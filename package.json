@@ -1,0 +1,23 @@
+{
+  "name": "team-undefined42",
+  "version": "1.0.0",
+  "description": "Web application with Node.js",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/undefined42-Telerik/CourseProject.git"
+  },
+  "author": "Silviya Boteva, Elena Zarkova, Todor Georgiev, Boiko Bonev, Martin Iotov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/undefined42-Telerik/CourseProject/issues"
+  },
+  "homepage": "https://github.com/undefined42-Telerik/CourseProject#readme",
+  "dependencies": {
+    "typings": "^2.0.0"
+  }
+}
