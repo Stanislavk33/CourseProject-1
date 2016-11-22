@@ -25,3 +25,7 @@ const competitionSchema = new Schema({
     },
     //TODO: keys for searching
 });
+
+const Competition = mongoose.model("Competition", competitionSchema);
+
+module.exports = mongoose.model("Competition");

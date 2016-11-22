@@ -68,4 +68,4 @@ const User = mongoose.model("User", userSchema);
 
 //TODO: add function to find specific user => admin
 
-module.exports = mongoose.model('User');
+module.exports = mongoose.model("User");
