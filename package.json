@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/undefined42-Telerik/CourseProject#readme",
   "dependencies": {
+    "express": "^4.14.0",
+    "mongoose": "^4.6.8",
     "typings": "^2.0.0"
   }
 }
