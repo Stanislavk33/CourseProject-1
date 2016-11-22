@@ -25,21 +25,8 @@ const userSchema = new Schema({
         required: true
     },
     birthDate: {
-        day: {
-            min: 1,
-            max: 31,
-            required: true
-        },
-        month: {
-            min: 1,
-            max: 12,
-            required: true
-        },
-        year: {
-            min: 1900,
-            max: 2050,
-            required: true
-        }
+        Type: Date,
+        required: true
     },
     email: {
         type: String,
@@ -48,9 +35,21 @@ const userSchema = new Schema({
     image: {
         type: String
     },
+    competitions: [{
+        // TODO: decide on information
+    }]
     //TODO: include progressbar-model 
     //include competition-model
 });
+
+progressbar{
+    mainpoints,
+    categories:[
+        1: points,
+        2: points, color
+    ]
+}
+
 
 userSchema.methods = {
     isValidPassword(password) {

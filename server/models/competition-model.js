@@ -8,22 +8,39 @@ const competitionSchema = new Schema({
         type: String,
         required: true
     },
-    organizator: {
-        //TODO: include user-model
-        required: true
+    likes: { type: Number, required: true},
+    organizator:
+    {
+        _id: { Type: String, required: true },
+        username: { Type: String, required: true }
     },
     category: {
-        //TODO: include category-model
-        required: true
+        _id: { Type: String, required: true },
+        name: { Type: String, required: true }
     },
     joinedUsers: {
-        type: [String]
+        type: [{
+            _id: { Type: String, required: true },
+            username: { Type: String, required: true }
+        }]
     },
     points: {
         type: Number,
         required: true
     },
-    //TODO: keys for searching
+    level: {
+        type: String, 
+        required: true
+    },
+    keys: [String],
+    location: {
+        // string google link for rendering
+        // {latitude, longitute}
+    },
+    passed: {
+        Type: Boolean, required: true
+    }
+    // TODO: maybe add users who took part
 });
 
 const Competition = mongoose.model("Competition", competitionSchema);
