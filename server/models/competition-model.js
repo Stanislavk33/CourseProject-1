@@ -11,17 +11,17 @@ const competitionSchema = new Schema({
     },
     likes: { type: Number, required: true },
     organizator: {
-        _id: { Type: String, required: true },
-        username: { Type: String, required: true }
+        _id: { type: String, required: true },
+        username: { type: String, required: true }
     },
     category: {
-        _id: { Type: String, required: true },
-        name: { Type: String, required: true }
+        _id: { type: String, required: true },
+        name: { type: String, required: true }
     },
     joinedUsers: {
         type: [{
-            _id: { Type: String, required: true },
-            username: { Type: String, required: true }
+            _id: { type: String, required: true },
+            username: { type: String, required: true }
         }]
     },
     points: {
@@ -34,11 +34,12 @@ const competitionSchema = new Schema({
     },
     keys: [String],
     location: {
-        // string google link for rendering
+        latitude: { type: String },
+        longitute: { type: String }
         // {latitude, longitute}
     },
     passed: {
-        Type: Boolean,
+        type: Boolean,
         required: true
     }
     // TODO: maybe add users who took part

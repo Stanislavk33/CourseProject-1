@@ -5,10 +5,10 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const progressbarSchema = new Schema({
-    totalPoints: { Type: Number, required: true },
+    totalPoints: { type: Number, required: true },
     categoriesPoints: [{
-        name: { Type: String, required: true },
-        points: { Type: String, required: true }
+        name: { type: String, required: true },
+        points: { type: String, required: true }
     }]
 });
 
