@@ -1,3 +1,4 @@
+/* globals module require */
 "use strict"
 
 const mongoose = require("mongoose");
@@ -36,20 +37,19 @@ const userSchema = new Schema({
         type: String
     },
     competitions: [{
-        // TODO: decide on information
-    }]
-    //TODO: include progressbar-model 
-    //include competition-model
+            // TODO: decide on information
+        }]
+        //TODO: include progressbar-model 
+        //include competition-model
 });
 
-progressbar{
-    mainpoints,
-    categories:[
-        1: points,
-        2: points, color
-    ]
-}
-
+// progressbar {
+//     mainpoints,
+//     categories: [
+//         1: points,
+//         2: points, color
+//     ]
+// }
 
 userSchema.methods = {
     isValidPassword(password) {
