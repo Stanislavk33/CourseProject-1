@@ -4,6 +4,9 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const constants = require("../utilities/constants");
+const Status = constants.competitionStatus;
+
 const competitionSchema = new Schema({
     place: {
         type: String,
@@ -12,7 +15,7 @@ const competitionSchema = new Schema({
     likes: { type: Number, required: true },
     organizator: {
         _id: { type: String, required: true },
-        username: { type: String, required: true }
+        username: { type: String, required: true, unique: true }
     },
     category: {
         _id: { type: String, required: true },
@@ -39,7 +42,7 @@ const competitionSchema = new Schema({
         // {latitude, longitute}
     },
     passed: {
-        type: Boolean,
+        enum: Status,
         required: true
     }
     // TODO: maybe add users who took part

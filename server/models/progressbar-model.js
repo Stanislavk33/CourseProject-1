@@ -12,6 +12,4 @@ const progressbarSchema = new Schema({
     }]
 });
 
-mongoose.model("Progressbar", progressbarSchema);
-
-module.exports = mongoose.model("Progressbar");
+module.exports = progressbarSchema;

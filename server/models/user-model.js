@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 const encrypt = require("../utilities/encryptor");
 const Schema = mongoose.Schema;
 
+const progressbarSchema = require("./progressbar-model");
+
 const userSchema = new Schema({
     username: {
         type: String,
@@ -34,22 +36,16 @@ const userSchema = new Schema({
         required: true
     },
     image: {
-        type: String
+        type: String,
+        required: false
     },
     competitions: [{
-            // TODO: decide on information
-        }]
-        //TODO: include progressbar-model 
-        //include competition-model
+        // TODO: decide on information
+    }],
+    progress: {
+        type: progressbarSchema
+    }
 });
-
-// progressbar {
-//     mainpoints,
-//     categories: [
-//         1: points,
-//         2: points, color
-//     ]
-// }
 
 userSchema.methods = {
     isValidPassword(password) {
