@@ -59,38 +59,18 @@ module.exports = function(models) {
                     return resolve(competitions);
                 });
             })
-        },
-        // Still not working, will fix soon
-        // getCompetitionsByKeys(...keys) { 
-        //     if (Array.isArray(keys[0])) {
-        //         keys = keys[0];
-        //     }
-
-        //     return new Promise((resolve, reject) => {
-        //         Competition.find({ 
-        //             "keys": { 
-        //                 $in: keys 
-        //             }
-        //         }, (err, competitions) => {
-        //             if (err){
-        //                 return reject(err);
-        //             }
-                    
-        //             return resolve(competitions);
-        //             });
-        //     });
-        // },
-        createCompetition(competition) { //competition object is create in the controller
+        },  
+        createCompetition(competition) { //competition object is created in the controller
             let newCompetition = new Competition({
                 place: competition.place,
-                likes:  0,
-                organizator:  competition.organizator,
-                category:  competition.category,      //TODO: Create category if does not exist
-                joinedUsers:  [],
-                points:  competition.points,
-                level:  competition.level,
-                keys:  competition.keys,
-                passed: false
+                likes: 0,
+                organizator: competition.organizator,
+                category: competition.category,
+                joinedUsers: [],
+                points: competition.points,
+                level: competition.level,
+                keys: competition.keys,
+                passed: "upcoming"
             });
 
             return new Promise((resolve, reject) => {
@@ -102,11 +82,62 @@ module.exports = function(models) {
                     return resolve(newCompetition);
                 });
             });
-        }
+        },
+        updateCompetitionLikes(_id){ //increment likes with 1
+             return new Promise((resolve, reject) =>{
+             Competition.findByIdAndUpdate({"_id": _id}, 
+             {"$inc": {"likes": 1}},
+             (err) => {
+                 if (err) {
+                 return reject(err);               
+             }
 
-        //TODO:
-        // UpdateCompetitionLikes()
-        // AddNewJoinedUser()
-        // UpdateCompetitionToPassed()
+             return resolve();
+             })
+             });
+         },        
+         addNewJoinedUser(competitionId, user){ //user object is created in the controller
+             return new Promise((resolve, reject) => {
+                 Competition.findByIdAndUpdate({"_id": competitionId},
+                 {$push: {"joinedUsers": user}},
+                 (err) => {
+                     if (err) {
+                         return reject(err);
+                     }
+                 return resolve();
+                })
+             });
+         },
+         updateCompetitionToPassedStatus(_id, status){
+             return new Promise((resolve, reject) => {
+                 Competition.findByIdAndUpdate({"_id": _id},
+                 { $set: { "passed": status } },
+                 (err) => {
+                     if (err) {
+                         return reject(err);
+                     }
+                 return resolve();
+                });
+             });
+         }
+
+        // Not working
+        // getCompetitionsByKeys(...keys) { 
+        //     if (Array.isArray(keys[0])) {
+        //         keys = keys[0];
+        //     }
+        //     console.log(keys);
+        //     return new Promise((resolve, reject) => {
+        //         Competition.find({ 
+        //             "keys": keys
+        //             })
+        //         }, (err, competitions) => {
+        //             if (err){
+        //                 return reject(err);
+        //             }
+                    
+        //             return resolve(competitions);
+        //             });
+        //     },
     };
 };

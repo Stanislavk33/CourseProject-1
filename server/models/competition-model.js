@@ -11,7 +11,7 @@ const competitionSchema = new Schema({
     name: { type: String, require: true },
     place: { type: String, required: true },
     likes: { type: Number, required: true },
-    organizator: { type: String, required: true, unique: true },
+    organizator: { type: String, required: true},
     category: { type: String, required: true },
     joinedUsers: {
         type: [{
@@ -26,7 +26,7 @@ const competitionSchema = new Schema({
         latitude: { type: String },
         longitute: { type: String }
     },
-    passed: { enum: Status, required: true }
+    passed: { type: String, enum: Status, required: true }
 });
 
 mongoose.model("Competition", competitionSchema);

@@ -19,7 +19,7 @@ const userSchema = new Schema({
         // TODO: decide on information
     }],
     progress: { type: progressbarSchema },
-    isOgranizator: { type: Boolean, required: true },
+    isOrganizator: { type: Boolean, required: true },
     isAdmin: { type: Boolean, required: true }
 });
 

@@ -13,8 +13,8 @@ const categorySchema = new Schema({
         _id: { type: String, required: true },
         name: { type: String, required: true },
         image: { type: String, required: true },
-        status: { enum: Status, required: true },
-        organizator: { type: String, required: true, unique: true },
+        status: { type: String, enum: Status, required: true },
+        organizator: { type: String, required: true},
     }]
 });
 
