@@ -1,12 +1,13 @@
 /* globals require  */
 
-const config = require("./server/config");
+const config = require('./server/config/');
 
-const app = require("./server/config/application");
+const app = require('./server/config/application');
 
-const data = require("./server/data")(config);
-require("./server/routers")(app, data);
+const data = require('./server/data')(config);
 
-app.listen(config.port, () => {
-    console.log(`Running at ${config.port}`);
-})
+require('./server/routers')(app, data)
+
+app.listen(config.port);
+
+console.log(`Server is running on port: ${config.port}`);
