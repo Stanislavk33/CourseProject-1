@@ -18,7 +18,7 @@ module.exports = function(models) {
         },
         getCategoryById(id) {
             return new Promise((resolve, reject) => {
-                Category.find({ _id: id }, (err, category) => {
+                Category.find({ "_id": id }, (err, category) => {
                     if (err){
                         return reject(err);
                     }
@@ -38,7 +38,7 @@ module.exports = function(models) {
                 });
             })
         },
-        createCategory(category) { //competition object is created in the controller
+        createCategory(category) {
             let newCategory = new Category({
                 title: category.title,
                 competitions: []
@@ -54,10 +54,10 @@ module.exports = function(models) {
                 });
             });
         },
-        addCompetitionToCategory(categoryId, category) { //category object is created in the controller
+        addCompetitionToCategory(categoryId, competition) { //competition object is created in the controller
             return new Promise((resolve, reject) => {
                  Category.findByIdAndUpdate({"_id": categoryId},
-                 {$push: {"competitions": category}},
+                 {$push: {"competitions": competition}},
                  (err) => {
                      if (err) {
                          return reject(err);

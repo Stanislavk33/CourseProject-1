@@ -9,9 +9,11 @@ module.exports = function(config) {
     mongoose.connect(config.connectionString);
    let Competition = require("../models/competition-model");
    let Category = require("../models/category-model");
+   let User = require("../models/user-model");
+   let UserGallery = require("../models/user-gallery-model");
 
     //TODO - add other models in model object
-   let models = { Competition, Category };
+   let models = { Competition, Category, User, UserGallery };
     let data = {};
 
     fs.readdirSync("./server/data")
