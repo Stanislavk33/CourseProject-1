@@ -1,0 +1,24 @@
+{
+  "name": "team-undefined42",
+  "description": "Web application with Node.js",
+  "main": "app.js",
+  "authors": [
+    "Silviya Boteva",
+    "Elena Zarkova",
+    "Todor Georgiev",
+    "Boyko Bonev",
+    "Martin Yotov"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/undefined42-Telerik/CourseProject",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "public/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
+}
