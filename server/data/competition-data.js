@@ -16,7 +16,7 @@ module.exports = function(models) {
                 });
             });
         },
-        getCompetitionById(id){
+        getCompetitionById(id) {
             return new Promise((resolve, reject) => {
                 Competition.findOne({ _id: id }, (err, competition) => {
                     if (err) {

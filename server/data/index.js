@@ -11,9 +11,10 @@ module.exports = function(config) {
    let Category = require("../models/category-model");
    let User = require("../models/user-model");
    let UserGallery = require("../models/user-gallery-model");
+   let ForumPost = require("../models/forum-post-model");
 
     //TODO - add other models in model object
-   let models = { Competition, Category, User, UserGallery };
+   let models = { Competition, Category, User, UserGallery, ForumPost };
     let data = {};
 
     fs.readdirSync("./server/data")

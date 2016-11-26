@@ -6,7 +6,7 @@ module.exports = function(models) {
     return {
         getUserGalleryById(_id) {
             return new Promise((resolve, reject) => {
-                UserGallery.find({ "_id": _id }, (err, userGallery) => {
+                UserGallery.findOne({ "_id": _id }, (err, userGallery) => {
                     if (err){
                         return reject(err);
                     }
@@ -17,7 +17,7 @@ module.exports = function(models) {
         },
         getUserGalleryByUsername(username) {
             return new Promise((resolve, reject) => {
-                UserGallery.find({ "username": username }, (err, userGallery) => {
+                UserGallery.findOne({ "username": username }, (err, userGallery) => {
                     if (err){
                         return reject(err);
                     }
