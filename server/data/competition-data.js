@@ -16,7 +16,7 @@ module.exports = function(models) {
                 });
             });
         },
-        getCompetitionById(id) {
+        getCompetitionById(id){
             return new Promise((resolve, reject) => {
                 Competition.findOne({ _id: id }, (err, competition) => {
                     if (err) {
@@ -95,7 +95,7 @@ module.exports = function(models) {
                     })
             });
         },
-        addNewJoinedUser(competitionId, user) { //user object is created in the controller
+        addJoinedUserToCompetition(competitionId, user) { //user object is created in the controller
             return new Promise((resolve, reject) => {
                 Competition.findByIdAndUpdate({ "_id": competitionId }, { $push: { "joinedUsers": user } },
                     (err) => {
@@ -106,7 +106,7 @@ module.exports = function(models) {
                     })
             });
         },
-        updateCompetitionToPassedStatus(_id, status) {
+        updateCompetitionPassedStatus(_id, status) {
             return new Promise((resolve, reject) => {
                 Competition.findByIdAndUpdate({ "_id": _id }, { $set: { "passed": status } },
                     (err) => {

@@ -16,9 +16,9 @@ module.exports = function(models) {
                 });
             })
         },
-        getCategoryById(id) {
+        getCategoryById(_id) {
             return new Promise((resolve, reject) => {
-                Category.find({ "_id": id }, (err, category) => {
+                Category.findOne({ "_id": _id }, (err, category) => {
                     if (err) {
                         return reject(err);
                     }
