@@ -1,5 +1,5 @@
 /* globals module require */
-"use strict"
+"use strict";
 
 module.exports = function(models) {
     let Competition = models.Competition;
@@ -8,32 +8,32 @@ module.exports = function(models) {
         getAllCompetitions() {
             return new Promise((resolve, reject) => {
                 Competition.find((err, competitions) => {
-                    if (err){
+                    if (err) {
                         return reject(err);
                     }
 
-                    return resolve (competitions);
+                    return resolve(competitions);
                 });
-            })
+            });
         },
         getCompetitionById(id) {
             return new Promise((resolve, reject) => {
-                Competition.find({ _id: id }, (err, competition) => {
-                    if (err){
+                Competition.findOne({ _id: id }, (err, competition) => {
+                    if (err) {
                         return reject(err);
                     }
 
                     return resolve(competition);
                 });
-            })
+            });
         },
         getCompetitionsByPlace(place) {
             return new Promise((resolve, reject) => {
                 Competition.find({ "place": place }, (err, competitions) => {
-                    if (err){
+                    if (err) {
                         return reject(err);
                     }
-                    
+
                     return resolve(competitions);
                 });
             })
@@ -41,10 +41,10 @@ module.exports = function(models) {
         getCompetitionsByOrganizator(username) {
             return new Promise((resolve, reject) => {
                 Competition.find({ "organizator.username": username }, (err, competitions) => {
-                    if (err){
+                    if (err) {
                         return reject(err);
                     }
-                    
+
                     return resolve(competitions);
                 });
             })
@@ -52,14 +52,14 @@ module.exports = function(models) {
         getCompetitionsByLevel(level) {
             return new Promise((resolve, reject) => {
                 Competition.find({ "level": level }, (err, competitions) => {
-                    if (err){
+                    if (err) {
                         return reject(err);
                     }
-                    
+
                     return resolve(competitions);
                 });
             })
-        },  
+        },
         createCompetition(competition) { //competition object is created in the controller
             let newCompetition = new Competition({
                 place: competition.place,
@@ -83,43 +83,40 @@ module.exports = function(models) {
                 });
             });
         },
-        updateCompetitionLikes(_id){ //increment likes with 1
-             return new Promise((resolve, reject) =>{
-             Competition.findByIdAndUpdate({"_id": _id}, 
-             {"$inc": {"likes": 1}},
-             (err) => {
-                 if (err) {
-                 return reject(err);               
-             }
+        updateCompetitionLikes(_id) { //increment likes with 1
+            return new Promise((resolve, reject) => {
+                Competition.findByIdAndUpdate({ "_id": _id }, { "$inc": { "likes": 1 } },
+                    (err) => {
+                        if (err) {
+                            return reject(err);
+                        }
 
-             return resolve();
-             })
-             });
-         },        
-         addNewJoinedUser(competitionId, user){ //user object is created in the controller
-             return new Promise((resolve, reject) => {
-                 Competition.findByIdAndUpdate({"_id": competitionId},
-                 {$push: {"joinedUsers": user}},
-                 (err) => {
-                     if (err) {
-                         return reject(err);
-                     }
-                 return resolve();
-                })
-             });
-         },
-         updateCompetitionToPassedStatus(_id, status){
-             return new Promise((resolve, reject) => {
-                 Competition.findByIdAndUpdate({"_id": _id},
-                 { $set: { "passed": status } },
-                 (err) => {
-                     if (err) {
-                         return reject(err);
-                     }
-                 return resolve();
-                });
-             });
-         }
+                        return resolve();
+                    })
+            });
+        },
+        addNewJoinedUser(competitionId, user) { //user object is created in the controller
+            return new Promise((resolve, reject) => {
+                Competition.findByIdAndUpdate({ "_id": competitionId }, { $push: { "joinedUsers": user } },
+                    (err) => {
+                        if (err) {
+                            return reject(err);
+                        }
+                        return resolve();
+                    })
+            });
+        },
+        updateCompetitionToPassedStatus(_id, status) {
+            return new Promise((resolve, reject) => {
+                Competition.findByIdAndUpdate({ "_id": _id }, { $set: { "passed": status } },
+                    (err) => {
+                        if (err) {
+                            return reject(err);
+                        }
+                        return resolve();
+                    });
+            });
+        }
 
         // Not working
         // getCompetitionsByKeys(...keys) { 
@@ -135,7 +132,7 @@ module.exports = function(models) {
         //             if (err){
         //                 return reject(err);
         //             }
-                    
+
         //             return resolve(competitions);
         //             });
         //     },

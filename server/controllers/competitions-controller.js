@@ -1,7 +1,11 @@
 module.exports = (data) => {
     return {
         getByID(req, res) {
-            // TODO: get all competitions from db and load them
+            const id = req.params.id;
+            data.getCompetitionById(id)
+                .then(competition => {
+                    res.render("competition", { res: competition });
+                });
         },
         getCreatePage(req, res) {
             // TODO: load competitions creation page
@@ -13,7 +17,10 @@ module.exports = (data) => {
             // TODO 
         },
         loadCompetitions(req, res) {
-            // TODO
+            data.getAllCompetitions()
+                .then(competitions => {
+                    res.render("competition-list", { res: competitions });
+                })
         },
         likes(req, res) {
             // TODO

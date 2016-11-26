@@ -9,7 +9,7 @@ module.exports = {
         "semi": 2,
         "no-undef": 2,
         "no-use-before-define": 0,
-        "quotes": 2,
+        "quotes": 1,
         "comma-dangle": 2, // disallow trailing commas in object literals
         "no-cond-assign": 2, // disallow assignment in conditional expressions
         "no-console": 0, // disallow use of console (off by default in the node environment)

@@ -1,0 +1,38 @@
+doctype
+html
+    head
+        title Conquer Bulgaria
+       
+    body
+        header.nav
+        .container
+            .navbar-header
+                a.navbar-brand(href="/") Event System
+            .navbar-collapse.collapse
+                ul.nav.navbar-nav
+                    li
+                        a(href="/") Home
+                    if (currentUser)
+                        li
+                            a(href="/competitions") List Competitions
+                        li
+                            a(href="/events/active") Active Events
+                        li
+                            a(href="/events/past") Past Events
+                        li
+                            a(href="/profile") #{currentUser.username}
+                        li
+                            a(href="/logout") Logout
+                    if (!currentUser)
+                        li
+                            a(href="/register") Register
+                        li
+                            a(href="/login") Login
+
+        .container
+
+            block content
+
+        footer
+            p.text-center
+                | &copy; Telerik Academy 2014
