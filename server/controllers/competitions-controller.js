@@ -8,7 +8,7 @@ module.exports = (data) => {
                 });
         },
         getCreatePage(req, res) {
-            res.status(200).render("create-competition", {
+            return res.status(200).render("create-competition", {
                 result: ["hiking", "skiing", "swimming"]
             });
         },
@@ -26,8 +26,8 @@ module.exports = (data) => {
         },
         createCompetition(req, res) {
             let body = req.body;
-            let user = req.user.username;
-            let keys = req.body.keys
+            let user = "admin"; // req.user.username 
+            let keys = body.keys
                 .split(" ")
                 .filter(x => x !== "");
 
@@ -40,7 +40,7 @@ module.exports = (data) => {
                     keys: keys
                 })
                 .then(competition => {
-                    res.redirect(`/competition/${competition._id}`);
+                    res.redirect(`/competitions/${competition._id}`);
                 }).catch(err => {
                     console.log(err);
                 });

@@ -13,8 +13,8 @@ module.exports = (app, data) => {
         .get('/:id', controller.getByID)
         .get('/create', controller.getCreatePage)
 
-    .put('/:id/like', controller.likes)
-        .put('/:id/join', controller.joinCompetition)
+    // .put('/:id/like', controller.likes)
+    //     .put('/:id/join', controller.joinCompetition)
 
     .post('/create', controller.createCompetition);
 
