@@ -1,3 +1,6 @@
+/* globals require */
+"use strict";
+
 const express = require('express');
 
 module.exports = (app, data) => {
@@ -10,10 +13,10 @@ module.exports = (app, data) => {
         .get('/:id', controller.getByID)
         .get('/create', controller.getCreatePage)
 
-        .put('/:id/like', controller.likes)
+    .put('/:id/like', controller.likes)
         .put('/:id/join', controller.joinCompetition)
 
-        .post('/create', controller.createCompetition);
+    .post('/create', controller.createCompetition);
 
     app.use('/competitions', router);
-}
+};

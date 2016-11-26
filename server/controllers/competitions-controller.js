@@ -8,7 +8,9 @@ module.exports = (data) => {
                 });
         },
         getCreatePage(req, res) {
-            // TODO: load competitions creation page
+            res.status(200).render("create-competition", {
+                result: ["hiking", "skiing", "swimming"]
+            });
         },
         joinCompetition(req, res) {
             // TODO: post query to db
