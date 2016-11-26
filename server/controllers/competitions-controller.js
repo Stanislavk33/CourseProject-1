@@ -4,7 +4,7 @@ module.exports = (data) => {
             const id = req.params.id;
             data.getCompetitionById(id)
                 .then(competition => {
-                    res.render("competition", { res: competition });
+                    res.render("competition", { result: competition });
                 });
         },
         getCreatePage(req, res) {
@@ -21,7 +21,7 @@ module.exports = (data) => {
         loadCompetitions(req, res) {
             data.getAllCompetitions()
                 .then(competitions => {
-                    res.render("competition-list", { res: competitions });
+                    res.render("competition-list", { result: competitions });
                 });
         },
         createCompetition(req, res) {

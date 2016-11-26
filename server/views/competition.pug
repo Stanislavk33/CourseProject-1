@@ -1,0 +1,19 @@
+extends _layout
+
+block content
+
+    #info
+        h1 Information
+            p
+                h3 Place #{result.place}
+                h3 Organizator
+                    a(href="user/" +result.organizator._id)  #{result.organizator}
+                h3 Category #{result.category}
+                h3 Level - #{result.level}
+                h3 Points - #{result.points}
+                h3 Tags 
+
+                ul
+                each tag in result.keys
+                    li #{tag}
+                    

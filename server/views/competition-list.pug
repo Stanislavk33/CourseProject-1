@@ -3,4 +3,4 @@ extends _layout
 block content
     each competition in result
         h3
-            a(href="/competition/#{competition._id}")=competition.name
+            a(href="/competitions/"+ competition._id)= competition.place

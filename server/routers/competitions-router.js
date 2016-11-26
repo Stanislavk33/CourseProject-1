@@ -10,7 +10,7 @@ module.exports = (app, data) => {
 
     router
         .get('/', controller.loadCompetitions)
-        .get('/:id', controller.getByID)
+        .get('/:id', /* is authenticated and isInRole middleWare here */ controller.getByID)
         .get('/create', controller.getCreatePage)
 
     // .put('/:id/like', controller.likes)
