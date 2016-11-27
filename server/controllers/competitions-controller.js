@@ -37,6 +37,8 @@ module.exports = (data) => {
                     category: body.category,
                     points: body.points,
                     level: body.level,
+                    startDate: body.startDate,
+                    endDate: body.endDate,
                     keys: keys,
                     location: { longitude: body.longitude, latitude: body.latitude }
                 })
@@ -46,11 +48,16 @@ module.exports = (data) => {
                     console.log(err);
                 });
         },
-        getUpcommingCompetitions(req, res) {
-            data.getLatestUpcommingCompetitions()
-                .then(competitions => {
-                    console.log(competitions);
-                    res.render("competition-list", { result: competitions });
+        getHome(req, res) {
+            Promise.all([data.getLatestUpcommingCompetitions(), data.getMostPopularCompetitions()])
+                .then(([upcommingCompetition, mostPopularCompetition]) => {
+
+                    res.render("home-page", {
+                        result: {
+                            upcommingCompetition,
+                            mostPopularCompetition
+                        }
+                    })
                 });
         }
     };

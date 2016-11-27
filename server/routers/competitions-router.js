@@ -10,8 +10,9 @@ module.exports = (app, data) => {
 
     router
         .get('/', controller.loadCompetitions)
+        .get('/home', controller.getHome)
         .get('/create', controller.getCreatePage) // :id should be last
-        .get('/:id', /* is authenticated and isInRole middleWare here */ controller.getByID)      
+        .get('/:id', /* is authenticated and isInRole middleWare here */ controller.getByID)
 
     // .put('/:id/like', controller.likes)
     //     .put('/:id/join', controller.joinCompetition)

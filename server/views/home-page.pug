@@ -1,0 +1,12 @@
+extends _layout
+block content
+    h2 Upcomming
+    ul
+    each commingCompetition in result.upcommingCompetition
+        li 
+            a(href="/competitions/" + commingCompetition._id) #{commingCompetition.place}
+    h2 MostPopular
+    each topCompetition in result.mostPopularCompetition
+        li
+            a(href="/competitions/" + topCompetition._id) #{topCompetition.place}
+        

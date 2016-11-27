@@ -7,7 +7,7 @@ function initMap() {
         zoom: 10
     });
 
-    google.maps.event.addListener(map, 'click', function (event) {
+    google.maps.event.addListener(map, 'click', function(event) {
         marker = addMarker(event.latLng, map, marker);
     });
 
@@ -26,7 +26,7 @@ function addMarker(location, map, oldMarker) {
     return marker;
 }
 
-$("#create").on("click", function (ev) {
+$("#create").on("click", function(ev) {
     if (!marker) {
         toastr.error("You should choose a location on the map.")
 
@@ -42,8 +42,10 @@ $("#create").on("click", function (ev) {
     let level = $("#level").val();
     let category = $("#category").val();
     let keys = $("#keys").val();
+    let startDate = $("#startDate").val();
+    let endDate = $("#endDate").val();
 
-    let data = { place, points, level, category, keys, latitude, longitude}
+    let data = { place, points, level, category, keys, latitude, longitude, startDate, endDate }
     console.log(data);
     ev.preventDefault();
 
@@ -52,10 +54,10 @@ $("#create").on("click", function (ev) {
         data: JSON.stringify(data),
         contentType: "application/json"
     }).
-    done(()=>{
-        toastr.success("magic");
-    })
-    .fail(()=>{
-        toastr.error("You are a fail!")
-    })
+    done(() => {
+            toastr.success("magic");
+        })
+        .fail(() => {
+            toastr.error("You are a fail!")
+        })
 });

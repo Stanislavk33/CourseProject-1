@@ -61,6 +61,7 @@ module.exports = function(models) {
             })
         },
         createCompetition(competition) { //competition object is created in the controller
+            const passed = extractPassed(competition.startDate, competition.endDate);
             let newCompetition = new Competition({
                 place: competition.place,
                 likes: 0,
@@ -70,7 +71,7 @@ module.exports = function(models) {
                 points: competition.points,
                 level: competition.level,
                 keys: competition.keys,
-                passed: "upcoming",
+                passed: passed,
                 location: competition.location
             });
 
@@ -124,6 +125,16 @@ module.exports = function(models) {
                     // .sort({ dateCreated: -1 })
                     .sort({ 'startDate': 'asc' })
                     .limit(5);
+
+                resolve(competitions);
+            });
+        },
+        getMostPopularCompetitions(count) {
+            return new Promise((resolve, reject) => {
+                let competitions = Competition.find({})
+                    // .sort({ dateCreated: -1 })
+                    .sort({ 'likes': 'desc' })
+                    .limit(count);
 
                 resolve(competitions);
             });
