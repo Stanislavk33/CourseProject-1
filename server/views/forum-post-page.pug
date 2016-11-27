@@ -1,0 +1,16 @@
+extends _layout
+
+block content
+
+        h1 #{result.title}
+        p #{result.description}
+        p Posted by #{result.user.username}(#{result.user.points})
+        p Posted on #{result.date}
+        p.likes Likes: #{result.likes}
+        if (result.answers.length)
+            h3 Answers
+            each answer in result.answers
+                p #{answer.user.username}(#{answer.user.points}) : #{answer.content}
+                p Posted on #{answer.date}
+                p.likes Likes: #{answer.likes} 
+                    button.btn-like Like

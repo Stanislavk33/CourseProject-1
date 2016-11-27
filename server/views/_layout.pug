@@ -2,7 +2,7 @@
 html
     head
         title Conquer Bulgaria
-       
+        block styles
     body
         header.nav
         .container
@@ -12,6 +12,8 @@ html
                 ul.nav.navbar-nav
                     li
                         a(href="/") Home
+                    li 
+                        a(href="/forum") Forum
                     if (currentUser)
                         li
                             a(href="/competitions") List Competitions
@@ -34,3 +36,5 @@ html
         footer
             p.text-center
                 | &copy; Telerik Academy 2014
+        
+        block scripts

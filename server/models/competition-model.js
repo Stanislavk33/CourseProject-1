@@ -24,7 +24,7 @@ const competitionSchema = new Schema({
     keys: [String],
     location: {
         latitude: { type: String },
-        longitute: { type: String }
+        longitude: { type: String }
     },
     passed: { type: String, enum: Status, required: true }
 });
