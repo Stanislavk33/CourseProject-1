@@ -70,7 +70,8 @@ module.exports = function(models) {
                 points: competition.points,
                 level: competition.level,
                 keys: competition.keys,
-                passed: "upcoming"
+                passed: "upcoming",
+                location: competition.location
             });
 
             return new Promise((resolve, reject) => {

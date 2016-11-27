@@ -37,7 +37,8 @@ module.exports = (data) => {
                     category: body.category,
                     points: body.points,
                     level: body.level,
-                    keys: keys
+                    keys: keys,
+                    location: {longitude: body.longitude, latitude: body.latitude}
                 })
                 .then(competition => {
                     res.redirect(`/competitions/${competition._id}`);

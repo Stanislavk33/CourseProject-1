@@ -1,9 +1,9 @@
 ## Pages: 
-1.Homepage
-2.Page of every competition
-3.Map with marked competition in the next weeks
-4.Profile page of every user
-5.Personal profile page if the user is registered and logged in
+1. Homepage
+2. Page of every competition
+3. Map with marked competition in the next weeks
+4. Profile page of every user
+5. Personal profile page if the user is registered and logged in
 
 ------------------------------------------
 
@@ -23,17 +23,17 @@
 -------------------------------------
 
 ## Users:
-1.Everyone (not registered) will see 
+1. Everyone (not registered) will see 
 	- the homepage
 	- the pages of the competitions
 	- the profiles of the users
-2.Regular user 
+2. Regular user 
 	- can join competitions
 	- can rate competitions
 	- will have progress bar 
 	- can chat with other users
 	- can ask questions for every competition/ or write in the forum if we decide to make a forum
-3.Organizator
+3. Organizator
 	- can add new competitions
 	- has to mark if the users came to the competition
 	- you become organizator after reaching certain points in the progress bar
