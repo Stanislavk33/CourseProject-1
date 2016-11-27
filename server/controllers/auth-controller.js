@@ -49,11 +49,15 @@ module.exports = (data) => {
                         return;
                     }
 
-                    res.status(201).send('<h1>Logged in!</h1>');
+                    res.status(201).send(`<h1>Hello ${user.username}!</h1>`);
                 });
             });
 
             auth(req, res, next);
+        },
+        logout(req, res) {
+            req.logout();
+            res.status(200).send('<h1>Logged Out</h1>');
         }
     }
 }

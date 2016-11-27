@@ -10,6 +10,7 @@ module.exports = (app, data) => {
         .post('/register', controller.register)
         .get('/login', controller.loadLoginPage)
         .post('/login', controller.loginLocal)
+        .get('/logout', controller.logout)
 
     app.use('/auth', router);
 }
