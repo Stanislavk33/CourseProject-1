@@ -16,6 +16,10 @@ module.exports = (app, data) => {
     // .put('/:id/like', controller.likes)
     //     .put('/:id/join', controller.joinCompetition)
 
+    // TODO
+    // api/competiions/create
+    // competitions/create
+    // competitions/api/create
     .post('/create', controller.createCompetition);
 
     app.use('/competitions', router);

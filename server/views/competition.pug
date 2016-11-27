@@ -12,8 +12,11 @@ block content
                 h3 Level - #{result.level}
                 h3 Points - #{result.points}
                 h3 Tags 
-
+                //- div(id="map") 
+                //-     img(id="map-image" src="http://maps.googleapis.com/maps/api/staticmap?key=AIzaSyAnMEg3EOPkAf0dDFAF6LveVv8E-NUG9Wo&center=" + result.location.latitude + "," +result.location.longitude+ "&zoom=13&size=500x500&sensor=false")     
                 ul
                 each tag in result.keys
                     li #{tag}
+
+             
                     

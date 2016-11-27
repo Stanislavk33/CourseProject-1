@@ -1,7 +1,11 @@
 extends _layout
 
+block styles
+    link(rel="stylesheet" type="text/css" href="/static/bower_components/toastr/toastr.css")
+
 block content
-    form(action="/competitions/create" method="post")
+    //- form(action="/competitions/create" method="post")
+    form
         label(for="place") Place
         input(id="place" class="form-control" type="text" name="place" placeholder="Place")
         br
@@ -25,4 +29,11 @@ block content
         label(for="longitude") Longitude
         input(id="longitude" class="form-control" type="number" name="longitude" placeholder="Longitude")
         br
-        input(type="submit" class="btn btn-lg" value="Create")
+        div(id="map" style="height:200px;width:200px")
+        input(type="submit" id="create" class="btn btn-lg" value="Create")
+
+block scripts 
+    script(src="/static/bower_components/jquery/dist/jquery.min.js")
+    script(src="/static/bower_components/toastr/toastr.js")
+    script(src="/static/js/create-competition.js") 
+    script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0PmHg9An9AdDbib9-jYefjSKSnapzFLQ&callback=initMap")
