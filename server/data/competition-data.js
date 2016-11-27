@@ -1,7 +1,7 @@
 /* globals module require */
 "use strict";
 
-module.exports = function(models) {
+module.exports = function (models) {
     let Competition = models.Competition;
 
     return {
@@ -62,6 +62,7 @@ module.exports = function(models) {
         },
         createCompetition(competition) { //competition object is created in the controller
             let newCompetition = new Competition({
+                name: competition.name,
                 place: competition.place,
                 likes: 0,
                 organizator: competition.organizator,
@@ -116,6 +117,26 @@ module.exports = function(models) {
                         }
                         return resolve();
                     });
+            });
+        },
+        filterCompetitions(option) {
+            return new Promise((resolve, reject) => {
+                console.log("here");
+                // findOne({"username" : {$regex : ".*son.*"}});
+                let filter = {};
+                if (option.type && option.search) {
+                    const regex = `.*${option.search}.*`;
+                    console.log(option);
+                    filter[option.type] = { $regex: regex };
+                }
+                console.log(filter);
+                Competition.find(filter, (err, competitions) => {
+                    if (err) {
+                        return reject(err);
+                    }
+
+                    return resolve(competitions);
+                });
             });
         }
 

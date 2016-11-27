@@ -13,6 +13,7 @@ const competitionSchema = new Schema({
     likes: { type: Number, required: true },
     organizator: { type: String, required: true},
     category: { type: String, required: true },
+    description: {type: String},
     joinedUsers: {
         type: [{
             username: { type: String, required: true },
