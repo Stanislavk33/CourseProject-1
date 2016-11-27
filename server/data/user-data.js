@@ -77,20 +77,9 @@ module.exports = function(models) {
                     })
             });
         },
-        makeUserAnOrganizator(userId){
+        updateUserInRole(userId, role){
             return new Promise((resolve, reject) => {
-                User.findByIdAndUpdate({ "_id": userId }, { $set: { "isOrganizator": true } },
-                    (err) => {
-                        if (err) {
-                            return reject(err);
-                        }
-                        return resolve();
-                    });
-            });
-        },
-        makeUserAnAdmin(userId){
-            return new Promise((resolve, reject) => {
-                User.findByIdAndUpdate({ "_id": userId }, { $set: { "isAdmin": true } },
+                User.findByIdAndUpdate({ "_id": userId }, { $set: { "inRole": role } },
                     (err) => {
                         if (err) {
                             return reject(err);

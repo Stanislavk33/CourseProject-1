@@ -7,5 +7,6 @@ block content
                 a(href="/forum/"+ forumPost._id)= forumPost.title
             p Posted by #{forumPost.user.username}(#{forumPost.user.points})
             p.likes Likes: #{forumPost.likes}
+                //-TODO: send put request 
                 button.btn-like Like
     a(href="/forum/create") Create Post
