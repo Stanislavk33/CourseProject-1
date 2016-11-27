@@ -6,6 +6,7 @@ const app = require('./server/config/application');
 
 const data = require('./server/data')(config);
 
+require('./server/config/passport')(app, data);
 require('./server/routers')(app, data)
 
 app.listen(config.port);

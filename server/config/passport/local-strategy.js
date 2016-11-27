@@ -7,7 +7,7 @@ module.exports = (passport, data) => {
         (username, password, done) => {
             data.getUserByUsername(username)
                 .then(user => {
-                    if(user && user.password === password) {
+                    if(user && user.passHash === password) {
                         done(null, user);
                     } else {
                         done(null, false);

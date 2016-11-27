@@ -12,5 +12,10 @@ block content
             each answer in result.answers
                 p #{answer.user.username}(#{answer.user.points}) : #{answer.content}
                 p Posted on #{answer.date}
-                p.likes Likes: #{answer.likes} 
-                    button.btn-like Like
+                p.likes Likes: #{answer.likes}
+                    //-TODO: send put request 
+                    a(href=`/forum/${result._id}/like`).button Like  
+        form(action=`/forum/${result._id}/comment` method="post")
+            label(for="comment")
+            input(id="comment" class="form-control" type="text" name="content" placeholder="Comment")
+            input(type="submit" class="btn btn-lg" value="Create")         
