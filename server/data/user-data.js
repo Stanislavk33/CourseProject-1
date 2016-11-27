@@ -15,6 +15,20 @@ module.exports = function(models) {
                 });
             })
         },
+        getTopUsers() {
+            return new Promise((resolve, reject) => {
+                User.find({})
+                .sort({"progress.totalPoints": "desc"})
+                .limit(10)
+                .exec((err, users)=>{
+                    if(err){
+                        return reject(err);
+                    }
+
+                    return resolve(users);
+                })
+            });
+        },
         getUserById(id) {
             return new Promise((resolve, reject) => {
                 User.findOne({ "_id": id }, (err, user) => {

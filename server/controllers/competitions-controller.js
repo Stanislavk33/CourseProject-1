@@ -48,18 +48,6 @@ module.exports = (data) => {
                 }).catch(err => {
                     console.log(err);
                 });
-        },
-        getHome(req, res) {
-            Promise.all([data.getLatestUpcommingCompetitions(), data.getMostPopularCompetitions()])
-                .then(([upcommingCompetition, mostPopularCompetition]) => {
-
-                    res.render("home-page", {
-                        result: {
-                            upcommingCompetition,
-                            mostPopularCompetition
-                        }
-                    })
-                });
         }
     };
 };
