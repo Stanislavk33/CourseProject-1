@@ -59,6 +59,8 @@ module.exports = function(models) {
             });
         },
         addAnswerToForumPost(forumPostId, answer) { //answer object is created in the controller
+            answer.date = new Date();
+            answer.likes = 0;
             return new Promise((resolve, reject) => {
                 ForumPost.findByIdAndUpdate({ "_id": forumPostId }, { $push: { "answers": answer } },
                     (err) => {
@@ -80,6 +82,7 @@ module.exports = function(models) {
                         return resolve();
                     })
             });
-        }
+        },
+        // TODO: updateForumPostAnswerLikes()
     };
 };
