@@ -38,12 +38,19 @@ module.exports = (data) => {
                     points: body.points,
                     level: body.level,
                     keys: keys,
-                    location: {longitude: body.longitude, latitude: body.latitude}
+                    location: { longitude: body.longitude, latitude: body.latitude }
                 })
                 .then(competition => {
                     res.redirect(`/competitions/${competition._id}`);
                 }).catch(err => {
                     console.log(err);
+                });
+        },
+        getUpcommingCompetitions(req, res) {
+            data.getLatestUpcommingCompetitions()
+                .then(competitions => {
+                    console.log(competitions);
+                    res.render("competition-list", { result: competitions });
                 });
         }
     };

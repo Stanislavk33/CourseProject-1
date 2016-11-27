@@ -117,8 +117,17 @@ module.exports = function(models) {
                         return resolve();
                     });
             });
-        }
+        },
+        getLatestUpcommingCompetitions() {
+            return new Promise((resolve, reject) => {
+                let competitions = Competition.find({ passed: "upcoming" })
+                    // .sort({ dateCreated: -1 })
+                    .sort({ 'startDate': 'asc' })
+                    .limit(5);
 
+                resolve(competitions);
+            });
+        }
         // Not working
         // getCompetitionsByKeys(...keys) { 
         //     if (Array.isArray(keys[0])) {
@@ -139,3 +148,14 @@ module.exports = function(models) {
         //     },
     };
 };
+
+function extractPassed(startDate, endDate) {
+    if (+Date.now() > +new Date(endDate)) {
+        return "passed";
+    } else if (+new Date(startDate) < +Date.now() &&
+        +Date.now() < +new Date(endDate)) {
+        return "ongoing";
+    } else {
+        return "upcoming";
+    };
+}
