@@ -10,6 +10,14 @@ block content
         each topCompetition in result.mostPopularCompetition
             li
                 a(href="/competitions/" + topCompetition._id) #{topCompetition.place}
+
+    h2 Categories
+    ul
+        each category in result.categories
+            li
+                a(href="/categories/" + category.title) #{category.title}
+                //- TODO: where will the pictures be stored
+                img(src="" + category.title +".png" alt=category.title + " image")
     h2 Top Users
     table
         tr
