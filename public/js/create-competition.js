@@ -37,13 +37,14 @@ $("#create").on("click", function (ev) {
 
     let latitude = marker.getPosition().lat();
     let longitude = marker.getPosition().lng();
+    let name = $("#name").val();
     let place = $("#place").val();
     let points = $("#points").val();
     let level = $("#level").val();
     let category = $("#category").val();
     let keys = $("#keys").val();
 
-    let data = { place, points, level, category, keys, latitude, longitude}
+    let data = { name, place, points, level, category, keys, latitude, longitude}
     console.log(data);
     ev.preventDefault();
 

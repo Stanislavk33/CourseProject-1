@@ -14,7 +14,8 @@ module.exports = (app, data) => {
         .post('/create', controller.createForumPost)
         .get('/:id', controller.getByID)
         .post('/:id/comment', /* is authenticated middleWare here */ controller.addComment)
-        .put('/:id/like', controller.likes)
+        .put('/:id/like', /* is authenticated middleWare here */ controller.AddLikeToPost)
+        .put('/:id/comment/like', /* is authenticated middleWare here */ controller.addComment)
 
     app.use('/forum', router);
 };

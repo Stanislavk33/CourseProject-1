@@ -1,0 +1,24 @@
+extends _layout
+
+block content
+    form(action="/search" method="get")
+        select(id="search-type" class="form-control" name="type")
+                option(value="category") Category
+                option(value="place") Place
+                option(value="name") Name
+                option(value="organizator") Competitions by organizator
+        input(type="text" id="search-bar" name="search" placeholder="Search")
+        input(type="submit" id="search-submit" value="Search") 
+
+    each competition in result.competitions
+        h3 
+            a(href="/competitions/"+ competition._id)= competition.name
+        h4 Category: #{competition.category}
+        h4 #{competition.status}
+        h4 #{competition.place}
+        p By #{competition.organizator}
+        br
+       
+
+            
+

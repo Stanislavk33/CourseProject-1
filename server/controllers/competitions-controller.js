@@ -32,6 +32,7 @@ module.exports = (data) => {
                 .filter(x => x !== "");
 
             data.createCompetition({
+                    name:body.name,
                     place: body.place,
                     organizator: user,
                     category: body.category,
