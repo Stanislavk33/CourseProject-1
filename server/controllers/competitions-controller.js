@@ -2,9 +2,13 @@ module.exports = (data) => {
     return {
         getByID(req, res) {
             const id = req.params.id;
+            let view = "competition";
+            if (req.isAuthenticated()) {
+                view = "competition-user";
+            }
             data.getCompetitionById(id)
                 .then(competition => {
-                    res.render("competition", { result: competition });
+                    res.render(view, { result: competition });
                 });
         },
         getCreatePage(req, res) {
@@ -13,7 +17,34 @@ module.exports = (data) => {
             });
         },
         joinCompetition(req, res) {
-            // TODO: post query to db
+            if (!req.isAuthenticated()) {
+                res.status(400).json({
+                    success: false,
+                    message: 'Not authorized to join competition.'
+                });
+            }
+            else {
+                const username = req.user.username;
+                const id = req.params.id;
+
+                // TODO: what will the request return
+                data.addJoinedUserToCompetition(id, username)
+                    .then((competition) => {
+                        const userCompetition = {
+                            _id: competition._id,
+                            name: competition.name,
+                            place: competition.place
+                        }
+                        return data.addCompetitionToUser(username, userCompetition);
+                    })
+                    .then((userCompetition) => {
+                        res.status(200).json(userCompetition);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        res.status(500).json(error);
+                    });
+            }
         },
         likes(req, res) {
             // TODO 
@@ -32,17 +63,17 @@ module.exports = (data) => {
                 .filter(x => x !== "");
 
             data.createCompetition({
-                    name:body.name,
-                    place: body.place,
-                    organizator: user,
-                    category: body.category,
-                    points: body.points,
-                    level: body.level,
-                    startDate: body.startDate,
-                    endDate: body.endDate,
-                    keys: keys,
-                    location: { longitude: body.longitude, latitude: body.latitude }
-                })
+                name: body.name,
+                place: body.place,
+                organizator: user,
+                category: body.category,
+                points: body.points,
+                level: body.level,
+                startDate: body.startDate,
+                endDate: body.endDate,
+                keys: keys,
+                location: { longitude: body.longitude, latitude: body.latitude }
+            })
                 .then(competition => {
                     res.redirect(`/competitions/${competition._id}`);
                 }).catch(err => {

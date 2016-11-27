@@ -14,12 +14,10 @@ module.exports = (app, data) => {
         .get('/:id', /* is authenticated and isInRole middleWare here */ controller.getByID)
 
     // .put('/:id/like', controller.likes)
-    //     .put('/:id/join', controller.joinCompetition)
+        .put('/:id/join', controller.joinCompetition)
 
     // TODO
     // api/competiions/create
-    // competitions/create
-    // competitions/api/create
     .post('/create', controller.createCompetition);
 
     app.use('/competitions', router);

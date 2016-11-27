@@ -80,14 +80,14 @@ module.exports = function(models) {
                 });
             });
         },
-        addCompetitionToUser(userId, competition) { //competition object is created in the controller
+        addCompetitionToUser(username, competition) { //competition object is created in the controller
             return new Promise((resolve, reject) => {
-                User.findByIdAndUpdate({ "_id": userId }, { $push: { "competitions": competition } },
+                User.findOneAndUpdate({ "username": username }, { $push: { "competitions": competition } },
                     (err) => {
                         if (err) {
                             return reject(err);
                         }
-                        return resolve();
+                        return resolve(competition);
                     })
             });
         },

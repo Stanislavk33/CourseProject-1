@@ -2,12 +2,12 @@ extends _layout
 
 block content
 
-    #info
+    div(id="info" data-id=result._id)
         h1 Information
             p
                 h3 Place #{result.place}
                 h3 Organizator
-                    a(href="user/" +result.organizator._id)  #{result.organizator}
+                    a(href="users/" +result.organizator)  #{result.organizator}
                 h3 Category #{result.category}
                 h3 Level - #{result.level}
                 h3 Points - #{result.points}
@@ -18,6 +18,18 @@ block content
                 ul
                 each tag in result.keys
                     li #{tag}
+                
+                h2 Joined users
+                table
+                    tr
+                        th User
+                    each user in result.joinedUsers
+                        tr 
+                            td
+                                a(href="/users/" + user.username) #{user.username}
+                            
+
+                block joining
 
              
                     
