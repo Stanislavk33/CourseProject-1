@@ -20,6 +20,5 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({ secret: 'james bond 007' }));
 
-require('./passport/index')(app);
 
 module.exports = app;

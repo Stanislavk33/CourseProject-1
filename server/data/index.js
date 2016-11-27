@@ -7,15 +7,15 @@ const path = require("path");
 
 module.exports = function(config) {
     mongoose.connect(config.connectionString);
-   let Competition = require("../models/competition-model");
-   let Category = require("../models/category-model");
-   let User = require("../models/user-model");
-   let UserGallery = require("../models/user-gallery-model");
-   let ForumPost = require("../models/forum-post-model");
+   const Competition = require("../models/competition-model");
+   const Category = require("../models/category-model");
+   const User = require("../models/user-model");
+   const UserGallery = require("../models/user-gallery-model");
+   const ForumPost = require("../models/forum-post-model");
 
     //TODO - add other models in model object
-   let models = { Competition, Category, User, UserGallery, ForumPost };
-    let data = {};
+   const models = { Competition, Category, User, UserGallery, ForumPost };
+    const data = {};
 
     fs.readdirSync("./server/data")
         .filter(x => x.includes("-data")) 

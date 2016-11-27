@@ -7,7 +7,9 @@ module.exports = (app, data) => {
 
     router
         .get('/register', controller.loadRegisterPage)
-        .post('/register', controller.register);
+        .post('/register', controller.register)
+        .get('/login', controller.loadLoginPage)
+        .post('/login', controller.loginLocal)
 
     app.use('/auth', router);
 }
