@@ -50,8 +50,7 @@ module.exports = function(models) {
                     totalPoints: 0,
                     categoriesPoints: []
                 },
-                isOrganizator: false,
-                isAdmin: false
+                inRole: user.inRole
             });
             if (user.image) {
                 newUser.image = user.image

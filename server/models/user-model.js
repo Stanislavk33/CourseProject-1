@@ -12,15 +12,15 @@ const userSchema = new Schema({
     firstName: { type: String, match: /^[A-Z]([a-z]?)+$/, required: true },
     lastName: { type: String, match: /^[A-Z]([a-z]?)+$/, required: true },
     passHash: { type: String, required: true },
-    birthDate: { type: Date, required: true },
+    birthDate: { type: Date },
     email: { type: String, required: true },
     image: { type: String, required: false },
-    competitions: [{
+    competitions: [{ 
         // TODO: decide on information
     }],
     progress: { type: progressbarSchema },
-    isOrganizator: { type: Boolean, required: true },
-    isAdmin: { type: Boolean, required: true }
+    inRole : { type: String, default: 'normal' }
+    
 });
 
 userSchema.methods = {
