@@ -5,11 +5,12 @@ $(".addPoints").on("click", function(ev) {
     let devider = dataId.indexOf(' ');
     let username = dataId.substr(0, devider);
     let points = +dataId.substr(devider + 1, dataId.length);
-
+    let category = $(this).attr('data-category');
     ev.preventDefault();
     const data = {
         username,
-        points
+        points,
+        category
     };
 
     $.ajax("/users/addPoints", {

@@ -20,7 +20,9 @@ module.exports = (data) => {
         addPoints(req, res) {
             const username = req.body.username;
             const points = req.body.points;
-            data.updatePoints(username, points)
+            const category = req.body.category;
+
+            data.updatePoints(username, points, category)
                 .then(user => {
                     if (user === null) {
                         return res.status(400)

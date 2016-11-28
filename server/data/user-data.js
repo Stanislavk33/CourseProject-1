@@ -113,20 +113,34 @@ module.exports = function(models) {
                     });
             });
         },
-        updatePoints(username, points) {
+        updatePoints(username, points, category) {
             return new Promise((resolve, reject) => {
                 let currentPoints = 0;
                 let user = User.findOne({ username })
                     .then((user) => {
                         currentPoints = user.progress.totalPoints + points;
-                        return currentPoints;
+                        const categoryPoints = user.progress.categoriesPoints || [];
+                        if (categoryPoints.length === 0 || !categoryPoints.map(x => x.name).includes(category)) {
+                            categoryPoints.push({
+                                name: category,
+                                points
+                            })
+                        } else {
+                            categoryPoints.forEach(el => {
+                                if (el.name === category) {
+                                    el.points += +points;
+                                }
+
+                            });
+                        }
+                        return { currentPoints, categoryPoints };
                     }).then(newPoints => {
-                        User.findOneAndUpdate({ username }, { $set: { 'progress.totalPoints': newPoints } },
+                        User.findOneAndUpdate({ username }, { $set: { 'progress.totalPoints': newPoints.currentPoints, 'progress.categoriesPoints': newPoints.categoryPoints } },
                             (err, user) => {
                                 if (err) {
                                     return reject(err);
                                 }
-                                
+
                                 return resolve(user);
                             })
                     });

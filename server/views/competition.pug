@@ -30,7 +30,7 @@ block content
                                 a(href="/users/" + user.username) #{user.username}
                             if result.isOrgan
                             td
-                                button.addPoints(data-id=user.username +" "+ result.points) addPoints
+                                button.addPoints(data-id=user.username +" "+ result.points data-category=result.category) addPoints
                                 block scripts
     script(src="/static/bower_components/jquery/dist/jquery.min.js")
     script(src="/static/bower_components/toastr/toastr.js")

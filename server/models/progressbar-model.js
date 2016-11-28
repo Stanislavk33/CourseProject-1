@@ -8,7 +8,7 @@ const progressbarSchema = new Schema({
     totalPoints: { type: Number, required: true },
     categoriesPoints: [{
         name: { type: String, required: true },
-        points: { type: String, required: true }
+        points: { type: Number, required: true }
     }]
 });
 
