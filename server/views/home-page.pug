@@ -1,6 +1,35 @@
 extends _layout
 block content
-    h2 Upcomming
+    body.landing-page
+    .wrapper
+      .header.header-filter(style="background-image: url('http://www.devittinsurance.com/wp-content/uploads/2016/01/competition-banner-background.jpg');")
+        .container.nopadding
+          .row
+            .center-heading
+              h1.main-heading Our top competitions
+              #myCarousel.carousel.slide(data-ride='carousel')
+            ol.carousel-indicators
+              li.active(data-target='#myCarousel', data-slide-to='0')
+              li(data-target='#myCarousel', data-slide-to='1')
+              li(data-target='#myCarousel', data-slide-to='2')
+              li(data-target='#myCarousel', data-slide-to='3')
+            .carousel-inner(role='listbox')
+              .item.active
+                img.img-rounded(src='http://www.amazingwallpaperz.com/wp-content/uploads/3D-Landscape-Wallpaper-High-Definition.jpg', alt='Chania')
+              .item
+                img.img-rounded(src='http://media1.santabanta.com/full1/Outdoors/Landscapes/landscapes-229v.jpg', alt='Chania')
+              .item
+                img.img-rounded(src='http://media1.santabanta.com/full1/Outdoors/Landscapes/landscapes-342a.jpg', alt='Flower')
+              .item
+                img.img-rounded(src='http://media1.santabanta.com/full1/Outdoors/Landscapes/landscapes-284a.jpg', alt='Flower')
+            a.left.carousel-control(href='#myCarousel', role='button', data-slide='prev')
+              span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
+              |  
+              span.sr-only Previous
+            a.right.carousel-control(href='#myCarousel', role='button', data-slide='next')
+              span.glyphicon.glyphicon-chevron-right(aria-hidden='true')
+              |  
+              span.sr-only Next
     ul
         each commingCompetition in result.upcommingCompetition
             li 

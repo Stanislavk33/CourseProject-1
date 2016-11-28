@@ -83,6 +83,17 @@ module.exports = function(models) {
         addCompetitionToUser(username, competition) { //competition object is created in the controller
             return new Promise((resolve, reject) => {
                 User.findOneAndUpdate({ "username": username }, { $push: { "competitions": competition } },
+                    (err, user) => {
+                        if (err) {
+                            return reject(err);
+                        }
+                        return resolve(user);
+                    })
+            });
+        },
+        removeCompetitionFromUser(username, competitionId){
+            return new Promise((resolve, reject) =>{
+                User.findOneAndUpdate({ "username": username }, { $push: { "competitions": competition } },
                     (err) => {
                         if (err) {
                             return reject(err);

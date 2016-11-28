@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+html
+    head
+        title Conquer Bulgaria
+        block styles
+    body
+        header.nav
+        .container
+            .navbar-header
+                a.navbar-brand(href="/") Conquer Bulgaria
+            .navbar-collapse.collapse
+                ul.nav.navbar-nav
+                    li
+                        a(href="/") Home
+                    li 
+                        a(href="/forum") Forum
+                    if (currentUser)
+                        li
+                            a(href="/competitions") List Competitions
+                        li
+                            a(href="/competitions/create") Add Competitions
+                        li
+                            a(href="/profile") #{currentUser.username}
+                        li
+                            a(href="/logout") Logout
+                    if (!currentUser)
+                        li
+                            a(href="/register") Register
+                        li
+                            a(href="/login") Login
+            form(action="/search" method="get")
+                select(id="search-type" class="form-control" name="type")
+                        option(value="category") Category
+                        option(value="place") Place
+                        option(value="name") Name
+                        option(value="organizator") Competitions by organizator
+                input(type="text" id="search-bar" name="search" placeholder="Search")
+                input(type="submit" id="search-submit" value="Search")
+        .container
+
+            block content
+
+        footer
+            p.text-center
+                | &copy; Telerik Academy 2014
+        
+        block scripts
+
+
+
+        
+
+
+
+extends _layout
+block content
+    h2 Upcomming
+    ul
+        each commingCompetition in result.upcommingCompetition
+            li 
+                a(href="/competitions/" + commingCompetition._id) #{commingCompetition.place}
+    h2 MostPopular
+    ul
+        each topCompetition in result.mostPopularCompetition
+            li
+                a(href="/competitions/" + topCompetition._id) #{topCompetition.place}
+
+    h2 Categories
+    ul
+        each category in result.categories
+            li
+                a(href="/categories/" + category.title) #{category.title}
+                //- TODO: where will the pictures be stored
+                img(src="" + category.title +".png" alt=category.title + " image")
+    h2 Top Users
+    table
+        tr
+            th User
+            th Points
+        each topUser in result.topUsers
+            tr 
+                td
+                    a(href="/users/" + topUser.username) #{topUser.username}
+                td #{topUser.progress.totalPoints}
+
+

@@ -110,6 +110,9 @@ module.exports = function(models) {
                     })
             });
         },
+        removeUserFromCompetition(competitionId, username){
+            
+        },
         updateCompetitionPassedStatus(_id, status) {
             return new Promise((resolve, reject) => {
                 Competition.findByIdAndUpdate({ "_id": _id }, { $set: { "passed": status } },
