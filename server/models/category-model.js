@@ -9,6 +9,7 @@ const Status = constants.competitionStatus;
 
 const categorySchema = new Schema({
     title: { type: String, required: true, unique: true },
+    description: {type: String},
     competitions: [{
         _id: { type: String, required: true },
         name: { type: String, required: true },

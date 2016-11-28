@@ -1,5 +1,73 @@
 module.exports = (data) => {
     return {
+        getProfile(req, res) {
+            const username = req.params.username;
+            let asPersonalPage = false;
+            let view = "user-profile";
+
+            if (req.isAuthenticated()) {
+                if (req.user.username === username) {
+                    asPersonalPage = true;
+                    view = "personal-profile";
+                }
+            }
+
+            data.getUserByUsername(username, asPersonalPage)
+                .then((user) => {
+                    if (!user) {
+                        return res.status(400)
+                            .redirect("/error");
+                    }
+
+                    return res.status(200).render(view, { result: user });
+                })
+                .catch((err) => {
+                    return res.status(500).json(err);
+                })
+        },
+        getEditPage(req, res) {
+            const username = req.params.username;
+            console.log(username);
+
+            if (req.isAuthenticated() && req.user.username === username) {
+                data.getUserByUsername(username)
+                    .then((user) => {
+                        return res.status(200).render("edit-profile", { result: user });
+                    })
+            } else {
+                return res.status(400).json({
+                    success: false,
+                    message: "Not authorized!"
+                })
+            }
+        },
+        editProfile(req, res) {
+            const username = req.params.username;
+            if (!req.isAuthenticated() || req.user.username !== username) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Not authorized!"
+                })
+            }
+            const userInfo = {
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                birthDate: req.body.birthDate,
+                email: req.body.email
+            };
+
+            if (req.file) {
+                userInfo.image = req.file.filename;
+            }
+
+            data.updateUserInformation(username, userInfo)
+                .then(() => {
+                    return res.redirect(`/users/${username}`);
+                })
+                .catch((err) => {
+                    return res.status(500).json(err);
+                })
+        },
         loadRegisterPage(req, res) {
             //TODO
         },

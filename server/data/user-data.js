@@ -1,6 +1,6 @@
 "use strict"
 
-module.exports = function(models) {
+module.exports = function (models) {
     let User = models.User;
 
     return {
@@ -40,13 +40,28 @@ module.exports = function(models) {
                 });
             })
         },
-        getUserByUsername(username) {
+        getUserByUsername(username, asPersonalPage) {
             return new Promise((resolve, reject) => {
                 User.findOne({ "username": username }, (err, user) => {
                     if (err) {
                         return reject(err);
                     }
 
+                    const joinedCompetitions = [];
+                    const attendedCompetitions = [];
+
+                    user.competitions.forEach(c => {
+                        if (c.attended) {
+                            attendedCompetitions.push(c);
+                        } else if (asPersonalPage) {
+                            joinedCompetitions.push(c);
+                        }
+                    });
+
+                    user.attendedCompetitions = attendedCompetitions;
+                    if (asPersonalPage) {
+                        user.joinedCompetitions = joinedCompetitions;
+                    }
                     return resolve(user);
                 });
             });
@@ -92,15 +107,6 @@ module.exports = function(models) {
             });
         },
         removeCompetitionFromUser(username, competitionId) {
-            return new Promise((resolve, reject) => {
-                User.findOneAndUpdate({ "username": username }, { $push: { "competitions": competition } },
-                    (err) => {
-                        if (err) {
-                            return reject(err);
-                        }
-                        return resolve(competition);
-                    })
-            });
         },
         updateUserInRole(userId, role) {
             return new Promise((resolve, reject) => {
@@ -111,6 +117,17 @@ module.exports = function(models) {
                         }
                         return resolve();
                     });
+            });
+        },
+        updateUserInformation(username, newInfo) {
+            return new Promise((resolve, reject) => {
+                User.findOneAndUpdate({ username }, newInfo,
+                    (err, user) => {
+                        if (err) {
+                            return reject(err);
+                        }
+                        return resolve(err);
+                    })
             });
         },
         updatePoints(username, points, category) {
