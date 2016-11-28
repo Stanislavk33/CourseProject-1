@@ -18,15 +18,15 @@ module.exports = function(models) {
         getTopUsers() {
             return new Promise((resolve, reject) => {
                 User.find({})
-                .sort({"progress.totalPoints": "desc"})
-                .limit(10)
-                .exec((err, users)=>{
-                    if(err){
-                        return reject(err);
-                    }
+                    .sort({ "progress.totalPoints": "desc" })
+                    .limit(10)
+                    .exec((err, users) => {
+                        if (err) {
+                            return reject(err);
+                        }
 
-                    return resolve(users);
-                })
+                        return resolve(users);
+                    })
             });
         },
         getUserById(id) {
@@ -91,8 +91,8 @@ module.exports = function(models) {
                     })
             });
         },
-        removeCompetitionFromUser(username, competitionId){
-            return new Promise((resolve, reject) =>{
+        removeCompetitionFromUser(username, competitionId) {
+            return new Promise((resolve, reject) => {
                 User.findOneAndUpdate({ "username": username }, { $push: { "competitions": competition } },
                     (err) => {
                         if (err) {
@@ -102,7 +102,7 @@ module.exports = function(models) {
                     })
             });
         },
-        updateUserInRole(userId, role){
+        updateUserInRole(userId, role) {
             return new Promise((resolve, reject) => {
                 User.findByIdAndUpdate({ "_id": userId }, { $set: { "inRole": role } },
                     (err) => {
@@ -112,7 +112,26 @@ module.exports = function(models) {
                         return resolve();
                     });
             });
+        },
+        updatePoints(username, points) {
+            return new Promise((resolve, reject) => {
+                let currentPoints = 0;
+                let user = User.findOne({ username })
+                    .then((user) => {
+                        currentPoints = user.progress.totalPoints + points;
+                        return currentPoints;
+                    }).then(newPoints => {
+                        User.findOneAndUpdate({ username }, { $set: { 'progress.totalPoints': newPoints } },
+                            (err, user) => {
+                                if (err) {
+                                    return reject(err);
+                                }
+                                
+                                return resolve(user);
+                            })
+                    });
+            });
         }
-        //updateProgress()
+
     };
 }

@@ -13,7 +13,7 @@ module.exports = (app, data) => {
         .post('/register', upload.single('avatar'), controller.register)
         .get('/login', controller.loadLoginPage)
         .post('/login', controller.loginLocal)
-        .get('/logout', controller.logout)
+        .get('/logout', controller.logout);
 
     app.use('/auth', router);
 }

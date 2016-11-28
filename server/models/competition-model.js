@@ -11,13 +11,13 @@ const competitionSchema = new Schema({
     name: { type: String, require: true },
     place: { type: String, required: true },
     likes: { type: Number, required: true },
-    organizator: { type: String, required: true},
+    organizator: { type: String, required: true },
     category: { type: String, required: true },
-    description: {type: String},
+    description: { type: String },
     joinedUsers: {
         type: [{
             username: { type: String, required: true },
-            attended: { type: String, required: true }
+            attended: { type: Boolean, default: false }
         }]
     },
     points: { type: Number, required: true },

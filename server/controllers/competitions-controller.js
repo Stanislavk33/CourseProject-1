@@ -3,11 +3,19 @@ module.exports = (data) => {
         getByID(req, res) {
             const id = req.params.id;
             let view = "competition";
+            let userName = req.user.username;
+            console.log(userName);
             if (req.isAuthenticated()) {
                 view = "competition-user";
             }
             data.getCompetitionById(id)
                 .then(competition => {
+                    if (userName === competition.organizator) {
+                        competition.isOrgan = true;
+                        console.log('here');
+                        console.log(competition.isOrgan);
+                    }
+                    console.log(competition)
                     res.render(view, { result: competition });
                 });
         },
@@ -22,8 +30,7 @@ module.exports = (data) => {
                     success: false,
                     message: 'Not authorized to join competition.'
                 });
-            }
-            else {
+            } else {
                 const username = req.user.username;
                 const id = req.params.id;
 
@@ -38,10 +45,12 @@ module.exports = (data) => {
                         return data.addCompetitionToUser(username, userCompetition);
                     })
                     .then((user) => {
-                        res.status(200).json({result: {
-                            username: user.username,
-                            points: user.progress.totalPoints
-                         }});
+                        res.status(200).json({
+                            result: {
+                                username: user.username,
+                                points: user.progress.totalPoints
+                            }
+                        });
                     })
                     .catch(error => {
                         res.status(500).json(error);
@@ -89,17 +98,17 @@ module.exports = (data) => {
                 .filter(x => x !== "");
 
             data.createCompetition({
-                name: body.name,
-                place: body.place,
-                organizator: user,
-                category: body.category,
-                points: body.points,
-                level: body.level,
-                startDate: body.startDate,
-                endDate: body.endDate,
-                keys: keys,
-                location: { longitude: body.longitude, latitude: body.latitude }
-            })
+                    name: body.name,
+                    place: body.place,
+                    organizator: user,
+                    category: body.category,
+                    points: body.points,
+                    level: body.level,
+                    startDate: body.startDate,
+                    endDate: body.endDate,
+                    keys: keys,
+                    location: { longitude: body.longitude, latitude: body.latitude }
+                })
                 .then(competition => {
                     res.redirect(`/competitions/${competition._id}`);
                 }).catch(err => {
