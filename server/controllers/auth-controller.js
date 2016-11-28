@@ -17,6 +17,7 @@ module.exports = (data) => {
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 birthDate: req.body.birthDate,
+                image: req.file ? req.file.filename : null,
                 email: req.body.email,
                 competitions: {},
 

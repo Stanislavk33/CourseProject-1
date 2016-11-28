@@ -14,7 +14,7 @@ const userSchema = new Schema({
     passHash: { type: String, required: true },
     birthDate: { type: Date },
     email: { type: String, required: true },
-    image: { type: String, required: false },
+    image: { type: String, default: '' },
     competitions: [{ 
         // TODO: decide on information
     }],

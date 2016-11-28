@@ -1,7 +1,7 @@
 extends _layout
 
 block content
-    form(method="post")
+    form(method="post" enctype="multipart/form-data")
         label(for="username") Username
         input(id="username" class="form-control" type="text" name="username" placeholder="Username")
         br
@@ -21,6 +21,6 @@ block content
         input(id="last-name" class="form-control" type="text" name="lastName" placeholder="Last Name")
         br
         label(for="avatar") Avatar
-        input(id="avatar" class="form-control" type="text" name="avatar" placeholder="Avatar")
+        input(id="avatar" class="form-control" type="file" name="avatar" placeholder="Avatar")
         br
         input(type="submit" class="btn btn-lg" value="Register")
