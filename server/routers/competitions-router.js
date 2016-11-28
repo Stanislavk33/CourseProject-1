@@ -15,6 +15,7 @@ module.exports = (app, data) => {
 
     // .put('/:id/like', controller.likes)
         .put('/:id/join', controller.joinCompetition)
+        .put('/:id/leave', controller.leaveCompetition)
 
     // TODO
     // api/competiions/create
