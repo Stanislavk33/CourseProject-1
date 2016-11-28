@@ -1,0 +1,14 @@
+extends user-profile
+
+block edit
+    button.btn-default
+        a(href="/users/" + result.username + "/edit") Edit profile information
+
+block joinedCompetitions
+    h3 Joined Competitions
+        ul
+            each competition in result.joinedCompetitions
+                li
+                    div 
+                        a(href="/competitions/"+ competition.id) #{competition.name}
+                        span #{competition.place}

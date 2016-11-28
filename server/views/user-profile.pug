@@ -1,0 +1,37 @@
+extends _layout
+
+block content
+
+    h2 #{result.firstName} #{result.lastName}
+    h3 #{result.username}
+
+    img(src="/static/imgs/user-images/"+result.image)
+
+    if(result.birthDate)
+        div
+            strong Birth date: 
+            span #{result.birthDate}
+
+    h3 Progress
+    table
+        tr
+            td Total points
+            td #{result.progress.totalPoints}
+        each category in result.progress.categoriesPoints
+            tr
+                td #{category.name}
+                td #{category.points}
+
+    block edit
+    
+    h3 Attended Competitions
+    ul
+        each competition in result.attendedCompetitions
+            li
+                div 
+                    a(href="/competitions/"+ competition.id) #{competition.name}
+                    span #{competition.place}
+
+    block joinedCompetitions            
+    
+
