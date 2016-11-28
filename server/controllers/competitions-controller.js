@@ -37,13 +37,39 @@ module.exports = (data) => {
                         }
                         return data.addCompetitionToUser(username, userCompetition);
                     })
-                    .then((userCompetition) => {
-                        res.status(200).json(userCompetition);
+                    .then((user) => {
+                        res.status(200).json({result: {
+                            username: user.username,
+                            points: user.progress.totalPoints
+                         }});
                     })
                     .catch(error => {
-                        console.log(error);
                         res.status(500).json(error);
                     });
+            }
+        },
+        leaveCompetition(req, res) {
+            if (!req.isAuthenticated()) {
+                res.status(400).json({
+                    success: false,
+                    message: 'Not authorized to join competition.'
+                });
+            } else {
+                const username = req.user.username;
+                const id = req.params.id;
+
+                data.removeUserFromCompetition(id, username)
+                    .then((competition) => {
+                        return data.removeCompetitionFromUser(username, id);
+                    })
+                    .then(() => {
+                        // TODO: what to return;
+                        res.status(200).json();
+                    })
+                    .catch(error => {
+                        res.status(500).json(error);
+                    });
+
             }
         },
         likes(req, res) {
@@ -78,6 +104,7 @@ module.exports = (data) => {
                     res.redirect(`/competitions/${competition._id}`);
                 }).catch(err => {
                     console.log(err);
+                    res.status(500).json(err);
                 });
         }
     };
