@@ -1,8 +1,8 @@
 /* globals module require */
-"use strict";
+'use strict';
 
 module.exports = function(models) {
-    let Category = models.Category;
+    const Category = models.Category;
 
     return {
         getAllCategories() {
@@ -18,7 +18,7 @@ module.exports = function(models) {
         },
         getCategoryById(_id) {
             return new Promise((resolve, reject) => {
-                Category.findOne({ "_id": _id }, (err, category) => {
+                Category.findOne({ '_id': _id }, (err, category) => {
                     if (err) {
                         return reject(err);
                     }
@@ -29,7 +29,7 @@ module.exports = function(models) {
         },
         getCategoriesByTitle(title) {
             return new Promise((resolve, reject) => {
-                Category.find({ "title": title }, (err, categories) => {
+                Category.find({ 'title': title }, (err, categories) => {
                     if (err) {
                         return reject(err);
                     }
@@ -39,7 +39,7 @@ module.exports = function(models) {
             });
         },
         createCategory(category) {
-            let newCategory = new Category({
+            const newCategory = new Category({
                 title: category.title,
                 competitions: []
             });
@@ -56,7 +56,7 @@ module.exports = function(models) {
         },
         addCompetitionToCategory(categoryId, competition) { //competition object is created in the controller
             return new Promise((resolve, reject) => {
-                Category.findByIdAndUpdate({ "_id": categoryId }, { $push: { "competitions": competition } },
+                Category.findByIdAndUpdate({ '_id': categoryId }, { $push: { 'competitions': competition } },
                     (err) => {
                         if (err) {
                             return reject(err);

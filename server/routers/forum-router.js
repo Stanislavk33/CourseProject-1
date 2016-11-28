@@ -1,12 +1,11 @@
 /* globals require */
-"use strict";
+'use strict';
 
 const express = require('express');
 
 module.exports = (app, data) => {
-    const controller = require('./../controllers/forum-controller')(data);
-
-    const router = new express.Router();
+    const controller = require('./../controllers/forum-controller')(data),
+        router = new express.Router();
 
     router
         .get('/', controller.loadForumPosts)

@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose'),
+    Schema = mongoose.Schema;
 
 const userGallerySchema = new Schema({
     username: { type: String, unique: true, required: true },
@@ -10,9 +10,10 @@ const userGallerySchema = new Schema({
         date: { type: Date, required: true },
         place: { type: String, required: true },
         category: { type: String, required: true },
-        title: {type: String, required: true}
+        title: { type: String, required: true }
     }]
 });
 
-mongoose.model("UserGallery", userGallerySchema);
-module.exports = mongoose.model("UserGallery");
+mongoose.model('UserGallery', userGallerySchema);
+
+module.exports = mongoose.model('UserGallery');

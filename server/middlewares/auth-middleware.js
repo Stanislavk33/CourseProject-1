@@ -1,4 +1,6 @@
 /* globals require */
+'use strict';
+
 module.exports = {
     isInRole(role) {
         return (req, res, next) => {
@@ -7,7 +9,7 @@ module.exports = {
             } else {
                 res.status(401).json({
                     success: false,
-                    message: "Not authorized!"
+                    message: 'Not authorized!'
                 });
             }
         }

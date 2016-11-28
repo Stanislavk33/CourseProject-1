@@ -1,27 +1,28 @@
 /* globals module require */
-"use strict"
+'use strict';
 
-const mongoose = require("mongoose");
-const fs = require("fs");
-const path = require("path");
+const mongoose = require('mongoose'),
+    fs = require('fs'),
+    path = require('path');
 
 module.exports = function(config) {
     mongoose.Promise = global.Promise;
     mongoose.connect(config.connectionString);
-    const Competition = require("../models/competition-model");
-    const Category = require("../models/category-model");
-    const User = require("../models/user-model");
-    const UserGallery = require("../models/user-gallery-model");
-    const ForumPost = require("../models/forum-post-model");
 
-    //TODO - add other models in model object
-    const models = { Competition, Category, User, UserGallery, ForumPost };
-    const data = {};
+    const Competition = require('../models/competition-model'),
+        Category = require('../models/category-model'),
+        User = require('../models/user-model'),
+        UserGallery = require('../models/user-gallery-model'),
+        ForumPost = require('../models/forum-post-model'),
 
-    fs.readdirSync("./server/data")
-        .filter(x => x.includes("-data"))
+        //TODO - add other models in model object
+        models = { Competition, Category, User, UserGallery, ForumPost },
+        data = {};
+
+    fs.readdirSync('./server/data')
+        .filter(x => x.includes('-data'))
         .forEach(file => {
-            let dataModule =
+            const dataModule =
                 require(path.join(__dirname, file))(models);
             Object.keys(dataModule)
                 .forEach(key => {

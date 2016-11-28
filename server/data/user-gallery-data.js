@@ -1,13 +1,13 @@
-"use strict"
+'use strict';
 
-module.exports = function(models) {
-    let UserGallery = models.UserGallery;
+module.exports = function (models) {
+    const UserGallery = models.UserGallery;
 
     return {
         getUserGalleryById(_id) {
             return new Promise((resolve, reject) => {
-                UserGallery.findOne({ "_id": _id }, (err, userGallery) => {
-                    if (err){
+                UserGallery.findOne({ '_id': _id }, (err, userGallery) => {
+                    if (err) {
                         return reject(err);
                     }
 
@@ -17,8 +17,8 @@ module.exports = function(models) {
         },
         getUserGalleryByUsername(username) {
             return new Promise((resolve, reject) => {
-                UserGallery.findOne({ "username": username }, (err, userGallery) => {
-                    if (err){
+                UserGallery.findOne({ 'username': username }, (err, userGallery) => {
+                    if (err) {
                         return reject(err);
                     }
 
@@ -27,7 +27,7 @@ module.exports = function(models) {
             })
         },
         createUserGallery(userGallery) {
-            let newUserGallery = new UserGallery({
+            const newUserGallery = new UserGallery({
                 username: userGallery.username,
                 photos: []
             });
@@ -44,15 +44,15 @@ module.exports = function(models) {
         },
         addPhotoToUserGallery(userGalleryId, photo) { //photo object is created in the controller
             return new Promise((resolve, reject) => {
-                 UserGallery.findByIdAndUpdate({"_id": userGalleryId},
-                 {$push: {"photos": photo}},
-                 (err) => {
-                     if (err) {
-                         return reject(err);
-                     }
-                 return resolve();
-                })
+                UserGallery.findByIdAndUpdate({ '_id': userGalleryId },
+                    { $push: { 'photos': photo } },
+                    (err) => {
+                        if (err) {
+                            return reject(err);
+                        }
+                        return resolve();
+                    })
             });
-       }     
+        }
     };
 }

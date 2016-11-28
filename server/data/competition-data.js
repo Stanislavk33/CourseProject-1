@@ -1,8 +1,8 @@
 /* globals module require */
-"use strict";
+'use strict';
 
 module.exports = function(models) {
-    let Competition = models.Competition;
+    const Competition = models.Competition;
 
     return {
         getAllCompetitions() {
@@ -29,7 +29,7 @@ module.exports = function(models) {
         },
         getCompetitionsByPlace(place) {
             return new Promise((resolve, reject) => {
-                Competition.find({ "place": place }, (err, competitions) => {
+                Competition.find({ 'place': place }, (err, competitions) => {
                     if (err) {
                         return reject(err);
                     }
@@ -40,7 +40,7 @@ module.exports = function(models) {
         },
         getCompetitionsByOrganizator(username) {
             return new Promise((resolve, reject) => {
-                Competition.find({ "organizator.username": username }, (err, competitions) => {
+                Competition.find({ 'organizator.username': username }, (err, competitions) => {
                     if (err) {
                         return reject(err);
                     }
@@ -51,7 +51,7 @@ module.exports = function(models) {
         },
         getCompetitionsByLevel(level) {
             return new Promise((resolve, reject) => {
-                Competition.find({ "level": level }, (err, competitions) => {
+                Competition.find({ 'level': level }, (err, competitions) => {
                     if (err) {
                         return reject(err);
                     }
@@ -62,7 +62,7 @@ module.exports = function(models) {
         },
         createCompetition(competition) { //competition object is created in the controller
             const passed = extractPassed(competition.startDate, competition.endDate);
-            let newCompetition = new Competition({
+            const newCompetition = new Competition({
                 name: competition.name,
                 place: competition.place,
                 likes: 0,
@@ -88,7 +88,7 @@ module.exports = function(models) {
         },
         updateCompetitionLikes(_id) { //increment likes with 1
             return new Promise((resolve, reject) => {
-                Competition.findByIdAndUpdate({ "_id": _id }, { "$inc": { "likes": 1 } },
+                Competition.findByIdAndUpdate({ '_id': _id }, { '$inc': { 'likes': 1 } },
                     (err) => {
                         if (err) {
                             return reject(err);
@@ -100,7 +100,7 @@ module.exports = function(models) {
         },
         addJoinedUserToCompetition(competitionId, username) { //user object is created in the controller
             return new Promise((resolve, reject) => {
-                Competition.findByIdAndUpdate({ "_id": competitionId }, { $push: { "joinedUsers": {username, attended: false} } },
+                Competition.findByIdAndUpdate({ '_id': competitionId }, { $push: { 'joinedUsers': { username, attended: false } } },
                     (err, competition) => {
                         console.log(competition);
                         if (err) {
@@ -110,12 +110,12 @@ module.exports = function(models) {
                     })
             });
         },
-        removeUserFromCompetition(competitionId, username){
-            
+        removeUserFromCompetition(competitionId, username) {
+
         },
         updateCompetitionPassedStatus(_id, status) {
             return new Promise((resolve, reject) => {
-                Competition.findByIdAndUpdate({ "_id": _id }, { $set: { "passed": status } },
+                Competition.findByIdAndUpdate({ '_id': _id }, { $set: { 'passed': status } },
                     (err) => {
                         if (err) {
                             return reject(err);
@@ -126,7 +126,7 @@ module.exports = function(models) {
         },
         getLatestUpcommingCompetitions() {
             return new Promise((resolve, reject) => {
-                let competitions = Competition.find({ passed: "upcoming" })
+                const competitions = Competition.find({ passed: 'upcoming' })
                     // .sort({ dateCreated: -1 })
                     .sort({ 'startDate': 'asc' })
                     .limit(5);
@@ -136,9 +136,9 @@ module.exports = function(models) {
         },
         filterCompetitions(option) {
             return new Promise((resolve, reject) => {
-                console.log("here");
-                // findOne({"username" : {$regex : ".*son.*"}});
-                let filter = {};
+                console.log('here');
+                // findOne({'username' : {$regex : '.*son.*'}});
+                const filter = {};
                 if (option.type && option.search) {
                     const regex = `.*${option.search}.*`;
                     console.log(option);
@@ -156,7 +156,7 @@ module.exports = function(models) {
         },
         getMostPopularCompetitions(count) {
             return new Promise((resolve, reject) => {
-                let competitions = Competition.find({})
+                const competitions = Competition.find({})
                     // .sort({ dateCreated: -1 })
                     .sort({ 'likes': 'desc' })
                     .limit(count);
@@ -172,7 +172,7 @@ module.exports = function(models) {
         //     console.log(keys);
         //     return new Promise((resolve, reject) => {
         //         Competition.find({ 
-        //             "keys": keys
+        //             'keys': keys
         //             })
         //         }, (err, competitions) => {
         //             if (err){
@@ -187,11 +187,11 @@ module.exports = function(models) {
 
 function extractPassed(startDate, endDate) {
     if (+Date.now() > +new Date(endDate)) {
-        return "passed";
+        return 'passed';
     } else if (+new Date(startDate) < +Date.now() &&
         +Date.now() < +new Date(endDate)) {
-        return "ongoing";
+        return 'ongoing';
     } else {
-        return "upcoming";
+        return 'upcoming';
     };
 }

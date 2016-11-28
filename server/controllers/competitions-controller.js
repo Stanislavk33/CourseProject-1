@@ -1,12 +1,15 @@
+'use strict';
+
 module.exports = (data) => {
     return {
         getByID(req, res) {
             const id = req.params.id;
-            let view = "competition";
-            let userName = req.user.username;
+
+            let view = 'competition',
+                userName = req.user.username;
             console.log(userName);
             if (req.isAuthenticated()) {
-                view = "competition-user";
+                view = 'competition-user';
             }
             data.getCompetitionById(id)
                 .then(competition => {
@@ -20,8 +23,8 @@ module.exports = (data) => {
                 });
         },
         getCreatePage(req, res) {
-            return res.status(200).render("create-competition", {
-                result: ["hiking", "skiing", "swimming"]
+            return res.status(200).render('create-competition', {
+                result: ['hiking', 'skiing', 'swimming']
             });
         },
         joinCompetition(req, res) {
@@ -31,8 +34,8 @@ module.exports = (data) => {
                     message: 'Not authorized to join competition.'
                 });
             } else {
-                const username = req.user.username;
-                const id = req.params.id;
+                const username = req.user.username,
+                    id = req.params.id;
 
                 // TODO: what will the request return
                 data.addJoinedUserToCompetition(id, username)
@@ -64,8 +67,8 @@ module.exports = (data) => {
                     message: 'Not authorized to join competition.'
                 });
             } else {
-                const username = req.user.username;
-                const id = req.params.id;
+                const username = req.user.username,
+                    id = req.params.id;
 
                 data.removeUserFromCompetition(id, username)
                     .then((competition) => {
@@ -87,28 +90,28 @@ module.exports = (data) => {
         loadCompetitions(req, res) {
             data.getAllCompetitions()
                 .then(competitions => {
-                    res.render("competition-list", { result: competitions });
+                    res.render('competition-list', { result: competitions });
                 });
         },
         createCompetition(req, res) {
-            let body = req.body;
-            let user = "admin"; // req.user.username 
-            let keys = body.keys
-                .split(" ")
-                .filter(x => x !== "");
+            let body = req.body,
+                user = 'admin', // req.user.username 
+                keys = body.keys
+                    .split(' ')
+                    .filter(x => x !== '');
 
             data.createCompetition({
-                    name: body.name,
-                    place: body.place,
-                    organizator: user,
-                    category: body.category,
-                    points: body.points,
-                    level: body.level,
-                    startDate: body.startDate,
-                    endDate: body.endDate,
-                    keys: keys,
-                    location: { longitude: body.longitude, latitude: body.latitude }
-                })
+                name: body.name,
+                place: body.place,
+                organizator: user,
+                category: body.category,
+                points: body.points,
+                level: body.level,
+                startDate: body.startDate,
+                endDate: body.endDate,
+                keys: keys,
+                location: { longitude: body.longitude, latitude: body.latitude }
+            })
                 .then(competition => {
                     res.redirect(`/competitions/${competition._id}`);
                 }).catch(err => {

@@ -1,7 +1,8 @@
-const express = require('express');
+'use strict';
 
-const multer = require('multer');
-const upload = multer({ dest: './public/imgs/user-images/' });
+const express = require('express'),
+    multer = require('multer'),
+    upload = multer({ dest: './public/imgs/user-images/' });
 
 module.exports = (app, data) => {
     const controller = require('./../controllers/user-controller')(data);
@@ -9,9 +10,9 @@ module.exports = (app, data) => {
     const router = new express.Router();
 
     router
-        .get("/:username", controller.getProfile)
-        .get("/:username/edit", controller.getEditPage)
-        .post("/:username/edit", upload.single('avatar'), controller.editProfile)
+        .get('/:username', controller.getProfile)
+        .get('/:username/edit', controller.getEditPage)
+        .post('/:username/edit', upload.single('avatar'), controller.editProfile)
         .put('/addPoints', controller.addPoints)
         .get('/profile/:id', controller.getById);
 

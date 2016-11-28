@@ -1,20 +1,22 @@
+'use strict';
+
 let marker;
 
 function initMap() {
-    let coordinates = { lat: 42.6977, lng: 23.3219 };
-    let map = new google.maps.Map(document.getElementById('map'), {
-        center: coordinates,
-        zoom: 10
-    });
+    let coordinates = { lat: 42.6977, lng: 23.3219 },
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: coordinates,
+            zoom: 10
+        });
 
-    google.maps.event.addListener(map, 'click', function(event) {
+    google.maps.event.addListener(map, 'click', function (event) {
         marker = addMarker(event.latLng, map, marker);
     });
 
 }
 
 function addMarker(location, map, oldMarker) {
-    var marker = new google.maps.Marker({
+    let marker = new google.maps.Marker({
         position: location,
         map: map
     });
@@ -26,7 +28,7 @@ function addMarker(location, map, oldMarker) {
     return marker;
 }
 
-$("#create").on("click", function(ev) {
+$("#create").on("click", function (ev) {
     if (!marker) {
         toastr.error("You should choose a location on the map.")
 
@@ -56,7 +58,7 @@ $("#create").on("click", function(ev) {
         data: JSON.stringify(data),
         contentType: "application/json"
     }).
-    done(() => {
+        done(() => {
             toastr.success("magic");
         })
         .fail(() => {

@@ -1,13 +1,12 @@
 /* globals require module */
+'use strict';
 
-const express = require('express');
-const session = require('express-session');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
-const path = require('path');
-
-
-const app = express();
+const express = require('express'),
+    session = require('express-session'),
+    cookieParser = require('cookie-parser'),
+    bodyParser = require('body-parser'),
+    path = require('path'),
+    app = express();
 
 app.set('view engine', 'pug');
 app.set('views', './server/views');

@@ -1,7 +1,7 @@
-"use strict"
+'use strict';
 
-module.exports = function (models) {
-    let User = models.User;
+module.exports = function(models) {
+    const User = models.User;
 
     return {
         getAllUsers() {
@@ -18,7 +18,7 @@ module.exports = function (models) {
         getTopUsers() {
             return new Promise((resolve, reject) => {
                 User.find({})
-                    .sort({ "progress.totalPoints": "desc" })
+                    .sort({ 'progress.totalPoints': 'desc' })
                     .limit(10)
                     .exec((err, users) => {
                         if (err) {
@@ -31,7 +31,7 @@ module.exports = function (models) {
         },
         getUserById(id) {
             return new Promise((resolve, reject) => {
-                User.findOne({ "_id": id }, (err, user) => {
+                User.findOne({ '_id': id }, (err, user) => {
                     if (err) {
                         return reject(err);
                     }
@@ -42,7 +42,7 @@ module.exports = function (models) {
         },
         getUserByUsername(username, asPersonalPage) {
             return new Promise((resolve, reject) => {
-                User.findOne({ "username": username }, (err, user) => {
+                User.findOne({ 'username': username }, (err, user) => {
                     if (err) {
                         return reject(err);
                     }
@@ -67,7 +67,7 @@ module.exports = function (models) {
             });
         },
         createUser(user) { //user object is created in the controller
-            let newUser = new User({
+            const newUser = new User({
                 username: user.username,
                 firstName: user.firstName,
                 lastName: user.lastName,
@@ -97,7 +97,7 @@ module.exports = function (models) {
         },
         addCompetitionToUser(username, competition) { //competition object is created in the controller
             return new Promise((resolve, reject) => {
-                User.findOneAndUpdate({ "username": username }, { $push: { "competitions": competition } },
+                User.findOneAndUpdate({ 'username': username }, { $push: { 'competitions': competition } },
                     (err, user) => {
                         if (err) {
                             return reject(err);
@@ -110,7 +110,7 @@ module.exports = function (models) {
         },
         updateUserInRole(userId, role) {
             return new Promise((resolve, reject) => {
-                User.findByIdAndUpdate({ "_id": userId }, { $set: { "inRole": role } },
+                User.findByIdAndUpdate({ '_id': userId }, { $set: { 'inRole': role } },
                     (err) => {
                         if (err) {
                             return reject(err);
@@ -133,7 +133,7 @@ module.exports = function (models) {
         updatePoints(username, points, category) {
             return new Promise((resolve, reject) => {
                 let currentPoints = 0;
-                let user = User.findOne({ username })
+                const user = User.findOne({ username })
                     .then((user) => {
                         currentPoints = user.progress.totalPoints + points;
                         const categoryPoints = user.progress.categoriesPoints || [];

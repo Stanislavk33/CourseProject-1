@@ -1,14 +1,16 @@
+'use strict';
+
 module.exports = (data) => {
     return {
         getProfile(req, res) {
-            const username = req.params.username;
+            const username = req.params.username,
+                view = 'user-profile';
             let asPersonalPage = false;
-            let view = "user-profile";
 
             if (req.isAuthenticated()) {
                 if (req.user.username === username) {
                     asPersonalPage = true;
-                    view = "personal-profile";
+                    view = 'personal-profile';
                 }
             }
 
@@ -16,7 +18,7 @@ module.exports = (data) => {
                 .then((user) => {
                     if (!user) {
                         return res.status(400)
-                            .redirect("/error");
+                            .redirect('/error');
                     }
 
                     return res.status(200).render(view, { result: user });
@@ -32,23 +34,25 @@ module.exports = (data) => {
             if (req.isAuthenticated() && req.user.username === username) {
                 data.getUserByUsername(username)
                     .then((user) => {
-                        return res.status(200).render("edit-profile", { result: user });
+                        return res.status(200).render('edit-profile', { result: user });
                     })
             } else {
                 return res.status(400).json({
                     success: false,
-                    message: "Not authorized!"
+                    message: 'Not authorized!'
                 })
             }
         },
         editProfile(req, res) {
             const username = req.params.username;
+
             if (!req.isAuthenticated() || req.user.username !== username) {
                 return res.status(400).json({
                     success: false,
-                    message: "Not authorized!"
+                    message: 'Not authorized!'
                 })
             }
+
             const userInfo = {
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
@@ -86,9 +90,9 @@ module.exports = (data) => {
                 });
         },
         addPoints(req, res) {
-            const username = req.body.username;
-            const points = req.body.points;
-            const category = req.body.category;
+            const username = req.body.username,
+                points = req.body.points,
+                category = req.body.category;
 
             data.updatePoints(username, points, category)
                 .then(user => {

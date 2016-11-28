@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = (data) => {
     return {
         getHome(req, res) {
@@ -9,7 +11,7 @@ module.exports = (data) => {
                  ])
                 .then(([upcommingCompetition, mostPopularCompetition, topUsers, categories]) => {
 
-                    res.render("home-page", {
+                    res.render('home-page', {
                         result: {
                             upcommingCompetition,
                             mostPopularCompetition,

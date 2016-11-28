@@ -1,7 +1,8 @@
-const express = require('express');
+'use strict';
 
-const multer = require('multer');
-const upload = multer({ dest: './public/imgs/user-images/' });
+const express = require('express'),
+    multer = require('multer'),
+    upload = multer({ dest: './public/imgs/user-images/' });
 
 module.exports = (app, data) => {
     const controller = require('./../controllers/auth-controller')(data);

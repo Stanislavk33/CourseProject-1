@@ -1,11 +1,10 @@
 /* globals module require */
-"use strict"
+'use strict';
 
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
-
-const constants = require("../utilities/constants");
-const Status = constants.competitionStatus;
+const mongoose = require('mongoose'),
+    Schema = mongoose.Schema,
+    constants = require('../utilities/constants'),
+    Status = constants.competitionStatus;
 
 const competitionSchema = new Schema({
     name: { type: String, require: true },
@@ -30,5 +29,6 @@ const competitionSchema = new Schema({
     passed: { type: String, enum: Status, required: true }
 });
 
-mongoose.model("Competition", competitionSchema);
-module.exports = mongoose.model("Competition");
+mongoose.model('Competition', competitionSchema);
+
+module.exports = mongoose.model('Competition');

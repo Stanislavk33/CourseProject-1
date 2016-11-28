@@ -1,11 +1,13 @@
-$(".addPoints").on("click", function(ev) {
+'use strict';
 
-    let dataId = $(this).attr('data-id');
+$('.addPoints').on('click', function (ev) {
 
-    let devider = dataId.indexOf(' ');
-    let username = dataId.substr(0, devider);
-    let points = +dataId.substr(devider + 1, dataId.length);
-    let category = $(this).attr('data-category');
+    let dataId = $(this).attr('data-id'),
+        devider = dataId.indexOf(' '),
+        username = dataId.substr(0, devider),
+        points = +dataId.substr(devider + 1, dataId.length),
+        category = $(this).attr('data-category');
+
     ev.preventDefault();
     const data = {
         username,
@@ -13,15 +15,15 @@ $(".addPoints").on("click", function(ev) {
         category
     };
 
-    $.ajax("/users/addPoints", {
-        method: "PUT",
+    $.ajax('/users/addPoints', {
+        method: 'PUT',
         data: JSON.stringify(data),
-        contentType: "application/json"
+        contentType: 'application/json'
     }).
-    done(() => {
-            toastr.success("magic");
+        done(() => {
+            toastr.success('magic');
         })
         .fail(() => {
-            toastr.error("You are a fail!")
+            toastr.error('You are a fail!')
         })
 });

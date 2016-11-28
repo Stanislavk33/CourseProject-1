@@ -1,11 +1,10 @@
 /* globals module require */
-"use strict"
+'use strict';
 
-const mongoose = require("mongoose");
-const encryptor = require("../utilities/encryptor");
-const Schema = mongoose.Schema;
-
-const progressbarSchema = require("./progressbar-model");
+const mongoose = require('mongoose'),
+    encryptor = require('../utilities/encryptor'),
+    Schema = mongoose.Schema,
+    progressbarSchema = require('./progressbar-model');
 
 const userSchema = new Schema({
     username: { type: String, unique: true, required: true },
@@ -15,18 +14,18 @@ const userSchema = new Schema({
     birthDate: { type: Date },
     email: { type: String, required: true },
     image: { type: String, default: '' },
-    competitions: [{ 
+    competitions: [{
         // TODO: decide on information
     }],
     progress: { type: progressbarSchema },
-    inRole : { type: String, default: 'normal' }
-    
+    inRole: { type: String, default: 'normal' }
+
 });
 
 userSchema.methods = {
     isValidPassword(password) {
-        let realPassHash = this.passHash;
-        let currentPassHash = encryptor.getPassHash(this.salt, password);
+        const realPassHash = this.passHash,
+            currentPassHash = encryptor.getPassHash(this.salt, password);
         if (currentPassHash === realPassHash) {
             return true;
         } else {
@@ -35,5 +34,6 @@ userSchema.methods = {
     }
 };
 
-mongoose.model("User", userSchema);
-module.exports = mongoose.model("User");
+mongoose.model('User', userSchema);
+
+module.exports = mongoose.model('User');

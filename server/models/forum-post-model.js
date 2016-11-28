@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose'),
+    Schema = mongoose.Schema;
 
 const forumPostSchema = new Schema({
     title: { type: String, required: true },
@@ -23,5 +23,6 @@ const forumPostSchema = new Schema({
     }]
 });
 
-mongoose.model("ForumPost", forumPostSchema);
-module.exports = mongoose.model("ForumPost");
+mongoose.model('ForumPost', forumPostSchema);
+
+module.exports = mongoose.model('ForumPost');
