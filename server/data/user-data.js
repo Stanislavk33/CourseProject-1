@@ -106,8 +106,7 @@ module.exports = function(models) {
                     })
             });
         },
-        removeCompetitionFromUser(username, competitionId) {
-        },
+        removeCompetitionFromUser(username, competitionId) {},
         updateUserInRole(userId, role) {
             return new Promise((resolve, reject) => {
                 User.findByIdAndUpdate({ '_id': userId }, { $set: { 'inRole': role } },
@@ -160,6 +159,19 @@ module.exports = function(models) {
 
                                 return resolve(user);
                             })
+                    });
+            });
+        },
+        findUserWithIdAndName(query) {
+            return new Promise((resolve, reject) => {
+                User.find(query)
+                    .select("_id username")
+                    .exec((err, users) => {
+                        if (err) {
+                            return reject(err);
+                        }
+
+                        return resolve(users);
                     });
             });
         }
