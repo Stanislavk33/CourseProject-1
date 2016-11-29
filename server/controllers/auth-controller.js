@@ -14,6 +14,7 @@ module.exports = (data) => {
             const user = {
                 username: req.body.username,
                 passHash: req.body.password,
+                salt: salt,
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 birthDate: req.body.birthDate,
@@ -26,7 +27,8 @@ module.exports = (data) => {
             data.createUser(user)
                 .then(dbUser => {
                     res.status(201)
-                        .send('<h1>Registered</h1>');
+                        .send('<h1>Registered</h1>')
+                        .redirect('/home');
                 })
                 .catch(err => res.status(500).json(err));
         },

@@ -7,10 +7,10 @@ module.exports = {
         const salt = crypto.randomBytes(128).toString('base64');
         return salt;
     },
-    getPassHash(salt, pwd) {
+    getPassHash(salt, password) {
         const passHash = crypto
             .createHmac('sha256', salt)
-            .update(pwd)
+            .update(password)
             .digest('hex');
 
         return passHash;

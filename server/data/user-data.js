@@ -1,5 +1,7 @@
 'use strict';
 
+const hashing = require("../utilities/encryptor");
+
 module.exports = function(models) {
     const User = models.User;
 
@@ -67,11 +69,15 @@ module.exports = function(models) {
             });
         },
         createUser(user) { //user object is created in the controller
+            const salt = hashing.getSalt(),
+                passHash = hashing.getPassHash(salt, user.passHash);
+
             const newUser = new User({
                 username: user.username,
                 firstName: user.firstName,
                 lastName: user.lastName,
-                passHash: user.passHash,
+                passHash: passHash,
+                salt: salt,
                 birthDate: user.birthDate,
                 email: user.email,
                 competitions: [],
@@ -108,7 +114,7 @@ module.exports = function(models) {
         },
         removeCompetitionFromUser(username, competitionId) {
             return new Promise((resolve, reject) => {
-                User.update({username}, { $pull: { "joinedCompetitions" : { _id: competitionId } } }, (err, user) => {
+                User.update({ username }, { $pull: { "joinedCompetitions": { _id: competitionId } } }, (err, user) => {
                     if (err) {
                         return reject(err);
                     }

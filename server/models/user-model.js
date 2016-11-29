@@ -11,6 +11,7 @@ const userSchema = new Schema({
     firstName: { type: String, match: /^[A-Z]([a-z]?)+$/, required: true },
     lastName: { type: String, match: /^[A-Z]([a-z]?)+$/, required: true },
     passHash: { type: String, required: true },
+    salt: { type: String, required: true },
     birthDate: { type: Date },
     email: { type: String, required: true },
     image: { type: String, default: '' },
@@ -24,6 +25,7 @@ const userSchema = new Schema({
 
 userSchema.methods = {
     isValidPassword(password) {
+        console.log(password, this);
         const realPassHash = this.passHash,
             currentPassHash = encryptor.getPassHash(this.salt, password);
         if (currentPassHash === realPassHash) {
