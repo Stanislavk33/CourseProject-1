@@ -14,7 +14,7 @@ html(lang='en')
     link(href='/static/css/home.css', rel='stylesheet')
     block styles
   body.landing-page
-    .navbar.navbar-inverse
+    .navbar.navbar-info
       .container-fluid
         .navbar-header
           .navbar-header
@@ -32,22 +32,32 @@ html(lang='en')
               a.dropdown-toggle(href='index.html', data-toggle='dropdown')
                 | Categories
                 b.caret
-              ul.dropdown-menu  //-  TODO: dynamic load categories names 
-                li
-                  a(href='') Username
-                li
-                  a(href='') Category
-                li
-                  a(href='') Competition name
+              ul.dropdown-menu 
+                //- each category in result.categories
+                //-   li
+                //-     a(href="/categories/" + category.title) #{category.title}
             li
               a.dropdown-toggle(href='/users') Users
             li
               a.dropdown-toggle(href='/forum') Forum
-          ul.nav.navbar-nav.navbar-right
-            li
-              a.dropdown-toggle(href='/auth/login') Login
-            li
-              a.dropdown-toggle(href='/auth/register') Register
+
+          if user
+            ul.nav.navbar-nav.navbar-right
+              li
+                a.dropdown-toggle(href='/profile') Profile
+                  if user.isAdmin
+                    li
+                      a(href="/profile") Admin
+              li
+                a.dropdown-toggle(href='/auth/logout') Logout
+              
+          else
+            ul.nav.navbar-nav.navbar-right
+              li
+                a.dropdown-toggle(href='/auth/login') Login
+              li
+                a.dropdown-toggle(href='/auth/register') Register
+              
           ul.nav.navbar-nav.navbar-right.col-md-2.col-md-offset-2
             li.dropdown
               a.dropdown-toggle(href='index.html', data-toggle='dropdown')

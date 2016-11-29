@@ -1,7 +1,7 @@
 /* globals module require */
 'use strict';
 
-module.exports = function(models) {
+module.exports = function (models) {
     const Competition = models.Competition;
 
     return {
@@ -100,7 +100,11 @@ module.exports = function(models) {
         },
         addJoinedUserToCompetition(competitionId, username) { //user object is created in the controller
             return new Promise((resolve, reject) => {
-                Competition.findByIdAndUpdate({ '_id': competitionId }, { $push: { 'joinedUsers': { username, attended: false } } },
+                const conditions = {
+                    _id: competitionId,
+                    'joinedUsers.username': { $ne: username }
+                }
+                Competition.findOneAndUpdate(conditions, { $addToSet: { 'joinedUsers': { username, attended: false } } },
                     (err, competition) => {
                         console.log(competition);
                         if (err) {
@@ -111,7 +115,16 @@ module.exports = function(models) {
             });
         },
         removeUserFromCompetition(competitionId, username) {
+            return new Promise((resolve, reject) => {
+                Competition.update({_id: competitionId}, { $pull: { "joinedUsers" : { username } } }, (err, competition) => {
+                    if (err) {
+                        return reject(err);
+                    }
 
+                    console.log(competition);
+                    resolve(competition);
+                });
+            });
         },
         updateCompetitionPassedStatus(_id, status) {
             return new Promise((resolve, reject) => {

@@ -22,12 +22,8 @@ module.exports = (data) => {
             //"i" case-insensitive
             let query = { username: new RegExp(username, "i") };
             data.findUserWithIdAndName(query)
-                .then(users => {
-                    //TODO: router for search by user 
-                    res.render("search/", {
-                        users,
-                        user
-                    });
+                .then((users) => {
+                    return res.status(200).render('searchpage', { result: { users } });
                 }, err => {
                     console.log(err);
                 });

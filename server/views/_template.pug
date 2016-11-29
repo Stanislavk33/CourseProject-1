@@ -46,41 +46,9 @@ html
         
         block scripts
 
-
-
-        
-
-
-
-extends _layout
-block content
-    h2 Upcomming
-    ul
-        each commingCompetition in result.upcommingCompetition
-            li 
-                a(href="/competitions/" + commingCompetition._id) #{commingCompetition.place}
-    h2 MostPopular
-    ul
-        each topCompetition in result.mostPopularCompetition
-            li
-                a(href="/competitions/" + topCompetition._id) #{topCompetition.place}
-
-    h2 Categories
-    ul
-        each category in result.categories
-            li
-                a(href="/categories/" + category.title) #{category.title}
-                //- TODO: where will the pictures be stored
-                img(src="" + category.title +".png" alt=category.title + " image")
-    h2 Top Users
-    table
-        tr
-            th User
-            th Points
-        each topUser in result.topUsers
-            tr 
-                td
-                    a(href="/users/" + topUser.username) #{topUser.username}
-                td #{topUser.progress.totalPoints}
-
-
+   //- TODO home-page.pug Most popular must be on the top of the page with sliders
+        //- h2 MostPopular
+        //- ul
+        //-     each topCompetition in result.mostPopularCompetition
+        //-         li
+        //-             a(href="/competitions/" + topCompetition._id) #{topCompetition.place}
