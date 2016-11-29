@@ -4,8 +4,12 @@ block styles
     link(rel="stylesheet" type="text/css" href="/static/bower_components/toastr/toastr.css")
 
 block joining
-
-    button(id="join") Join
+    if result.hasJoined
+        button(id="leave") Leave
+        button.hidden(id="join") Join
+    else
+        button.hidden(id="leave") Leave
+        button(id="join") Join
     //- leave
 
 block scripts

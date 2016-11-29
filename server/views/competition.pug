@@ -28,15 +28,18 @@ block content
                         tr 
                             td
                                 a(href="/users/" + user.username) #{user.username}
+                            
                             if result.isOrgan
                             td
                                 button.addPoints(data-id=user.username +" "+ result.points data-category=result.category) addPoints
                                 block scripts
+                block joining
+
     script(src="/static/bower_components/jquery/dist/jquery.min.js")
     script(src="/static/bower_components/toastr/toastr.js")
     script(src="/static/js/add-points.js")
     
-                block joining
+                
 
              
                     
