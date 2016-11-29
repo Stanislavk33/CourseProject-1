@@ -1,10 +1,7 @@
 'use strict';
-
-        $('.like-post').on('click', function (ev) {
-
+    function like(ev){
         const $target = $(ev.target);
         const postId = $target.parents("#post-info").attr("data-id");
-
         $.ajax(`/forum/${postId}/like`, {
             method: "PUT"
         })
@@ -12,19 +9,19 @@
                 const $likesSpan = $target.prev();    
                 const likes = $likesSpan.html();
                 $likesSpan.html(+likes + 1);
-                location.reload();
+                //location.reload();
+                $target.html('Unlike');
+               // $target.off('click', like);
+                $target.one('click', unlike);
                 toastr.success("Post liked!");
             })
             .fail((err) => {
                 toastr.err(err.message);
             });
-        });
-
-        $('.unlike-post').on('click', function (ev) {
-
+    }
+    function unlike(ev) {
         const $target = $(ev.target);
         const postId = $target.parents("#post-info").attr("data-id");
-
         $.ajax(`/forum/${postId}/unlike`, {
             method: "PUT"
         })
@@ -32,11 +29,16 @@
                 const $likesSpan = $target.prev();    
                 const likes = $likesSpan.html();
                 $likesSpan.html(+likes - 1);
-                location.reload();
+                $target.html('Like');
+                $target.one('click', like);
                 toastr.success("Post unliked!");
             })
             .fail((err) => {
                 toastr.err(err.message);
             });
-        });
+    }
+    
+        $('.like-post').one('click', like);
+        $('.unlike-post').one('click', unlike);
+        
 
