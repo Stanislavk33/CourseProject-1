@@ -5,16 +5,49 @@ module.exports = function (models) {
     const ForumPost = models.ForumPost;
 
     return {
-        getAllForumPosts() {
-            return new Promise((resolve, reject) => {
-                ForumPost.find((err, forumPosts) => {
-                    if (err) {
-                        return reject(err);
-                    }
+        getForumPosts({ page, pageSize }) {
+            const skip = (page - 1) * pageSize,
+                limit = pageSize;
 
-                    return resolve(forumPosts);
-                });
-            })
+            return Promise.all([
+                new Promise((resolve, reject) => {
+                    ForumPost.find()
+                        .skip(skip)
+                        .limit(limit)
+                        .exec((err, forumPosts) => {
+                            if (err) {
+                                return reject(err);
+                            }
+
+                            return resolve(forumPosts);
+                        });
+                }),
+                new Promise((resolve, reject) => {
+                    ForumPost.count({})
+                        .exec((err, count) => {
+                            if (err) {
+                                return reject(err);
+                            }
+
+                            return resolve(count);
+                        })
+                })
+            ])
+                .then(results => {
+                    const [forumPosts, count] = results;
+
+                    return { forumPosts, count };
+                })
+
+            // return new Promise((resolve, reject) => {
+            //     ForumPost.find((err, forumPosts) => {
+            //         if (err) {
+            //             return reject(err);
+            //         }
+
+            //         return resolve(forumPosts);
+            //     });
+            // })
         },
         getForumPostById(_id) {
             return new Promise((resolve, reject) => {

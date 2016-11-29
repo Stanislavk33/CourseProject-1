@@ -1,12 +1,64 @@
 'use strict';
 
+const DEFAULT_PAGE = 1,
+    PAGE_SIZE = 3; // for testing. Default will be 10/15
+
 module.exports = (data) => {
     return {
         loadForumPosts(req, res) {
-            data.getAllForumPosts()
-                .then(forumPosts => {
-                    return res.status(200).render('forum-page', { result: forumPosts });
-                });
+            const page = Number(req.query.page || DEFAULT_PAGE);
+
+            data.getForumPosts({ page, pageSize: PAGE_SIZE })
+                .then((result => {
+
+                    const {
+                        forumPosts,
+                        count
+                    } = result;
+
+                    if (count === 0) {
+
+                        return res.render('forum-page', {
+                            result: {
+                                forumPosts,
+                                params: {
+                                    page,
+                                    pages: 0
+                                }
+                            }
+                        });
+                    }
+
+                    if (page < 1) {
+                        return res.redirect('/forum?page=1');
+                    }
+
+                    const pages = count / PAGE_SIZE | 0;
+
+                    if (parseInt(pages, 10) < pages) {
+                        pages += 1;
+                        pages = parseInt(pages, 10);
+                    }
+
+
+                    if (page > pages) {
+                        page = pages;
+
+                        return res.redirect(`/forum?page=${page}`);
+                    }
+
+                    return res.status(200).render('forum-page', {
+                        result: {
+                            forumPosts,
+                            params: {
+                                page,
+                                pages
+                            }
+                        }
+                    });
+                    // return res.status(200).render('forum-page', { result: forumPosts });
+                }))
+                .catch(err => { res.status(404).send(err); });
         },
         getCreatePage(req, res) {
             return res.status(200).render('create-forum-post');

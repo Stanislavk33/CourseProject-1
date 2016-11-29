@@ -1,7 +1,17 @@
 extends _layout
 
 block content
-    each forumPost in result
+    ul.list.list-horizontal.list-pages.text-center
+        - for(let i = 1; i <= result.params.pages; i+=1 )
+            li
+                if result.params.page === i
+                    a.btn.btn-danger.disabled(href="/forum?page=" + i)
+                        = i
+                else
+                    a.btn.btn-danger(href="/forum?page=" + i)
+                        = i
+
+    each forumPost in result.forumPosts
         div
             h3.forum-post
                 a(href="/forum/"+ forumPost._id)= forumPost.title
