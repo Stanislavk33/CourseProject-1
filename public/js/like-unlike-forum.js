@@ -9,9 +9,7 @@
                 const $likesSpan = $target.prev();    
                 const likes = $likesSpan.html();
                 $likesSpan.html(+likes + 1);
-                //location.reload();
                 $target.html('Unlike');
-               // $target.off('click', like);
                 $target.one('click', unlike);
                 toastr.success("Post liked!");
             })
@@ -40,5 +38,5 @@
     
         $('.like-post').one('click', like);
         $('.unlike-post').one('click', unlike);
-        
+
 

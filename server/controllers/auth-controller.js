@@ -14,7 +14,7 @@ module.exports = (data) => {
             const user = {
                 username: req.body.username,
                 passHash: req.body.password,
-                salt: salt,
+                salt: req.body.salt,
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 birthDate: req.body.birthDate,
