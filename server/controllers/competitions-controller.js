@@ -94,8 +94,11 @@ module.exports = (data) => {
 
             }
         },
-        likes(req, res) {
-            // TODO 
+        likesCompetition(req, res) {
+
+        },
+        dislikeCompetition(req, res) {
+
         },
         loadCompetitions(req, res) {
             data.getAllCompetitions()
