@@ -24,33 +24,17 @@ const userSchema = new Schema({
 
 userSchema.methods = {
     isValidPassword(password) {
-        let realPassHash = this.passHash;
-        let currentPassHash = encryption.getPassHash(this.salt, password);
-        let isValid = currentPassHash === realPassHash;
-
-        return isValid;
+        const realPassHash = this.passHash,
+            currentPassHash = encryptor.getPassHash(this.salt, password);
+        if (currentPassHash === realPassHash) {
+            return true;
+        } else {
+            return false;
+        }
     }
 };
 
-const User = mongoose.model('User', userSchema);
 
-function addAdmin() {
-    User.find({ username: "admin" })
-        .then(user => {
-            if (!user.length) {
-                let salt = encryption.getSalt();
-                let passHash = encryption.getPassHash(salt, "admin");
-                let adminUser = new User({
-                    username: "admin",
-                    salt,
-                    passHash,
-                    roles: ["admin"]
-                });
+mongoose.model('User', userSchema);
 
-                adminUser.save();
-            }
-        })
-        .catch(console.log);
-}
-
-module.exports = { addAdmin };
+module.exports = mongoose.model('User');

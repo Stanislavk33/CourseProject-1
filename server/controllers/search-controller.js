@@ -1,7 +1,5 @@
 'use strict';
 
-const User = mongoose.model("user-model");
-
 module.exports = (data) => {
     return {
         search(req, res) {
@@ -25,7 +23,8 @@ module.exports = (data) => {
             let query = { username: new RegExp(username, "i") };
             data.findUserWithIdAndName(query)
                 .then(users => {
-                    res.render("searches/found-users.pug", {
+                    //TODO: router for search by user 
+                    res.render("search/", {
                         users,
                         user
                     });
