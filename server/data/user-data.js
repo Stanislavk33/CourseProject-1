@@ -106,7 +106,18 @@ module.exports = function(models) {
                     })
             });
         },
-        removeCompetitionFromUser(username, competitionId) {},
+        removeCompetitionFromUser(username, competitionId) {
+            return new Promise((resolve, reject) => {
+                User.update({username}, { $pull: { "joinedCompetitions" : { _id: competitionId } } }, (err, user) => {
+                    if (err) {
+                        return reject(err);
+                    }
+
+                    console.log(user);
+                    resolve(user);
+                });
+            });
+        },
         updateUserInRole(userId, role) {
             return new Promise((resolve, reject) => {
                 User.findByIdAndUpdate({ '_id': userId }, { $set: { 'inRole': role } },

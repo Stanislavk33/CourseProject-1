@@ -3,8 +3,8 @@
 module.exports = (data) => {
     return {
         getProfile(req, res) {
-            const username = req.params.username,
-                view = 'user-profile';
+            const username = req.params.username;
+            let view = 'user-profile';
             let asPersonalPage = false;
 
             if (req.isAuthenticated()) {

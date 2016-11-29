@@ -5,20 +5,26 @@ module.exports = (data) => {
         getByID(req, res) {
             const id = req.params.id;
 
-            let view = 'competition',
-                userName = req.user.username;
-            console.log(userName);
+            let view = 'competition';
+            let username;
+
             if (req.isAuthenticated()) {
                 view = 'competition-user';
+                username = req.user.username;
             }
+            console.log(username);
             data.getCompetitionById(id)
                 .then(competition => {
-                    if (userName === competition.organizator) {
+                    if (username === competition.organizator) {
+                        // view = 'some-new-view';
                         competition.isOrgan = true;
                         console.log('here');
                         console.log(competition.isOrgan);
                     }
-                    console.log(competition)
+                    if (competition.joinedUsers.find(x => x.username === username)) {
+                        competition.hasJoined = true;
+                    }
+
                     res.render(view, { result: competition });
                 });
         },
@@ -76,9 +82,13 @@ module.exports = (data) => {
                     })
                     .then(() => {
                         // TODO: what to return;
-                        res.status(200).json();
+                        res.status(200).json({
+                            success: true,
+                            username
+                        });
                     })
                     .catch(error => {
+                        console.log(error);
                         res.status(500).json(error);
                     });
 
