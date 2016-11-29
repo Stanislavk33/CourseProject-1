@@ -1,7 +1,7 @@
 /* globals module require */
 'use strict';
 
-module.exports = function (models) {
+module.exports = function(models) {
     const Competition = models.Competition;
 
     return {
@@ -116,7 +116,7 @@ module.exports = function (models) {
         },
         removeUserFromCompetition(competitionId, username) {
             return new Promise((resolve, reject) => {
-                Competition.update({_id: competitionId}, { $pull: { "joinedUsers" : { username } } }, (err, competition) => {
+                Competition.update({ _id: competitionId }, { $pull: { "joinedUsers": { username } } }, (err, competition) => {
                     if (err) {
                         return reject(err);
                     }
@@ -176,6 +176,29 @@ module.exports = function (models) {
 
                 resolve(competitions);
             });
+        },
+        updateAttendedStatusToUser(username, competitionId) {
+            return new Promise((resolve, reject) => {
+
+                Competition.findById({ '_id': competitionId })
+                    .then((competition) => {
+                        let joinedUsers = competition.joinedUsers;
+                        joinedUsers.forEach(user => {
+                            if (user.username === username) {
+                                user.attended = true;
+                            }
+                        });
+
+                        return (joinedUsers);
+                    }).then((joined) => {
+                        Competition.findByIdAndUpdate({ '_id': competitionId }, { 'joinedUsers': joined })
+                            .then((done) => {
+                                resolve(done);
+                            }).catch(er => reject(er));
+                    });
+
+
+            })
         }
         // Not working
         // getCompetitionsByKeys(...keys) { 

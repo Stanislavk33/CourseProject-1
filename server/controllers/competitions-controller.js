@@ -108,7 +108,7 @@ module.exports = (data) => {
         },
         createCompetition(req, res) {
             let body = req.body,
-                user = 'admin', // req.user.username 
+                user = req.user.username,
                 keys = body.keys
                 .split(' ')
                 .filter(x => x !== '');
