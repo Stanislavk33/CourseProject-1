@@ -1,13 +1,16 @@
 'use strict';
 
 const LocalStrategy = require('passport-local');
+const hashing = require("../../utilities/encryptor");
 
 module.exports = (passport, data) => {
-    const authStrategy =  new LocalStrategy(
+    const authStrategy = new LocalStrategy(
         (username, password, done) => {
             data.getUserByUsername(username)
                 .then(user => {
-                    if(user && user.passHash === password) {
+                    const passHash = hashing.getPassHash(user.salt, password);
+
+                    if (user && user.passHash === passHash) {
                         done(null, user);
                     } else {
                         done(null, false);

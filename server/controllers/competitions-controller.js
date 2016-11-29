@@ -94,8 +94,11 @@ module.exports = (data) => {
 
             }
         },
-        likes(req, res) {
-            // TODO 
+        likesCompetition(req, res) {
+
+        },
+        dislikeCompetition(req, res) {
+
         },
         loadCompetitions(req, res) {
             data.getAllCompetitions()
@@ -107,21 +110,21 @@ module.exports = (data) => {
             let body = req.body,
                 user = 'admin', // req.user.username 
                 keys = body.keys
-                    .split(' ')
-                    .filter(x => x !== '');
+                .split(' ')
+                .filter(x => x !== '');
 
             data.createCompetition({
-                name: body.name,
-                place: body.place,
-                organizator: user,
-                category: body.category,
-                points: body.points,
-                level: body.level,
-                startDate: body.startDate,
-                endDate: body.endDate,
-                keys: keys,
-                location: { longitude: body.longitude, latitude: body.latitude }
-            })
+                    name: body.name,
+                    place: body.place,
+                    organizator: user,
+                    category: body.category,
+                    points: body.points,
+                    level: body.level,
+                    startDate: body.startDate,
+                    endDate: body.endDate,
+                    keys: keys,
+                    location: { longitude: body.longitude, latitude: body.latitude }
+                })
                 .then(competition => {
                     res.redirect(`/competitions/${competition._id}`);
                 }).catch(err => {
