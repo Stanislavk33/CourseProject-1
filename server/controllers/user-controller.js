@@ -3,8 +3,8 @@
 module.exports = (data) => {
     return {
         getProfile(req, res) {
-            const username = req.params.username,
-                view = 'user-profile';
+            const username = req.params.username;
+            let view = 'user-profile';
             let asPersonalPage = false;
 
             if (req.isAuthenticated()) {
@@ -72,11 +72,15 @@ module.exports = (data) => {
                     return res.status(500).json(err);
                 })
         },
+        logoutUser(req, res) {
+            req.logout();
+            res.redirect("/");
+        },
         loadRegisterPage(req, res) {
-            //TODO
+            res.render("user/register");
         },
         loadLoginPage(req, res) {
-            // TODO
+            res.render("user/login");
         },
         getById(req, res) {
             data.getUserById(req.params.id)
@@ -101,9 +105,6 @@ module.exports = (data) => {
                             .redirect('/error');
                     }
                 })
-        },
-        create(req, res) {
-            // TODO
         },
         login(req, res) {
             // TODO

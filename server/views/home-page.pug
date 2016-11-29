@@ -8,28 +8,28 @@ block content
             .center-heading
               h1.main-heading Our top competitions
               #myCarousel.carousel.slide(data-ride='carousel')
-            ol.carousel-indicators
-              li.active(data-target='#myCarousel', data-slide-to='0')
-              li(data-target='#myCarousel', data-slide-to='1')
-              li(data-target='#myCarousel', data-slide-to='2')
-              li(data-target='#myCarousel', data-slide-to='3')
-            .carousel-inner(role='listbox')
-              .item.active
-                img.img-rounded(src='http://www.amazingwallpaperz.com/wp-content/uploads/3D-Landscape-Wallpaper-High-Definition.jpg', alt='Chania')
-              .item
-                img.img-rounded(src='http://media1.santabanta.com/full1/Outdoors/Landscapes/landscapes-229v.jpg', alt='Chania')
-              .item
-                img.img-rounded(src='http://media1.santabanta.com/full1/Outdoors/Landscapes/landscapes-342a.jpg', alt='Flower')
-              .item
-                img.img-rounded(src='http://media1.santabanta.com/full1/Outdoors/Landscapes/landscapes-284a.jpg', alt='Flower')
-            a.left.carousel-control(href='#myCarousel', role='button', data-slide='prev')
-              span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
-              |  
-              span.sr-only Previous
-            a.right.carousel-control(href='#myCarousel', role='button', data-slide='next')
-              span.glyphicon.glyphicon-chevron-right(aria-hidden='true')
-              |  
-              span.sr-only Next
+              ol.carousel-indicators
+                li.active(data-slide-to='0')
+                li(data-slide-to='1')
+                li(data-slide-to='2')
+                li(data-slide-to='3')
+              .carousel-inner(role='listbox')
+                .item.active
+                  img.img-rounded(src='http://www.amazingwallpaperz.com/wp-content/uploads/3D-Landscape-Wallpaper-High-Definition.jpg', alt='Chania')
+                .item
+                  img.img-rounded(src='http://media1.santabanta.com/full1/Outdoors/Landscapes/landscapes-229v.jpg', alt='Chania')
+                .item
+                  img.img-rounded(src='http://media1.santabanta.com/full1/Outdoors/Landscapes/landscapes-342a.jpg', alt='Flower')
+                .item
+                  img.img-rounded(src='http://media1.santabanta.com/full1/Outdoors/Landscapes/landscapes-284a.jpg', alt='Flower')
+              a.left.carousel-control(role='button', data-slide='prev')
+                span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
+                |  
+                span.sr-only Previous
+              a.right.carousel-control(role='button', data-slide='next')
+                span.glyphicon.glyphicon-chevron-right(aria-hidden='true')
+                |  
+                span.sr-only Next
     
     .main.main-raised
       .container
@@ -118,27 +118,26 @@ block content
                     a(href='/categories/swimming') Swimming
                   p
                     | Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough.
-        .section.text-left
+        
+        .section.text-center.section-landing
+          .row
+              .col-md-2.col-md-offset-0
+                h2.title Upcomming competitions
+                ul.upcomming
+                    each commingCompetition in result.upcommingCompetition
+                        li 
+                            a(href="/competitions/" + commingCompetition._id) #{commingCompetition.place}
+                            div #{commingCompetition.name}
 
-    h2.title Upcomming competitions
-    
-    ul
-        each commingCompetition in result.upcommingCompetition
-            li 
-                a(href="/competitions/" + commingCompetition._id) #{commingCompetition.place}
-    h2 MostPopular
-    ul
-        each topCompetition in result.mostPopularCompetition
-            li
-                a(href="/competitions/" + topCompetition._id) #{topCompetition.place}
-
-    h2 Top Users
-    table
-        tr
-            th User
-            th Points
-        each topUser in result.topUsers
-            tr 
-                td
-                    a(href="/users/" + topUser.username) #{topUser.username}
-                td #{topUser.progress.totalPoints}
+              .col-md-2.col-md-offset-6
+                h2.title Top Users
+                table.table.table-hover
+                  thead.thead-inverse
+                    tr.success
+                        th.text-success User
+                        th.text-success Points
+                    each topUser in result.topUsers
+                        tr
+                            td
+                                a(href="/users/" + topUser.username) #{topUser.username}
+                            td #{topUser.progress.totalPoints}

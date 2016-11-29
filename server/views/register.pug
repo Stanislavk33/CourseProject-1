@@ -1,26 +1,48 @@
 extends _layout
 
 block content
-    form(method="post" enctype="multipart/form-data")
-        label(for="username") Username
-        input(id="username" class="form-control" type="text" name="username" placeholder="Username")
-        br
-        label(for="password") Password
-        input(id="password" class="form-control" type="password" name="password" placeholder="Password")
-        br
-        label(for="confirm-password") Confirm Password
-        input(id="confirm-password" class="form-control" type="password" name="confirmPassword" placeholder="Confirm password")
-        br
-        label(for="email") E-mail
-        input(id="email" class="form-control" type="email" name="email" placeholder="E-mail")
-        br
-        label(for="first-name") First Name
-        input(id="first-name" class="form-control" type="text" name="firstName" placeholder="First Name")
-        br
-        label(for="last-name") Last Name
-        input(id="last-name" class="form-control" type="text" name="lastName" placeholder="Last Name")
-        br
-        label(for="avatar") Avatar
-        input(id="avatar" class="form-control" type="file" name="avatar" placeholder="Avatar")
-        br
-        input(type="submit" class="btn btn-lg" value="Register")
+    .section.section-full-screen.section-signup(style="background: blur;")
+        .container
+            .row
+                .col-md-4.col-md-offset-4
+                    .card.card-signup
+                        form.form(method="post" enctype="multipart/form-data")
+                            .header.header-info.text-center(style="height: 50%;")
+                                h4 Sign up
+                                .social-line
+                                  a.btn.btn-simple.btn-just-icon(href="/auth/facebook")
+                                    i.fa.fa-facebook-square
+                                    .ripple-container
+                                  a.btn.btn-simple.btn-just-icon(href="/auth/google")
+                                    i.fa.fa-google-plus
+                            .input-group
+                                span.input-group-addon
+                                    i.material-icons face
+                                input.form-control(type="text" id="tb-username" placeholder="Username" name="username" class="form-control")
+                            .input-group
+                                span.input-group-addon
+                                    i.material-icons email
+                                input.form-control(type="email" id="tb-email" placeholder="E-mail" name="email" class="form-control")
+                            .input-group
+                                span.input-group-addon
+                                    i.material-icons lock_outline
+                                input.form-control(type="password" id="tb-password" placeholder="Password" name="password" class="form-control")
+                            .input-group
+                                span.input-group-addon
+                                    i.material-icons lock_outline
+                                input.form-control(type="password" id="tb-confirm-password" placeholder="Confirm password" name="confirm-password" class="form-control")
+                            .input-group
+                                span.input-group-addon 
+                                    i.material-icons face
+                                input.form-control(type="text" id="tb-first-name" placeholder="First name" name="firstName" class="form-control")
+                            .input-group
+                                span.input-group-addon
+                                    i.material-icons face
+                                input.form-control(type="text" id="tb-last-name" placeholder="Last name" name="lastName" class="form-control")
+                            .input-group
+                                span.input-group-addon
+                                    i.material-icons picture_in_picture
+                                span.input-group-addon(style="display: block;") Upload avatar
+                                input(type="file" id="tb-avatar" name="avatar" value="Upload" class="btn btn-info")
+                            .footer.text-center
+                                input(type="submit" value="Register" class="btn btn-lg btn-info")
