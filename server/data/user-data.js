@@ -66,7 +66,7 @@ module.exports = function(models) {
                 });
             });
         },
-        createUser(user) { //user object is created in the controller
+        createUser(user) {
             const newUser = new User({
                 username: user.username,
                 firstName: user.firstName,
@@ -95,7 +95,7 @@ module.exports = function(models) {
                 });
             });
         },
-        addCompetitionToUser(username, competition) { //competition object is created in the controller
+        addCompetitionToUser(username, competition) {
             return new Promise((resolve, reject) => {
                 User.findOneAndUpdate({ 'username': username }, { $push: { 'competitions': competition } },
                     (err, user) => {

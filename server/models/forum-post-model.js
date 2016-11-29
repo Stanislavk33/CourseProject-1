@@ -12,6 +12,7 @@ const forumPostSchema = new Schema({
     },
     date: { type: Date, required: true },
     likes: { type: Number, required: true },
+    usersLiked: [String],
     answers: [{
         content: { type: String, required: true },
         user: {

@@ -9,7 +9,7 @@ module.exports = (data) => {
             const page = Number(req.query.page || DEFAULT_PAGE);
 
             data.getForumPosts({ page, pageSize: PAGE_SIZE })
-                .then((result => {
+            .then((result) => {
 
                     const {
                         forumPosts,
@@ -47,17 +47,19 @@ module.exports = (data) => {
                         return res.redirect(`/forum?page=${page}`);
                     }
 
+                    const user = req.user;
+
                     return res.status(200).render('forum-page', {
                         result: {
                             forumPosts,
+                            user,
                             params: {
                                 page,
                                 pages
                             }
                         }
                     });
-                    // return res.status(200).render('forum-page', { result: forumPosts });
-                }))
+                })
                 .catch(err => { res.status(404).send(err); });
         },
         getCreatePage(req, res) {
@@ -103,9 +105,21 @@ module.exports = (data) => {
         AddLikeToPost(req, res) {
             const id = req.params.id;
 
-            data.updateForumPostLikes(id)
-                .then(() => {
-                    res.redirect('/forum')
+            data.incrementForumPostLikes(id)
+                .then(() => data.addUsernameToPostUsersLiked(id, req.user.username))
+                .then(() =>{
+                    res.send('');
+                }).catch(err => {
+                    console.log(err);
+                });
+        },
+        UnlikePost(req, res) {
+            const id = req.params.id;
+
+            data.decrementForumPostLikes(id)
+                .then(() => data.removeUsernameFromPostUsersLiked(id, req.user.username))
+                .then(() =>{
+                    res.send('');
                 }).catch(err => {
                     console.log(err);
                 });

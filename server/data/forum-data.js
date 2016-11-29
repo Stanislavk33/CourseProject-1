@@ -78,6 +78,7 @@ module.exports = function (models) {
                 user: forumPost.user,
                 date: new Date(),
                 likes: 0,
+                usersLiked: [],
                 answers: []
             });
 
@@ -104,7 +105,7 @@ module.exports = function (models) {
                     })
             });
         },
-        updateForumPostLikes(_id) { //increment likes with 1
+        incrementForumPostLikes(_id) { 
             return new Promise((resolve, reject) => {
                 ForumPost.findByIdAndUpdate({ '_id': _id }, { '$inc': { 'likes': 1 } },
                     (err) => {
@@ -116,6 +117,42 @@ module.exports = function (models) {
                     })
             });
         },
+        decrementForumPostLikes(_id) { 
+            return new Promise((resolve, reject) => {
+                ForumPost.findByIdAndUpdate({ '_id': _id, "score": { "$gt": 0 } }, { '$inc': { 'likes': -1 } },
+                    (err) => {
+                        if (err) {
+                            return reject(err);
+                        }
+
+                        return resolve();
+                    })
+            });
+        },  
+        addUsernameToPostUsersLiked(postId, username) {
+            return new Promise((resolve, reject) => {
+                ForumPost.findByIdAndUpdate({ '_id': postId }, { $push: { 'usersLiked': username } },
+                    (err) => {
+                        if (err) {
+                            return reject(err);
+                        }
+
+                        return resolve();
+                    })
+            });
+        },
+        removeUsernameFromPostUsersLiked(postId, username) {
+            return new Promise((resolve, reject) => {
+                ForumPost.findByIdAndUpdate({ '_id': postId }, { $pull: { 'usersLiked': username } },
+                    (err) => {
+                        if (err) {
+                            return reject(err);
+                        }
+
+                        return resolve();
+                    })
+            });
+        }
         // TODO: updateForumPostAnswerLikes()
     };
 };

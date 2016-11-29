@@ -10,13 +10,21 @@ block content
                 else
                     a.btn.btn-danger(href="/forum?page=" + i)
                         = i
-
     each forumPost in result.forumPosts
-        div
+        div(id="post-info" data-id=forumPost._id)
             h3.forum-post
                 a(href="/forum/"+ forumPost._id)= forumPost.title
             p Posted by #{forumPost.user.username}(#{forumPost.user.points})
-            p.likes Likes: #{forumPost.likes}
-                //-TODO: send put request 
-                button.btn-like Like
-    a(href="/forum/create") Create Post
+            p.likes Likes: 
+                span(id='post-likes-count') #{forumPost.likes}
+                if result.user
+                    if forumPost.usersLiked.indexOf(result.user.username) < 0
+                        button.like-post Like
+                    else
+                        button.unlike-post Unlike            
+    if result.user                           
+        a(href="/forum/create") Create Post
+    block scripts
+    script(src="/static/bower_components/jquery/dist/jquery.min.js")
+    script(src="/static/bower_components/toastr/toastr.js")
+    script(src="/static/js/like-unlike-forum.js")

@@ -14,6 +14,7 @@ module.exports = (app, data) => {
         .get('/:id', controller.getByID)
         .post('/:id/comment', /* is authenticated middleWare here */ controller.addComment)
         .put('/:id/like', /* is authenticated middleWare here */ controller.AddLikeToPost)
+        .put('/:id/unlike', /* is authenticated middleWare here */ controller.UnlikePost)
         .put('/:id/comment/like', /* is authenticated middleWare here */ controller.addComment)
 
     app.use('/forum', router);

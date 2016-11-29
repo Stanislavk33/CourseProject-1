@@ -14,8 +14,8 @@ block content
                 p Posted on #{answer.date}
                 p.likes Likes: #{answer.likes}
                     //-TODO: send put request 
-                    a(href=`/forum/${result._id}/like`).button Like  
+                    button(id="like-post-answer") Like  
         form(action=`/forum/${result._id}/comment` method="post")
             label(for="comment")
             input(id="comment" class="form-control" type="text" name="content" placeholder="Comment")
-            input(type="submit" class="btn btn-lg" value="Create")         
+            input(type="submit" class="btn btn-lg" value="Comment")         
