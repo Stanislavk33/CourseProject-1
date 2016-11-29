@@ -96,7 +96,8 @@ module.exports = (data) => {
         addPoints(req, res) {
             const username = req.body.username,
                 points = req.body.points,
-                category = req.body.category;
+                category = req.body.category,
+                competitionId = req.body.competitionId;
 
             data.updatePoints(username, points, category)
                 .then(user => {
@@ -104,6 +105,12 @@ module.exports = (data) => {
                         return res.status(400)
                             .redirect('/error');
                     }
+                }).then(() => {
+                    data.updateAttendedStatusToUser(username, competitionId)
+                        .catch(er => {
+                            return res.status(400)
+                                .redirect('/error');
+                        })
                 })
         },
         login(req, res) {
