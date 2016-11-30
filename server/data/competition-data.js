@@ -1,7 +1,7 @@
 /* globals module require */
 'use strict';
 
-module.exports = function(models) {
+module.exports = function (models) {
     const Competition = models.Competition;
 
     return {
@@ -147,18 +147,15 @@ module.exports = function(models) {
                 resolve(competitions);
             })
         },
-        filterCompetitions(option) {
+        filterCompetitions(searchName) {
             return new Promise((resolve, reject) => {
-                console.log('here');
                 // findOne({'username' : {$regex : '.*son.*'}});
-                const filter = {};
-                if (option.type && option.search) {
-                    const regex = `.*${option.search}.*`;
-                    console.log(option);
-                    filter[option.type] = { $regex: regex };
-                }
-                console.log(filter);
-                Competition.find(filter, (err, competitions) => {
+                const regex = { $regex: new RegExp(`.*${searchName}.*`, 'i') };
+                const nameRegex = { name: regex };
+                const placeRegex = { place: regex };
+                const categoryRegex = { category: regex };
+
+                Competition.find({$or: [nameRegex, placeRegex, categoryRegex]}, (err, competitions) => {
                     if (err) {
                         return reject(err);
                     }

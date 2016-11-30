@@ -1,6 +1,9 @@
 extends _layout
 
 block content
+    if result.searchName
+        div
+            p Search: #{result.searchName}   
     each competition in result.competitions
         h3 
             a(href="/competitions/"+ competition._id)= competition.name
