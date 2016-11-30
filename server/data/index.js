@@ -15,7 +15,6 @@ module.exports = function(config) {
         UserGallery = require('../models/user-gallery-model'),
         ForumPost = require('../models/forum-post-model'),
 
-        //TODO - add other models in model object
         models = { Competition, Category, User, UserGallery, ForumPost },
         data = {};
 

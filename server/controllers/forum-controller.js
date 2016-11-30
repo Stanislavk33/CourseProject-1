@@ -72,7 +72,7 @@ module.exports = (data) => {
             data.createForumPost({
                 title: body.title,
                 description: body.description,
-                user: { username: 'someusername', points: 0 } // TODO: get from req.user
+                user: { username: req.user.username, points: req.user.progress.totalPoints}
             })
                 .then(() => {
                     res.redirect('/forum')
@@ -82,9 +82,10 @@ module.exports = (data) => {
         },
         getByID(req, res) { //
             const id = req.params.id;
+            const currentUser = req.user;
             data.getForumPostById(id)
                 .then(forumPost => {
-                    res.render('forum-post-page', { result: forumPost });
+                    res.render('forum-post-page', { result: {forumPost, currentUser} });
                 });
         },
         addComment(req, res) { //
@@ -94,7 +95,7 @@ module.exports = (data) => {
 
             data.addAnswerToForumPost(id, {
                 content: body.content,
-                user: { username: 'someusername', points: 0 } // TODO: get from req.user
+                user: { username: req.user.username, points: req.user.progress.totalPoints} 
             })
                 .then(() => {
                     res.redirect('/forum/' + id)
@@ -124,8 +125,27 @@ module.exports = (data) => {
                     console.log(err);
                 });
         },
-        AddLikeToAnswer(req, res) { //
-            // TODO 
+        AddLikeToAnswer(req, res) { 
+            const postId = req.params.id;
+            const answerId = req.params.answerid;
+            data.incrementForumPostAnswerLikes(postId, answerId)
+                .then(() => data.addUsernameToPostAnswerUsersLiked(postId, answerId, req.user.username))
+                .then(() =>{
+                    res.send('');
+                }).catch(err => {
+                    console.log(err);
+                });
+        },
+        UnlikePostAnswer(req, res) {
+            const postId = req.params.id;
+            const answerId = req.params.answerid;
+            data.decrementForumPostAnswerLikes(postId, answerId)
+                .then(() => data.removeUsernameFromPostAnswerUsersLiked(postId, answerId, req.user.username))
+                .then(() =>{
+                    res.send('');
+                }).catch(err => {
+                    console.log(err);
+                });
         }
     };
 };
