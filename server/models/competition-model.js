@@ -26,7 +26,10 @@ const competitionSchema = new Schema({
         latitude: { type: String },
         longitude: { type: String }
     },
-    passed: { type: String, enum: Status, required: true }
+    passed: { type: String, enum: Status, required: true },
+    usersLiked: [{
+        user: String
+    }],
 });
 
 mongoose.model('Competition', competitionSchema);

@@ -94,11 +94,30 @@ module.exports = (data) => {
 
             }
         },
-        likesCompetition(req, res) {
-
+        likeCompetition(competitionId, req, res) {
+            let update = { $inc: { likes: 1 } };
+            data.updateCompetition(competitionId, update, null)
+                .then((competition) => {
+                    let user = { user: req.user.username };
+                    competition.usersLiked.push(user);
+                    competition.save();
+                    return competition;
+                })
+                .then((competition) => {
+                    res.json(JSON.stringify(competition.likes + 1));
+                });
         },
-        dislikeCompetition(req, res) {
-
+        dislikeCompetition(competitionId, index, res) { 
+            let update = { $inc: { likes: -1 } };
+            data.updateCompetition(competitionId, update, null)
+                .then((competition) => {
+                    competition.usersLiked.splice(index, 1);
+                    competition.save();
+                    return competition;
+                })
+                .then((competition) => {
+                    res.json(JSON.stringify(competition.likes + 1));
+                });
         },
         loadCompetitions(req, res) {
             data.getAllCompetitions()

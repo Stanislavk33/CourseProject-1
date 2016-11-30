@@ -86,16 +86,16 @@ module.exports = function(models) {
                 });
             });
         },
-        updateCompetitionLikes(_id) { //increment likes with 1
+        updateCompetition(competitionId, update, options) {
             return new Promise((resolve, reject) => {
-                Competition.findByIdAndUpdate({ '_id': _id }, { '$inc': { 'likes': 1 } },
-                    (err) => {
+                Competition.findOneAndUpdate({ "_id": competitionId }, update, options,
+                    (err, competition) => {
                         if (err) {
                             return reject(err);
                         }
 
-                        return resolve();
-                    })
+                        return resolve(competition);
+                    });
             });
         },
         addJoinedUserToCompetition(competitionId, username) { //user object is created in the controller
