@@ -6,14 +6,15 @@ mixin competitions-list(competitions)
             a.thumbnail(href='#', title='Lorem ipsum')
               //- img(src='/static/imgs/competitions-imgs/'+competition.image, alt='Competition image')
               img(src='http://lorempixel.com/250/140/people', alt='Lorem ipsum')
-          .col-xs-12.col-sm-12.col-md-2
+          .col-xs-12.col-sm-12.col-md-2.right-border
             ul.meta-search
               li
                 i.glyphicon.glyphicon-calendar
                 span #{competition.startDate}
               li
                 i.glyphicon.glyphicon-tags
-                span #{competition.category}
+                span 
+                  a(href='/categories/'+competition.category) #{competition.category}
               li
                 i.glyphicon.glyphicon-user
                 span By 
@@ -25,11 +26,3 @@ mixin competitions-list(competitions)
             span.plus
               a(href='/competitions/' + competition._id, title='Lorem ipsum') Go to page 
           span.clearfix.borda
-
-        //- img(src='/static/imgs/competitions/'+ competitions.image alt='competition photo')
-        //- h2 
-        //-     a(href="/competitions/"+ competition._id) #{competition.name}
-        //- h3
-        //-     a(href="/competitions/"+ competition._id) #{competition.place}
-        //- p Organized by 
-        //-     a(href='/users/'+competition.organizator) #{competition.organizator}

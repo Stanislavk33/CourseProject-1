@@ -10,7 +10,10 @@ block content
             else  
                 hgroup.mb20
                     h2 All competitions
-            +competitions-list(result.competitions)
+            if result.competitions.length
+                +competitions-list(result.competitions)
+            else
+                h3 No competitions found!
        
 
             
