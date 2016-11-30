@@ -1,7 +1,7 @@
 'use strict';
 
 const DEFAULT_PAGE = 1,
-    PAGE_SIZE = 3; // for testing. Default will be 10/15
+    PAGE_SIZE = 2; // for testing. Default will be 10/15
 
 module.exports = (data) => {
     return {
@@ -9,23 +9,13 @@ module.exports = (data) => {
             const page = Number(req.query.page || DEFAULT_PAGE);
 
             data.getForumPosts({ page, pageSize: PAGE_SIZE })
-            .then((result) => {
+                .then((result) => {
 
-                    const {
-                        forumPosts,
-                        count
-                    } = result;
+                    const { forumPosts, count } = result;
 
                     if (count === 0) {
-
                         return res.render('forum-page', {
-                            result: {
-                                forumPosts,
-                                params: {
-                                    page,
-                                    pages: 0
-                                }
-                            }
+                            result: { forumPosts, params: { page, pages: 0 } }
                         });
                     }
 
@@ -33,12 +23,17 @@ module.exports = (data) => {
                         return res.redirect('/forum?page=1');
                     }
 
-                    const pages = count / PAGE_SIZE | 0;
+                    let pages = (count / PAGE_SIZE) | 0;
 
-                    if (parseInt(pages, 10) < pages) {
+                    if (count % PAGE_SIZE !== 0) {
                         pages += 1;
-                        pages = parseInt(pages, 10);
                     }
+                    console.log(parseInt(pages, 10));
+
+                    // if (parseInt(pages, 10) < pages) {
+                    //     pages = parseInt(pages, 10);
+                    //     pages += 1;
+                    // }
 
 
                     if (page > pages) {
@@ -50,14 +45,7 @@ module.exports = (data) => {
                     const user = req.user;
 
                     return res.status(200).render('forum-page', {
-                        result: {
-                            forumPosts,
-                            user,
-                            params: {
-                                page,
-                                pages
-                            }
-                        }
+                        result: { forumPosts, user, params: { page, pages } }
                     });
                 })
                 .catch(err => { res.status(404).send(err); });
@@ -108,7 +96,7 @@ module.exports = (data) => {
 
             data.incrementForumPostLikes(id)
                 .then(() => data.addUsernameToPostUsersLiked(id, req.user.username))
-                .then(() =>{
+                .then(() => {
                     res.send('');
                 }).catch(err => {
                     console.log(err);
@@ -119,7 +107,7 @@ module.exports = (data) => {
 
             data.decrementForumPostLikes(id)
                 .then(() => data.removeUsernameFromPostUsersLiked(id, req.user.username))
-                .then(() =>{
+                .then(() => {
                     res.send('');
                 }).catch(err => {
                     console.log(err);

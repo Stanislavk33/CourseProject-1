@@ -2,7 +2,7 @@
 
 const hashing = require("../utilities/encryptor");
 
-module.exports = function(models) {
+module.exports = function (models) {
     const User = models.User;
 
     return {
@@ -49,6 +49,9 @@ module.exports = function(models) {
                         return reject(err);
                     }
 
+                    if (!user) {
+                        return reject({ error: 'User not found' });
+                    }
                     const joinedCompetitions = [];
                     const attendedCompetitions = [];
 
@@ -80,6 +83,7 @@ module.exports = function(models) {
                 salt: salt,
                 birthDate: user.birthDate,
                 email: user.email,
+                image: user.image,
                 competitions: [],
                 progress: {
                     totalPoints: 0,
@@ -190,6 +194,21 @@ module.exports = function(models) {
 
                         return resolve(users);
                     });
+            });
+        },
+        searchUsersByName(name) {
+            return new Promise((resolve, reject) => {
+                const usernameRegex = { username: {$regex: `.*${name}.*` }};
+                const firstNameRegex = { firstName:{$regex: `.*${name}.*` }};
+                const lastNameRegex = { lastName: {$regex:`.*${name}.*` }};
+
+                User.find({ $or: [usernameRegex, firstNameRegex, lastNameRegex]}, (err, users)=>{
+                    if(err){
+                        return reject(err);
+                    }
+                    console.log(users);
+                    return resolve(users);
+                })
             });
         }
 

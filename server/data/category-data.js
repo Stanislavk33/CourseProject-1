@@ -29,7 +29,7 @@ module.exports = function(models) {
         },
         getCategoriesByTitle(title) {
             return new Promise((resolve, reject) => {
-                Category.find({ 'title': title }, (err, categories) => {
+                Category.findOne({ 'title': title }, (err, categories) => {
                     if (err) {
                         return reject(err);
                     }

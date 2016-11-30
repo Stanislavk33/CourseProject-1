@@ -7,7 +7,7 @@ const mongoose = require('mongoose'),
     Status = constants.competitionStatus;
 
 const competitionSchema = new Schema({
-    name: { type: String, require: true },
+    name: { type: String, required: true },
     place: { type: String, required: true },
     likes: { type: Number, required: true },
     organizator: { type: String, required: true },

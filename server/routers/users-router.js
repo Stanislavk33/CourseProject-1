@@ -10,6 +10,7 @@ module.exports = (app, data) => {
     const router = new express.Router();
 
     router
+        .get('/', controller.loadUsers)
         .get('/:username', controller.getProfile)
         .get('/:username/edit', controller.getEditPage)
         .post('/:username/edit', upload.single('avatar'), controller.editProfile)

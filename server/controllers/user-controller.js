@@ -63,7 +63,7 @@ module.exports = (data) => {
             if (req.file) {
                 userInfo.image = req.file.filename;
             }
-
+            console.log(userInfo);
             data.updateUserInformation(username, userInfo)
                 .then(() => {
                     return res.redirect(`/users/${username}`);
@@ -112,6 +112,29 @@ module.exports = (data) => {
                                 .redirect('/error');
                         })
                 })
+        },
+        loadUsers(req, res){
+            if(req.query.search){
+                const searchName = req.query.search;
+                console.log(searchName);
+                data.searchUsersByName(searchName)  
+                    .then(users=>{
+                        console.log(searchName);
+                        return res.status(200).render('users', {result:{users,searchName}});
+                    })
+                    .catch(err=>{
+                        console.log(err);
+                        return res.status(500).json(err).render('error');
+                    });
+            }else{
+                data.getTopUsers()
+                    .then(users=>{
+                        return res.status(200).render('users', {result:{users}});
+                    })
+                    .catch(err=>{
+                        return res.status(500).json(err).render('error');
+                    });
+            }
         },
         login(req, res) {
             // TODO

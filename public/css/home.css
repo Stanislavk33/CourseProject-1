@@ -38,6 +38,11 @@
     width: auto;
 }
 
+.user-img{
+    height: 50px;
+    width: auto;
+}
+
 .header-text {
     position: absolute;
     top: 20%;
@@ -53,6 +58,10 @@
     color: #006CB7;
     z-index: 10000 !important;
 }
+
+/*.users-search{
+    display:inline-block;
+}*/
 
 /*.carousel-caption {
   z-index: 10;

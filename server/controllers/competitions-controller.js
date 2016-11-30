@@ -107,7 +107,7 @@ module.exports = (data) => {
                     res.json(JSON.stringify(competition.likes + 1));
                 });
         },
-        dislikeCompetition(competitionId, index, res) { 
+        dislikeCompetition(competitionId, index, res) {
             let update = { $inc: { likes: -1 } };
             data.updateCompetition(competitionId, update, null)
                 .then((competition) => {
@@ -132,8 +132,9 @@ module.exports = (data) => {
                 .split(' ')
                 .filter(x => x !== '');
 
+            console.log(body.competitionName + "   asdsadsa");
             data.createCompetition({
-                    name: body.name,
+                    name: body.competitionName,
                     place: body.place,
                     organizator: user,
                     category: body.category,
