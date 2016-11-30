@@ -38,4 +38,31 @@
     width: auto;
 }
 
+.header-text {
+    position: absolute;
+    top: 20%;
+    left: 1.8%;
+    right: auto;
+    width: 96.66666666666666%;
+    color: #006CB7;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.header-text a{
+    color: #006CB7;
+    z-index: 10000 !important;
+}
+
+/*.carousel-caption {
+  z-index: 10;
+}
+
+.carousel-content {
+    color:black;
+    display:flex;
+    align-items:center;
+     z-index: 10;
+}*/
+
 .upcomming-competitions {}

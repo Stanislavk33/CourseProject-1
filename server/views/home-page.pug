@@ -1,4 +1,6 @@
 extends _layout
+include categories-mixin
+
 block content
     body.landing-page
     .wrapper
@@ -7,29 +9,49 @@ block content
           .row
             .center-heading
               h1.main-heading Our top competitions
-              #myCarousel.carousel.slide(data-ride='carousel')
-              ol.carousel-indicators
-                li.active(data-slide-to='0')
-                li(data-slide-to='1')
-                li(data-slide-to='2')
-                li(data-slide-to='3')
-              .carousel-inner(role='listbox')
-                .item.active
-                  img.img-rounded(src='http://www.amazingwallpaperz.com/wp-content/uploads/3D-Landscape-Wallpaper-High-Definition.jpg', alt='Chania')
-                .item
-                  img.img-rounded(src='http://media1.santabanta.com/full1/Outdoors/Landscapes/landscapes-229v.jpg', alt='Chania')
-                .item
-                  img.img-rounded(src='http://media1.santabanta.com/full1/Outdoors/Landscapes/landscapes-342a.jpg', alt='Flower')
-                .item
-                  img.img-rounded(src='http://media1.santabanta.com/full1/Outdoors/Landscapes/landscapes-284a.jpg', alt='Flower')
-              a.left.carousel-control(role='button', data-slide='prev')
-                span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
-                |  
-                span.sr-only Previous
-              a.right.carousel-control(role='button', data-slide='next')
-                span.glyphicon.glyphicon-chevron-right(aria-hidden='true')
-                |  
-                span.sr-only Next
+          div(id='myCarousel' class='carousel slide' data-ride='carousel')
+            ol.carousel-indicators
+              - for(let i = 0; i < result.topCompetitions.length; i+=1 )
+                if i === 0
+                  li(data-target='#myCarousel' data-slide-to='0' class='active')
+                else
+                  li(data-target='#myCarousel' data-slide-to=i)
+            .carousel-inner(role='listbox')
+              - for(let i = 0; i < result.topCompetitions.length; i+=1 )
+                if i === 0
+                  .item(class='active')
+                    //- img.img-rounded(src='/static/imgs/competitions/'+result.topCompetitions[i].image, alt='Competition image')
+                    img.img-rounded(src='http://www.amazingwallpaperz.com/wp-content/uploads/3D-Landscape-Wallpaper-High-Definition.jpg' alt='Chania')
+                    .header-text.hidden-xs
+                     .col-md-12.text-center
+                       h2 
+                         a(href='/competitions/'+ result.topCompetitions[i]._id) #{result.topCompetitions[i].name}
+                       h3 
+                         a(href='/competitions/'+ result.topCompetitions[i]._id) #{result.topCompetitions[i].place}
+                else
+                  .item
+                    //- img.img-rounded(src='/static/imgs/competitions/'+result.topCompetitions[i].image, alt='Competition image')
+                    img.img-rounded(src='http://www.amazingwallpaperz.com/wp-content/uploads/3D-Landscape-Wallpaper-High-Definition.jpg', alt='Chania')
+                    .header-text.hidden-xs
+                      .col-md-12.text-center
+                        h2 
+                          a(href='/competitions/'+ result.topCompetitions[i]._id) #{result.topCompetitions[i].name}
+                        h3 
+                          a(href='/competitions/'+ result.topCompetitions[i]._id) #{result.topCompetitions[i].place}
+              //- .item
+              //-   img.img-rounded(src='http://media1.santabanta.com/full1/Outdoors/Landscapes/landscapes-229v.jpg', alt='Chania')
+              //- .item
+              //-   img.img-rounded(src='http://media1.santabanta.com/full1/Outdoors/Landscapes/landscapes-342a.jpg', alt='Flower')
+              //- .item
+              //-   img.img-rounded(src='http://media1.santabanta.com/full1/Outdoors/Landscapes/landscapes-284a.jpg', alt='Flower')
+            a.left.carousel-control(role='button', data-slide='prev' href="#myCarousel")
+              span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
+              |  
+              span.sr-only Previous
+            a.right.carousel-control(role='button', data-slide='next' href="#myCarousel")
+              span.glyphicon.glyphicon-chevron-right(aria-hidden='true')
+              |  
+              span.sr-only Next
     
     .main.main-raised
       .container
@@ -39,92 +61,93 @@ block content
               h2.title Conquer Bulgaria is your competitions online guide!
               h5.description
                 | Welcome to Bulagria&rsquo;s Biggest Competitions Website, with over 100,000 members! Since 2016 we have set the standard in the way that competitions are communicated. First up, we are based here in Sofia, whilst a lot of so called &lsquo;Aussie&rsquo; sites are located all over the     world. Secondly, your membership is Free. There are no special locked areas, anything on our site you can click away to your heart&rsquo;s content. The reason the media comes to us is simple, we know the game better than anyone else. Competitions Guide is all about fresh competitions,     delivered daily. We invite you to Join us - Free!
-          .features
-            .row
-              .col-md-8.col-md-offset-2
-                h2.title These are our categories
-            .row
-              .col-md-4
-                .info
-                  a(href='/categories/art')
-                   img.categories-img(src='http://www.freeiconspng.com/uploads/art-icon--hobbies-iconset--hadezign-7.png')
-                  h4.info-title
-                    a(href='/categories/art') Art
-                  p
-                    | Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough.
-              .col-md-4
-                .info
-                  a(href='/categories/board-games')
-                    img.categories-img(src='https://lh5.ggpht.com/1OeRm47x08zJ2pPU7UTZZzXLWLkVP_fgi81Yebl3_1n6fpu0ajk8G0-7pwq-CgUVltY=w300')
-                  h4.info-title
-                    a(href='/categories/board-games') Board games
-                  p
-                    | Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough.
-              .col-md-4
-                .info
-                  a(href='/categories/climbing')
-                    img.categories-img(src='https://fitnesssupermarket.com/media/catalog/category/onboard-rockclimbing.png')
-                  h4.info-title
-                    a(href='/categories/climbing') Climbing
-                  p
-                    | Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough.
-            .row
-              .col-md-4
-                .info
-                  a(href='/categories/dancing')
-                    img.categories-img(src='https://s-media-cache-ak0.pinimg.com/originals/49/30/2d/49302dafdd7bce83440467210cd7d871.png')
-                  h4.info-title
-                    a(href='/categories/dancing') Dancing
-                  p
-                    | Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough.
-              .col-md-4
-                .info
-                  a(href='/categories/hiking')
-                    img.categories-img(src='http://worldartsme.com/images/cartoon-hiker-clipart-1.jpg')
-                  h4.info-title
-                    aa(href='/categories/hiking') Hiking
-                  p
-                    | Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough.
-              .col-md-4
-                .info
-                  a(href='/categories/history')
-                    img.categories-img(src='http://www.freeiconspng.com/uploads/history-png-30.png')
-                  h4.info-title
-                    a(href='/categories/history') History
-                  p
-                    | Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough.
-            .row
-              .col-md-4
-                .info
-                  a(href='/categories/programming')
-                    img.categories-img(src='https://www.mobiwebtech.com/wp-content/uploads/2015/02/Web-Programming-services.png')
-                  h4.info-title
-                    a(href='/categories/programming') Programming
-                  p
-                    | Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough.
-              .col-md-4
-                .info
-                  a(href='/categories/quiz')
-                    img.categories-img(src='http://www.tvedestrand.kommune.no/handlers/bv.ashx/i15e0060e-3800-4278-938e-ba1542648927/quiz.png')
-                  h4.info-title
-                    a(href='/categories/quiz') Quiz
-                  p
-                    | Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough.
-              .col-md-4
-                .info
-                  a(href='/categories/swimming')
-                    img.categories-img(src='http://www.pngall.com/wp-content/uploads/2016/03/Swimming-PNG-Pic.png')
-                  h4.info-title
-                    a(href='/categories/swimming') Swimming
-                  p
-                    | Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough.
+          +categories-list(result.categories)
+          //- .features
+          //-   .row
+          //-     .col-md-8.col-md-offset-2
+          //-       h2.title These are our categories
+          //-   .row
+          //-     .col-md-4
+          //-       .info
+          //-         a(href='/categories/art')
+          //-          img.categories-img(src='http://www.freeiconspng.com/uploads/art-icon--hobbies-iconset--hadezign-7.png')
+          //-         h4.info-title
+          //-           a(href='/categories/art') Art
+          //-         p
+          //-           | Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough.
+          //-     .col-md-4
+          //-       .info
+          //-         a(href='/categories/board-games')
+          //-           img.categories-img(src='https://lh5.ggpht.com/1OeRm47x08zJ2pPU7UTZZzXLWLkVP_fgi81Yebl3_1n6fpu0ajk8G0-7pwq-CgUVltY=w300')
+          //-         h4.info-title
+          //-           a(href='/categories/board-games') Board games
+          //-         p
+          //-           | Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough.
+          //-     .col-md-4
+          //-       .info
+          //-         a(href='/categories/climbing')
+          //-           img.categories-img(src='https://fitnesssupermarket.com/media/catalog/category/onboard-rockclimbing.png')
+          //-         h4.info-title
+          //-           a(href='/categories/climbing') Climbing
+          //-         p
+          //-           | Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough.
+          //-   .row
+          //-     .col-md-4
+          //-       .info
+          //-         a(href='/categories/dancing')
+          //-           img.categories-img(src='https://s-media-cache-ak0.pinimg.com/originals/49/30/2d/49302dafdd7bce83440467210cd7d871.png')
+          //-         h4.info-title
+          //-           a(href='/categories/dancing') Dancing
+          //-         p
+          //-           | Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough.
+          //-     .col-md-4
+          //-       .info
+          //-         a(href='/categories/hiking')
+          //-           img.categories-img(src='http://worldartsme.com/images/cartoon-hiker-clipart-1.jpg')
+          //-         h4.info-title
+          //-           aa(href='/categories/hiking') Hiking
+          //-         p
+          //-           | Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough.
+          //-     .col-md-4
+          //-       .info
+          //-         a(href='/categories/history')
+          //-           img.categories-img(src='http://www.freeiconspng.com/uploads/history-png-30.png')
+          //-         h4.info-title
+          //-           a(href='/categories/history') History
+          //-         p
+          //-           | Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough.
+          //-   .row
+          //-     .col-md-4
+          //-       .info
+          //-         a(href='/categories/programming')
+          //-           img.categories-img(src='https://www.mobiwebtech.com/wp-content/uploads/2015/02/Web-Programming-services.png')
+          //-         h4.info-title
+          //-           a(href='/categories/programming') Programming
+          //-         p
+          //-           | Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough.
+          //-     .col-md-4
+          //-       .info
+          //-         a(href='/categories/quiz')
+          //-           img.categories-img(src='http://www.tvedestrand.kommune.no/handlers/bv.ashx/i15e0060e-3800-4278-938e-ba1542648927/quiz.png')
+          //-         h4.info-title
+          //-           a(href='/categories/quiz') Quiz
+          //-         p
+          //-           | Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough.
+          //-     .col-md-4
+          //-       .info
+          //-         a(href='/categories/swimming')
+          //-           img.categories-img(src='http://www.pngall.com/wp-content/uploads/2016/03/Swimming-PNG-Pic.png')
+          //-         h4.info-title
+          //-           a(href='/categories/swimming') Swimming
+          //-         p
+          //-           | Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough.
         
         .section.text-center.section-landing
           .row
               .col-md-2.col-md-offset-0
                 h2.title Upcomming competitions
                 ul.upcomming
-                    each commingCompetition in result.upcommingCompetition
+                    each commingCompetition in result.upcommingCompetitions
                         li 
                             a(href="/competitions/" + commingCompetition._id) #{commingCompetition.place}
                             div #{commingCompetition.name}

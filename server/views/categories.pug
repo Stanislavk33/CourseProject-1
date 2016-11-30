@@ -1,0 +1,10 @@
+extends _layout
+include categories-mixin
+
+block content
+    .main
+        .container
+            .section.text-center.section-landing
+                +categories-list(result.categories)
+
+

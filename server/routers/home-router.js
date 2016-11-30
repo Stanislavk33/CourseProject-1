@@ -7,7 +7,8 @@ module.exports = (app, data) => {
 
     const router = new express.Router();
 
-    router.get('/', controller.getHome);
+    router.get('/', controller.getHome)
+        .get('/home', controller.getHome)
 
-    app.use('/home', router);
+    app.use('/', router);
 };

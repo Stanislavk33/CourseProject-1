@@ -9,12 +9,12 @@ module.exports = (data) => {
                  data.getTopUsers(),
                  data.getAllCategories()
                  ])
-                .then(([upcommingCompetition, mostPopularCompetition, topUsers, categories]) => {
+                .then(([upcommingCompetitions, topCompetitions, topUsers, categories]) => {
 
                     res.render('home-page', {
                         result: {
-                            upcommingCompetition,
-                            mostPopularCompetition,
+                            upcommingCompetitions,
+                            topCompetitions,
                             topUsers,
                             categories
                         }

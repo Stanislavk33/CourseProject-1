@@ -1,0 +1,25 @@
+mixin categories-list(categories)
+    .features
+        .row
+            .col-md-8.col-md-offset-2
+                h2.title These are our categories
+        - for(let i = 0; i < 9; i+=1 )
+            if i % 3 === 0
+                | <div class='row'>
+                .col-md-4
+                    .info
+                        a(href='/categories/art')
+                            img.categories-img(src='http://www.freeiconspng.com/uploads/art-icon--hobbies-iconset--hadezign-7.png')
+                        h4.info-title
+                            a(href='/categories/art') Art
+                        p Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough.
+            if i % 3 === 2
+                | </div>
+            else
+                .col-md-4
+                    .info
+                        a(href='/categories/board-games')
+                            img.categories-img(src='https://lh5.ggpht.com/1OeRm47x08zJ2pPU7UTZZzXLWLkVP_fgi81Yebl3_1n6fpu0ajk8G0-7pwq-CgUVltY=w300')
+                    h4.info-title
+                        a(href='/categories/board-games') Board games
+                    p Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough.
