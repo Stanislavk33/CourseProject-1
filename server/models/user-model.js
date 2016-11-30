@@ -18,6 +18,8 @@ const userSchema = new Schema({
     competitions: [{
         // TODO: decide on information
     }],
+    facebookId: { type: String },
+    facebookToken: { type: String },
     progress: { type: progressbarSchema },
     inRole: { type: String, default: 'normal' }
 

@@ -54,9 +54,16 @@ module.exports = function(models) {
                 });
             });
         },
-        addCompetitionToCategory(categoryId, competition) { //competition object is created in the controller
+        addCompetitionToCategory(competition) {
             return new Promise((resolve, reject) => {
-                Category.findByIdAndUpdate({ '_id': categoryId }, { $push: { 'competitions': competition } },
+                console.log("before");
+                const competitionToAdd = {
+                    _id: competition._id,
+                    name: competition.name,
+                    status: competition.passed,
+                    organizator: competition.organizator
+                }
+                Category.findOneAndUpdate({ 'title': competition.category }, { $push: { 'competitions': competitionToAdd } },
                     (err) => {
                         if (err) {
                             return reject(err);
