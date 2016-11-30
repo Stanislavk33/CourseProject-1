@@ -1,0 +1,11 @@
+extends _layout
+include ./_mixins/competitions-mixin
+
+block content
+    .main
+        .container
+            .section.text-center.section-landing
+                img.categories-img(src='http://www.freeiconspng.com/uploads/art-icon--hobbies-iconset--hadezign-7.png')
+                h1 #{result.title}
+                p #{result.description}
+                +competitions-list(result.competitions)
