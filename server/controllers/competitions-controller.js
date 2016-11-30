@@ -91,7 +91,6 @@ module.exports = (data) => {
                         console.log(error);
                         res.status(500).json(error);
                     });
-
             }
         },
         likeCompetition(competitionId, req, res) {
@@ -146,7 +145,12 @@ module.exports = (data) => {
                     location: { longitude: body.longitude, latitude: body.latitude }
                 })
                 .then(competition => {
-                    res.redirect(`/competitions/${competition._id}`);
+                    data.addCompetitionToCategory(competition)
+                        .then(() => {
+                            res.redirect(`/competitions/${competition._id}`);
+                        }).catch(err => {
+                            res.status(500).json(err);
+                        });
                 }).catch(err => {
                     console.log(err);
                     res.status(500).json(err);
