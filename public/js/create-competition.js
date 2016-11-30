@@ -9,7 +9,7 @@ function initMap() {
             zoom: 10
         });
 
-    google.maps.event.addListener(map, 'click', function (event) {
+    google.maps.event.addListener(map, 'click', function(event) {
         marker = addMarker(event.latLng, map, marker);
     });
 
@@ -28,7 +28,7 @@ function addMarker(location, map, oldMarker) {
     return marker;
 }
 
-$("#create").on("click", function (ev) {
+$("#create").on("click", function(ev) {
     if (!marker) {
         toastr.error("You should choose a location on the map.")
 
@@ -39,7 +39,7 @@ $("#create").on("click", function (ev) {
 
     let latitude = marker.getPosition().lat();
     let longitude = marker.getPosition().lng();
-    let name = $("#name").val();
+    let competitionName = $("#competitionName").val();
     let place = $("#place").val();
     let points = $("#points").val();
     let level = $("#level").val();
@@ -48,7 +48,7 @@ $("#create").on("click", function (ev) {
     let startDate = $("#startDate").val();
     let endDate = $("#endDate").val();
 
-    let data = { place, points, level, category, keys, latitude, longitude, startDate, endDate }
+    let data = { competitionName, place, points, level, category, keys, latitude, longitude, startDate, endDate }
 
     console.log(data);
     ev.preventDefault();
@@ -58,7 +58,7 @@ $("#create").on("click", function (ev) {
         data: JSON.stringify(data),
         contentType: "application/json"
     }).
-        done(() => {
+    done(() => {
             toastr.success("magic");
         })
         .fail(() => {
