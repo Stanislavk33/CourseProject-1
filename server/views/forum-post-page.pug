@@ -1,21 +1,29 @@
 extends _layout
 
 block content
-
-        h1 #{result.title}
-        p #{result.description}
-        p Posted by #{result.user.username}(#{result.user.points})
-        p Posted on #{result.date}
-        p.likes Likes: #{result.likes}
-        if (result.answers.length)
+        h1(id="post-info" data-id=result.forumPost._id) #{result.forumPost.title}
+        p #{result.forumPost.description}
+        p Posted by #{result.forumPost.user.username}(#{result.forumPost.user.points})
+        p Posted on #{result.forumPost.date}
+        p.likes Likes: #{result.forumPost.likes}
+        if (result.forumPost.answers.length)
             h3 Answers
-            each answer in result.answers
-                p #{answer.user.username}(#{answer.user.points}) : #{answer.content}
-                p Posted on #{answer.date}
-                p.likes Likes: #{answer.likes}
-                    //-TODO: send put request 
-                    button(id="like-post-answer") Like  
+            each answer in result.forumPost.answers
+                div(id="post-answer-info" data-id=answer._id)
+                    p #{answer.user.username}(#{answer.user.points}) : #{answer.content}
+                    p Posted on #{answer.date}
+                    p.likes Likes:
+                        span(id='post-answer-likes-count') #{answer.likes}
+                        if result.currentUser
+                            if answer.usersLiked.indexOf(result.currentUser.username) < 0
+                                button.like-post-answer Like
+                            else
+                                button.unlike-post-answer Unlike
         form(action=`/forum/${result._id}/comment` method="post")
             label(for="comment")
             input(id="comment" class="form-control" type="text" name="content" placeholder="Comment")
-            input(type="submit" class="btn btn-lg" value="Comment")         
+            input(type="submit" class="btn btn-lg" value="Comment")    
+        block scripts
+        script(src="/static/bower_components/jquery/dist/jquery.min.js")
+        script(src="/static/bower_components/toastr/toastr.js")
+        script(src="/static/js/like-unlike-forum.js")     

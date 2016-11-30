@@ -20,7 +20,8 @@ const forumPostSchema = new Schema({
             points: { type: String, required: true }
         },
         date: { type: Date, required: true },
-        likes: { type: Number, required: true }
+        likes: { type: Number, required: true },
+        usersLiked: [String]
     }]
 });
 

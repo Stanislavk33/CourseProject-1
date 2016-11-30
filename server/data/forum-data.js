@@ -92,7 +92,7 @@ module.exports = function (models) {
                 });
             });
         },
-        addAnswerToForumPost(forumPostId, answer) { //answer object is created in the controller
+        addAnswerToForumPost(forumPostId, answer) {
             answer.date = new Date();
             answer.likes = 0;
             return new Promise((resolve, reject) => {
@@ -152,7 +152,92 @@ module.exports = function (models) {
                         return resolve();
                     })
             });
-        }
+        },
         // TODO: updateForumPostAnswerLikes()
+        incrementForumPostAnswerLikes(_id, answerId) { 
+            return new Promise((resolve, reject) => {
+                ForumPost.findOne({ '_id': _id})
+                    .then((forumPost) => {
+                        let answers = forumPost.answers;
+                        answers.forEach(answer => {
+                            if (answer._id == answerId) {
+                                let likes = +answer.likes;
+                                answer.likes = likes + 1;
+                            }
+                        });
+                        return(answers)
+                    }).then((updatedAnswers) => {
+                        ForumPost.findOneAndUpdate({ '_id': _id}, {'answers': updatedAnswers})
+                            .then((done) => {
+                                  resolve(done);
+                            }).catch(err => reject(err));
+                    });
+            });
+        },
+        decrementForumPostAnswerLikes(_id, answerId) { 
+            
+            return new Promise((resolve, reject) => {
+                ForumPost.findOne({ '_id': _id})
+                    .then((forumPost) => {
+                        let answers = forumPost.answers;
+                        answers.forEach(answer => {
+                            if (answer._id == answerId) {
+                                let likes = +answer.likes;
+                                answer.likes = likes - 1;
+                            }
+                        });
+                        return(answers)
+                    }).then((updatedAnswers) => {
+                        console.log(updatedAnswers);
+                        ForumPost.findOneAndUpdate({ '_id': _id}, {'answers': updatedAnswers})
+                            .then((done) => {
+                                  resolve(done);
+                            }).catch(err => reject(err));
+                    });
+            });
+        },  
+        addUsernameToPostAnswerUsersLiked(postId, answerId, username) {
+            return new Promise((resolve, reject) => {
+
+                ForumPost.findOne({ '_id': postId})
+                    .then((forumPost) => {
+                        let answers = forumPost.answers;
+                        answers.forEach(answer => {
+                            if (answer._id == answerId) {
+                                let usersLiked = answer.usersLiked;
+                                usersLiked.push(username);
+                            }
+                        });
+                        return(answers)
+                    }).then((updatedAnswers) => {
+                        console.log(updatedAnswers);
+                        ForumPost.findOneAndUpdate({ '_id': postId}, {'answers': updatedAnswers})
+                            .then((done) => {
+                                  resolve(done);
+                            }).catch(err => reject(err));
+                    });
+            });
+        },
+        removeUsernameFromPostAnswerUsersLiked(postId, answerId, username) {
+            return new Promise((resolve, reject) => {
+                ForumPost.findOne({ '_id': postId})
+                    .then((forumPost) => {
+                        let answers = forumPost.answers;
+                        answers.forEach(answer => {
+                            if (answer._id == answerId) {
+                                let usersLiked = answer.usersLiked;
+                                usersLiked.pull(username);
+                            }
+                        });
+                        return(answers)
+                    }).then((updatedAnswers) => {
+                        console.log(updatedAnswers);
+                        ForumPost.findOneAndUpdate({ '_id': postId}, {'answers': updatedAnswers})
+                            .then((done) => {
+                                  resolve(done);
+                            }).catch(err => reject(err));
+                    });
+            });
+        }
     };
 };

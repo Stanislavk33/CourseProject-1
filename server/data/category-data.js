@@ -29,7 +29,7 @@ module.exports = function(models) {
         },
         getCategoriesByTitle(title) {
             return new Promise((resolve, reject) => {
-                Category.find({ 'title': title }, (err, categories) => {
+                Category.findOne({ 'title': title }, (err, categories) => {
                     if (err) {
                         return reject(err);
                     }
@@ -61,7 +61,8 @@ module.exports = function(models) {
                     _id: competition._id,
                     name: competition.name,
                     status: competition.passed,
-                    organizator: competition.organizator
+                    organizator: competition.organizator,
+                    place: competition.place
                 }
                 Category.findOneAndUpdate({ 'title': competition.category }, { $push: { 'competitions': competitionToAdd } },
                     (err) => {
