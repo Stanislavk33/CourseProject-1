@@ -1,6 +1,9 @@
 extends _layout
+include ./_mixins/competitions-mixin
 
 block content
-    each competition in result
-        h3
-            a(href="/competitions/"+ competition._id)= competition.place
+    .main
+        .container
+            hgroup.mb20
+                h2 All competitions
+            +competitions-list(result)

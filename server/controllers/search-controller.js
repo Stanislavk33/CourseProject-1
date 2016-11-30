@@ -4,7 +4,7 @@ module.exports = (data) => {
     return {
         search(req, res) {
             const body = req.body,
-                searchName = req.query.search;
+                searchName = req.query.search || '';
 
             data.filterCompetitions(searchName)
                 .then((competitions) => {
