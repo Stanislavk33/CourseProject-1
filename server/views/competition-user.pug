@@ -3,6 +3,18 @@ extends competition.pug
 block styles
     link(rel="stylesheet" type="text/css" href="/static/bower_components/toastr/toastr.css")
 
+block like
+
+    div(id="competition-info" data-id=result._id)
+        h3.competition
+            a(href="/competitions/"+ result._id)= result.title
+        p.likes Likes: 
+            span(id='competition-likes-count') #{result.likes}
+                if result.usersLiked
+                    button.like-competition Like
+                else
+                    button.dislike-competition Dislike    
+
 block joining
     if result.hasJoined
         button(id="leave") Leave
@@ -16,4 +28,5 @@ block scripts
     script(src="/static/bower_components/jquery/dist/jquery.min.js")
     script(src="/static/bower_components/toastr/toastr.js")
     script(src="/static/js/join-competition.js")
+    script(src="/static/js/like-dislike-competition.js")
     

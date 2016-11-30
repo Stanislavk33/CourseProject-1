@@ -19,6 +19,8 @@ block content
                 ul
                 each tag in result.keys
                     li #{tag}
+
+                block like
                 
                 h2 Joined users
                 table(id="joined-users")
@@ -38,6 +40,7 @@ block content
     script(src="/static/bower_components/jquery/dist/jquery.min.js")
     script(src="/static/bower_components/toastr/toastr.js")
     script(src="/static/js/add-points.js")
+
     
                 
 
