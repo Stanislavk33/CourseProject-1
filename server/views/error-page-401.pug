@@ -1,0 +1,30 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    title Error page
+    link(href='/static/bower_components/bootstrap/dist/css/bootstrap.css', rel='stylesheet')    
+    link(href='/static/bower_components/material-kit/assets/css/bootstrap.min.css', rel='stylesheet')
+    link(href='/static/bower_components/material-kit/assets/css/material-kit.css', rel='stylesheet')
+    link(href='/static/css/error-page.css', rel='stylesheet')
+    block styles
+  body
+    .container
+      .row
+        .span12
+          .hero-unit.center
+            h1
+              | HTTP Error 401 Unauthorized
+              small
+                font(face='Tahoma', color='red') Error 401
+            br
+            p
+              | The request has not been applied because it lacks valid authentication credentials for the target resource.
+              b Back
+              |  button to navigate to the page you have prevously come from
+            p
+              b Or you could just press this neat little button:
+            a.btn.btn-large.btn-info(href='/home')
+              i.icon-home.icon-white
+              |  Take Me Home
+              block content

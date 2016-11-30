@@ -8,9 +8,10 @@ module.exports = {
                 next();
             } else {
                 res.status(401).json({
-                    success: false,
-                    message: 'Not authorized!'
-                });
+                        success: false,
+                        message: 'Not authorized!'
+                    })
+                    .render('error-page-401');
             }
         }
     },
@@ -19,9 +20,10 @@ module.exports = {
             next();
         } else {
             res.status(401).json({
-                success: false,
-                message: 'Not authorized'
-            })
+                    success: false,
+                    message: 'Not authorized'
+                })
+                .render('error-page-401');
         }
     }
 }
