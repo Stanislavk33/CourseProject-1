@@ -13,7 +13,7 @@ const userSchema = new Schema({
     passHash: { type: String, required: true },
     salt: { type: String, required: true },
     birthDate: { type: Date },
-    email: { type: String, required: true },
+    email: { type: String },
     image: { type: String, default: '' },
     competitions: [{
         // TODO: decide on information

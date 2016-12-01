@@ -3,7 +3,7 @@
 const passport = require('passport');
 
 module.exports = (app, data) => {
-    
+
     passport.serializeUser((user, done) => {
         if (user) {
             done(null, user.id);
@@ -20,7 +20,7 @@ module.exports = (app, data) => {
             });
     });
     require('./local-strategy')(passport, data);
-
+    require('./facebook-strategy')(passport, data);
     app.use(passport.initialize());
     app.use(passport.session());
 }

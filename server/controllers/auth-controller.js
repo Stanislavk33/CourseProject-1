@@ -61,6 +61,33 @@ module.exports = (data) => {
         logout(req, res) {
             req.logout();
             res.status(200).send('<h1>Logged Out</h1>');
+        },
+        loginUserFacebook(req, res, next) {
+            const auth = passport.authenticate('facebook', { scope: ['email'] }, function(error, user) {
+                if (error) {
+                    console.log(error);
+                    next(error);
+                    return;
+                }
+
+                if (!user) {
+                    res.json({
+                        success: false,
+                        message: 'Invalid name or password!'
+                    });
+                }
+
+                req.login(user, error => {
+                    if (error) {
+                        next(error);
+                        return;
+                    }
+
+                    res.redirect('/profile');
+                });
+            });
+
+            auth(req, res, next);
         }
     }
 }

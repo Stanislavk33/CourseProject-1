@@ -2,7 +2,7 @@
 
 const hashing = require("../utilities/encryptor");
 
-module.exports = function (models) {
+module.exports = function(models) {
     const User = models.User;
 
     return {
@@ -198,18 +198,29 @@ module.exports = function (models) {
         },
         searchUsersByName(name) {
             return new Promise((resolve, reject) => {
-                const usernameRegex = { username: {$regex: `.*${name}.*` }};
-                const firstNameRegex = { firstName:{$regex: `.*${name}.*` }};
-                const lastNameRegex = { lastName: {$regex:`.*${name}.*` }};
+                const usernameRegex = { username: { $regex: `.*${name}.*` } };
+                const firstNameRegex = { firstName: { $regex: `.*${name}.*` } };
+                const lastNameRegex = { lastName: { $regex: `.*${name}.*` } };
 
-                User.find({ $or: [usernameRegex, firstNameRegex, lastNameRegex]}, (err, users)=>{
-                    if(err){
+                User.find({ $or: [usernameRegex, firstNameRegex, lastNameRegex] }, (err, users) => {
+                    if (err) {
                         return reject(err);
                     }
                     console.log(users);
                     return resolve(users);
                 })
             });
+        },
+        findUserByFacebookId(facebookId) {
+            return new Promise((resolve, reject) => {
+                User.findOne({ facebookId }, (err, user) => {
+                    if (err) {
+                        return reject(err);
+                    }
+
+                    return resolve(user);
+                })
+            })
         }
 
     };

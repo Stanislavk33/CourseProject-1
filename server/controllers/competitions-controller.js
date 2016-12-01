@@ -12,14 +12,11 @@ module.exports = (data) => {
                 view = 'competition-user';
                 username = req.user.username;
             }
-            console.log(username);
             data.getCompetitionById(id)
                 .then(competition => {
                     if (username === competition.organizator) {
                         // view = 'some-new-view';
                         competition.isOrgan = true;
-                        console.log('here');
-                        console.log(competition.isOrgan);
                     }
                     if (competition.joinedUsers.find(x => x.username === username)) {
                         competition.hasJoined = true;
