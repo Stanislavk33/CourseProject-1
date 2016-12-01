@@ -22,7 +22,6 @@ module.exports = function(models) {
                     if (err) {
                         return reject(err);
                     }
-                    console.log(competition);
                     return resolve(competition);
                 });
             });
@@ -93,12 +92,11 @@ module.exports = function(models) {
                         if (err) {
                             return reject(err);
                         }
-
                         return resolve(competition);
                     });
             });
         },
-        addJoinedUserToCompetition(competitionId, username) { //user object is created in the controller
+        addJoinedUserToCompetition(competitionId, username) {
             return new Promise((resolve, reject) => {
                 const conditions = {
                     _id: competitionId,
@@ -106,7 +104,6 @@ module.exports = function(models) {
                 }
                 Competition.findOneAndUpdate(conditions, { $addToSet: { 'joinedUsers': { username, attended: false } } },
                     (err, competition) => {
-                        console.log(competition);
                         if (err) {
                             return reject(err);
                         }
@@ -121,7 +118,6 @@ module.exports = function(models) {
                         return reject(err);
                     }
 
-                    console.log(competition);
                     resolve(competition);
                 });
             });
@@ -197,24 +193,6 @@ module.exports = function(models) {
 
             })
         }
-        // Not working
-        // getCompetitionsByKeys(...keys) { 
-        //     if (Array.isArray(keys[0])) {
-        //         keys = keys[0];
-        //     }
-        //     console.log(keys);
-        //     return new Promise((resolve, reject) => {
-        //         Competition.find({ 
-        //             'keys': keys
-        //             })
-        //         }, (err, competitions) => {
-        //             if (err){
-        //                 return reject(err);
-        //             }
-
-        //             return resolve(competitions);
-        //             });
-        //     },
     };
 };
 

@@ -123,7 +123,6 @@ module.exports = function(models) {
                         return reject(err);
                     }
 
-                    console.log(user);
                     resolve(user);
                 });
             });

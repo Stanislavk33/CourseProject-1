@@ -10,10 +10,10 @@ block like
             a(href="/competitions/"+ result._id)= result.title
         p.likes Likes: 
             span(id='competition-likes-count') #{result.likes}
-                if result.usersLiked
-                    button.like-competition Like
-                else
-                    button.dislike-competition Dislike    
+            if result.usersLiked.indexOf(user.username) < 0
+                button.like-competition Like
+            else
+                button.dislike-competition Dislike    
 
 block joining
     if result.hasJoined
@@ -22,7 +22,6 @@ block joining
     else
         button.hidden(id="leave") Leave
         button(id="join") Join
-    //- leave
 
 block scripts
     script(src="/static/bower_components/jquery/dist/jquery.min.js")

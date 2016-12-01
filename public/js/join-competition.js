@@ -38,7 +38,6 @@
                 toastr.success("You left this competition!");
             })
             .fail((err) => {
-                console.log(err);
                 toastr.error(err.message);
             });
 

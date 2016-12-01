@@ -28,9 +28,7 @@ const competitionSchema = new Schema({
         longitude: { type: String }
     },
     //passed: { type: String, enum: Status, required: true },
-    usersLiked: [{
-        user: String
-    }],
+    usersLiked: [String]
 });
 
 competitionSchema.virtual('passed').get(function() {

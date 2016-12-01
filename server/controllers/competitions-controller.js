@@ -7,10 +7,11 @@ module.exports = (data) => {
 
             let view = 'competition';
             let username;
+            let user = req.user;
 
             if (req.isAuthenticated()) {
                 view = 'competition-user';
-                username = req.user.username;
+                username = user.username;
             }
             data.getCompetitionById(id)
                 .then(competition => {
@@ -23,7 +24,7 @@ module.exports = (data) => {
                     }
 
                     competition.passed = competition.getPassed();
-                    res.render(view, { result: competition });
+                    res.render(view, { result: competition, user: user });
                 });
         },
         getCreatePage(req, res) {
@@ -92,16 +93,16 @@ module.exports = (data) => {
                         });
                     })
                     .catch(error => {
-                        console.log(error);
                         res.status(500).json(error);
                     });
             }
         },
-        likeCompetition(competitionId, req, res) {
+        likeCompetition(req, res) {
+            const competitionId = req.params.id;
             let update = { $inc: { likes: 1 } };
             data.updateCompetition(competitionId, update, null)
                 .then((competition) => {
-                    let user = { user: req.user.username };
+                    let user = req.user.username;
                     competition.usersLiked.push(user);
                     competition.save();
                     return competition;
@@ -110,11 +111,13 @@ module.exports = (data) => {
                     res.json(JSON.stringify(competition.likes + 1));
                 });
         },
-        dislikeCompetition(competitionId, index, res) {
+        dislikeCompetition(req, res) {
+            const competitionId = req.params.id;
             let update = { $inc: { likes: -1 } };
             data.updateCompetition(competitionId, update, null)
                 .then((competition) => {
-                    competition.usersLiked.splice(index, 1);
+                    let user = req.user.username;
+                    competition.usersLiked.pull(user);
                     competition.save();
                     return competition;
                 })

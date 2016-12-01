@@ -60,7 +60,7 @@ module.exports = (data) => {
             data.createForumPost({
                 title: body.title,
                 description: body.description,
-                user: { username: req.user.username, points: req.user.progress.totalPoints}
+                user: { username: user.username, points: user.progress.totalPoints}
             })
                 .then(() => {
                     res.redirect('/forum')
