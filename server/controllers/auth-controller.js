@@ -62,7 +62,7 @@ module.exports = (data) => {
             res.status(200).send('<h1>Logged Out</h1>');
         },
         loginUserFacebook(req, res, next) {
-            const auth = passport.authenticate('facebook', { scope: ['email'] }, function(error, user) {
+            const auth = passport.authenticate('facebook', { scope: ['user'] }, function(error, user) {
                 if (error) {
                     console.log(error);
                     next(error);

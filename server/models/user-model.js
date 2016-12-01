@@ -22,7 +22,6 @@ const userSchema = new Schema({
     facebookToken: { type: String },
     progress: { type: progressbarSchema },
     inRole: { type: String, default: 'normal' }
-
 });
 
 userSchema.methods = {

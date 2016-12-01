@@ -34,7 +34,6 @@ const competitionSchema = new Schema({
 });
 
 competitionSchema.virtual('passed').get(function() {
-    return this.name.first + ' ' + this.name.last;
     if (+Date.now() > +new Date(this.endDate)) {
         return 'passed';
     } else if (+new Date(this.startDate) < +Date.now() &&
@@ -44,6 +43,17 @@ competitionSchema.virtual('passed').get(function() {
         return 'upcoming';
     };
 });
+
+competitionSchema.methods.getPassed = function() {
+    if (+Date.now() > +new Date(this.endDate)) {
+        return 'passed';
+    } else if (+new Date(this.startDate) < +Date.now() &&
+        +Date.now() < +new Date(this.endDate)) {
+        return 'ongoing';
+    } else {
+        return 'upcoming';
+    };
+};
 
 mongoose.model('Competition', competitionSchema);
 

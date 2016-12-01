@@ -22,6 +22,7 @@ module.exports = (data) => {
                         competition.hasJoined = true;
                     }
 
+                    competition.passed = competition.getPassed();
                     res.render(view, { result: competition });
                 });
         },
@@ -124,8 +125,6 @@ module.exports = (data) => {
         createCompetition(req, res) {
             let body = req.body,
                 user = req.user.username;
-            console.log("controller" + req.body.startDate);
-            console.log("controller" + req.body.endDate);
 
             console.log(body.competitionName + "   asdsadsa");
             data.createCompetition({
