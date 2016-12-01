@@ -43,11 +43,11 @@ html(lang='en')
             li
               a.dropdown-toggle(href='/competitions/create') Create competition 
 
-          if user
+          if result.user
             ul.nav.navbar-nav.navbar-right
               li
-                a.dropdown-toggle(href='/profile') Profile
-                  if user.isAdmin
+                a.dropdown-toggle(href='/users/'+result.user.username) Profile
+                  if result.user.isAdmin
                     li
                       a(href="/profile") Admin
               li

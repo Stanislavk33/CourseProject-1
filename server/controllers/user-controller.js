@@ -21,7 +21,7 @@ module.exports = (data) => {
                             .redirect('/error');
                     }
 
-                    return res.status(200).render(view, { result: user });
+                    return res.status(200).render(view, { result: { user: req.user } });
                 })
                 .catch((err) => {
                     return res.status(500).json(err);
@@ -34,7 +34,7 @@ module.exports = (data) => {
             if (req.isAuthenticated() && req.user.username === username) {
                 data.getUserByUsername(username)
                     .then((user) => {
-                        return res.status(200).render('edit-profile', { result: user });
+                        return res.status(200).render('edit-profile', { result: { user: req.user } });
                     })
             } else {
                 return res.status(400).json({
@@ -77,10 +77,10 @@ module.exports = (data) => {
             res.redirect("/");
         },
         loadRegisterPage(req, res) {
-            res.render("user/register");
+            res.render("user/register", { result: { user: req.user } });
         },
         loadLoginPage(req, res) {
-            res.render("user/login");
+            res.render("user/login", { result: { user: req.user } });
         },
         getById(req, res) {
             data.getUserById(req.params.id)
@@ -113,26 +113,26 @@ module.exports = (data) => {
                         })
                 })
         },
-        loadUsers(req, res){
-            if(req.query.search){
+        loadUsers(req, res) {
+            if (req.query.search) {
                 const searchName = req.query.search;
                 console.log(searchName);
-                data.searchUsersByName(searchName)  
-                    .then(users=>{
+                data.searchUsersByName(searchName)
+                    .then(users => {
                         console.log(searchName);
-                        return res.status(200).render('users', {result:{users,searchName}});
+                        return res.status(200).render('users', { result: { users, searchName, user: req.user } });
                     })
-                    .catch(err=>{
+                    .catch(err => {
                         console.log(err);
-                        return res.status(500).json(err).render('error');
+                        return res.status(500).json(err).render('error', { result: { user: req.user } });
                     });
-            }else{
+            } else {
                 data.getTopUsers()
-                    .then(users=>{
-                        return res.status(200).render('users', {result:{users}});
+                    .then(users => {
+                        return res.status(200).render('users', { result: { users, user: req.user } });
                     })
-                    .catch(err=>{
-                        return res.status(500).json(err).render('error');
+                    .catch(err => {
+                        return res.status(500).json(err).render('error', { result: { user: req.user } });
                     });
             }
         }

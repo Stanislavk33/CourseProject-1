@@ -4,11 +4,11 @@ module.exports = (data) => {
     return {
         getHome(req, res) {
             Promise.all([
-                data.getLatestUpcommingCompetitions(),
-                 data.getMostPopularCompetitions(),
-                 data.getTopUsers(),
-                 data.getAllCategories()
-                 ])
+                    data.getLatestUpcommingCompetitions(),
+                    data.getMostPopularCompetitions(),
+                    data.getTopUsers(),
+                    data.getAllCategories()
+                ])
                 .then(([upcommingCompetitions, topCompetitions, topUsers, categories]) => {
 
                     res.render('home-page', {
@@ -16,7 +16,8 @@ module.exports = (data) => {
                             upcommingCompetitions,
                             topCompetitions,
                             topUsers,
-                            categories
+                            categories,
+                            user: req.user
                         }
                     })
                 });

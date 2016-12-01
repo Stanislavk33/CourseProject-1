@@ -15,7 +15,7 @@ module.exports = (data) => {
 
                     if (count === 0) {
                         return res.render('forum-page', {
-                            result: { forumPosts, params: { page, pages: 0 } }
+                            result: { forumPosts, params: { page, pages: 0 }, user: req.user }
                         });
                     }
 
@@ -45,23 +45,23 @@ module.exports = (data) => {
                     const user = req.user;
 
                     return res.status(200).render('forum-page', {
-                        result: { forumPosts, user, params: { page, pages } }
+                        result: { forumPosts, user: req.user, params: { page, pages } }
                     });
                 })
                 .catch(err => { res.status(404).send(err); });
         },
         getCreatePage(req, res) {
-            return res.status(200).render('create-forum-post');
+            return res.status(200).render('create-forum-post', { result: { user: req.user } });
         },
         createForumPost(req, res) {
             const body = req.body,
                 user = req.user;
 
             data.createForumPost({
-                title: body.title,
-                description: body.description,
-                user: { username: req.user.username, points: req.user.progress.totalPoints}
-            })
+                    title: body.title,
+                    description: body.description,
+                    user: { username: req.user.username, points: req.user.progress.totalPoints }
+                })
                 .then(() => {
                     res.redirect('/forum')
                 }).catch(err => {
@@ -73,7 +73,7 @@ module.exports = (data) => {
             const currentUser = req.user;
             data.getForumPostById(id)
                 .then(forumPost => {
-                    res.render('forum-post-page', { result: {forumPost, currentUser} });
+                    res.render('forum-post-page', { result: { forumPost, currentUser, user: req.user } });
                 });
         },
         addComment(req, res) { //
@@ -82,9 +82,9 @@ module.exports = (data) => {
                 id = req.params.id;
 
             data.addAnswerToForumPost(id, {
-                content: body.content,
-                user: { username: req.user.username, points: req.user.progress.totalPoints} 
-            })
+                    content: body.content,
+                    user: { username: req.user.username, points: req.user.progress.totalPoints }
+                })
                 .then(() => {
                     res.redirect('/forum/' + id)
                 }).catch(err => {
@@ -113,12 +113,12 @@ module.exports = (data) => {
                     console.log(err);
                 });
         },
-        AddLikeToAnswer(req, res) { 
+        AddLikeToAnswer(req, res) {
             const postId = req.params.id;
             const answerId = req.params.answerid;
             data.incrementForumPostAnswerLikes(postId, answerId)
                 .then(() => data.addUsernameToPostAnswerUsersLiked(postId, answerId, req.user.username))
-                .then(() =>{
+                .then(() => {
                     res.send('');
                 }).catch(err => {
                     console.log(err);
@@ -129,7 +129,7 @@ module.exports = (data) => {
             const answerId = req.params.answerid;
             data.decrementForumPostAnswerLikes(postId, answerId)
                 .then(() => data.removeUsernameFromPostAnswerUsersLiked(postId, answerId, req.user.username))
-                .then(() =>{
+                .then(() => {
                     res.send('');
                 }).catch(err => {
                     console.log(err);
