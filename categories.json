@@ -1,0 +1,65 @@
+[
+    {
+        "link": "art",
+        "title": "Art",
+        "description": "Art is awesome!",
+        "image": "art.png",
+        "competitions": []
+    },
+    {
+        "link": "board-games",
+        "title": "Board Games",
+        "description": "Play board games and win awesome prizes!",
+        "image": "board-games.png",
+        "competitions": []
+    },
+    {
+        "link": "climbing",
+        "title": "Climbing",
+        "description": "It might sound a bit extreme but it is definitely worth it!",
+        "image": "climbing.png",
+        "competitions": []
+    },
+    {
+        "link": "dancing",
+        "title": "Dancing",
+        "description": "Get away from the everyday stress with awesome music and dancing!",
+        "image": "dancing.png",
+        "competitions": []
+    },
+    {
+        "link": "hiking",
+        "title": "Hiking",
+        "description": "Discover the hidden beauties of Bulgaria while being in the fresh air!",
+        "image": "hiking.jpg",
+        "competitions": []
+    },
+    {
+        "link": "history",
+        "title": "History",
+        "description": "Show your history knowledge and have fun while learning a lot of new facts!",
+        "image": "history.png",
+        "competitions": []
+    },
+    {
+        "link": "programming",
+        "title": "Programming",
+        "description": "Learn to code and you can write an app as cool as ours!",
+        "image": "programming.png",
+        "competitions": []
+    },
+    {
+        "link": "quiz",
+        "title": "Quiz",
+        "description": "Let's see if you can answer all of the questions!",
+        "image": "quiz.png",
+        "competitions": []
+    },
+    {
+        "link": "swimming",
+        "title": "Swimming",
+        "description": "Healthy, ",
+        "image": "swimming.png",
+        "competitions": []
+    }
+]

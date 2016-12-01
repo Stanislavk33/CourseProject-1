@@ -27,14 +27,14 @@ module.exports = function(models) {
                 });
             })
         },
-        getCategoriesByTitle(title) {
+        getCategoryByLink(link) {
             return new Promise((resolve, reject) => {
-                Category.findOne({ 'title': title }, (err, categories) => {
+                Category.findOne({ 'link': link }, (err, category) => {
                     if (err) {
                         return reject(err);
                     }
 
-                    return resolve(categories);
+                    return resolve(category);
                 });
             });
         },

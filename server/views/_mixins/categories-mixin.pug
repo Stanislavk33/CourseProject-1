@@ -8,18 +8,25 @@ mixin categories-list(categories)
                 | <div class='row'>
                 .col-md-4
                     .info
-                        a(href='/categories/art')
-                            img.categories-img(src='http://www.freeiconspng.com/uploads/art-icon--hobbies-iconset--hadezign-7.png')
+                        a(href='/categories/' + categories[i].link)
+                            img.categories-img(src='/static/imgs/categories-images/'+categories[i].image)
                         h4.info-title
-                            a(href='/categories/art') Art
-                        p Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough.
-            if i % 3 === 2
-                | </div>
+                            a(href='/categories/'+categories[i].link) #{categories[i].title}
+                        p #{categories[i].description}
+            else if i % 3 === 2
+                .col-md-4
+                    .info
+                        a(href='/categories/' + categories[i].link)
+                            img.categories-img(src='/static/imgs/categories-images/'+categories[i].image)
+                        h4.info-title
+                            a(href='/categories/'+categories[i].link) #{categories[i].title}
+                        p #{categories[i].description}
+                | </div>   
             else
                 .col-md-4
                     .info
-                        a(href='/categories/board-games')
-                            img.categories-img(src='https://lh5.ggpht.com/1OeRm47x08zJ2pPU7UTZZzXLWLkVP_fgi81Yebl3_1n6fpu0ajk8G0-7pwq-CgUVltY=w300')
-                    h4.info-title
-                        a(href='/categories/board-games') Board games
-                    p Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough.
+                        a(href='/categories/' + categories[i].link)
+                            img.categories-img(src='/static/imgs/categories-images/'+categories[i].image)
+                        h4.info-title
+                            a(href='/categories/'+categories[i].link) #{categories[i].title}
+                        p #{categories[i].description} 

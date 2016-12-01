@@ -7,8 +7,10 @@ const mongoose = require('mongoose'),
     Status = constants.competitionStatus;
 
 const categorySchema = new Schema({
+    link: {type: String, required: true},
     title: { type: String, required: true, unique: true },
     description: { type: String },
+    image: {type: String, required: true},
     competitions: [{
         _id: { type: String, required: true },
         name: { type: String, required: true },
