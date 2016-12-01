@@ -60,7 +60,7 @@ module.exports = function(models) {
                 });
             })
         },
-        createCompetition(competition) { //competition object is created in the controller
+        createCompetition(competition) {
             // const passed = extractPassed(competition.startDate, competition.endDate);
             const newCompetition = new Competition({
                 name: competition.name,

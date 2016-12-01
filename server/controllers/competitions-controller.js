@@ -27,8 +27,14 @@ module.exports = (data) => {
                 });
         },
         getCreatePage(req, res) {
-            return res.status(200).render('create-competition', {
-                result: ['hiking', 'skiing', 'swimming']
+            data.getAllCategories()
+            .then(categories => {
+                return categories.map(c => c.title)
+            })
+            .then(categoriesTitles => {
+                return res.status(200).render('create-competition', {
+                    result: categoriesTitles
+                });
             });
         },
         joinCompetition(req, res) {

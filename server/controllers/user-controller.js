@@ -135,12 +135,6 @@ module.exports = (data) => {
                         return res.status(500).json(err).render('error');
                     });
             }
-        },
-        login(req, res) {
-            // TODO
-        },
-        logout(req, res) {
-            // TODO
         }
     }
 }
