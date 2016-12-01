@@ -8,7 +8,7 @@ module.exports = (app, data) => {
 
     router
         .get('/', controller.loadCategories)
-        .get('/:title', controller.getCategoryByTitle)
+        .get('/:link', controller.getCategoryByTitle)
 
     app.use('/categories', router);
 };

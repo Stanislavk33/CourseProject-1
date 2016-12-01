@@ -12,8 +12,8 @@ module.exports = (data) => {
                 });
         },
         getCategoryByTitle(req, res){
-            const title = req.params.title;
-            data.getCategoriesByTitle(title)
+            const link = req.params.link;
+            data.getCategoryByLink(link)
                 .then(category => {
                     return res.status(200).render('category', {result: category});
                 })
