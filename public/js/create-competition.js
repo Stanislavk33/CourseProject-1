@@ -28,6 +28,11 @@ function addMarker(location, map, oldMarker) {
     return marker;
 }
 
+$(function() {
+    $(".datepicker").datepicker({ dateFormat: "yyyy-mm-dd" });
+});
+
+
 $("#create").on("click", function(ev) {
     if (!marker) {
         toastr.error("You should choose a location on the map.")
@@ -36,6 +41,12 @@ $("#create").on("click", function(ev) {
         return false;
 
     }
+
+    console.log($("#startDate").val());
+    console.log("aaaaaaaaaaaaaaaaaaaa");
+    console.log($("#endDate").val());
+    console.log("bbbbbbbbbbbbbbbbbb");
+
 
     let latitude = marker.getPosition().lat();
     let longitude = marker.getPosition().lng();
@@ -46,6 +57,8 @@ $("#create").on("click", function(ev) {
     let category = $("#category").val();
     let startDate = $("#startDate").val();
     let endDate = $("#endDate").val();
+
+
 
     let data = { competitionName, place, points, level, category, latitude, longitude, startDate, endDate }
 

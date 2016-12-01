@@ -19,16 +19,30 @@ const competitionSchema = new Schema({
             attended: { type: Boolean, default: false }
         }]
     },
+    startDate: { type: Date, required: true },
+    endDate: { type: Date, required: true },
     points: { type: Number, required: true },
     level: { type: String, required: true },
     location: {
         latitude: { type: String },
         longitude: { type: String }
     },
-    passed: { type: String, enum: Status, required: true },
+    //passed: { type: String, enum: Status, required: true },
     usersLiked: [{
         user: String
     }],
+});
+
+competitionSchema.virtual('passed').get(function() {
+    return this.name.first + ' ' + this.name.last;
+    if (+Date.now() > +new Date(this.endDate)) {
+        return 'passed';
+    } else if (+new Date(this.startDate) < +Date.now() &&
+        +Date.now() < +new Date(this.endDate)) {
+        return 'ongoing';
+    } else {
+        return 'upcoming';
+    };
 });
 
 mongoose.model('Competition', competitionSchema);

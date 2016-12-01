@@ -1,7 +1,7 @@
 /* globals module require */
 'use strict';
 
-module.exports = function (models) {
+module.exports = function(models) {
     const Competition = models.Competition;
 
     return {
@@ -22,7 +22,7 @@ module.exports = function (models) {
                     if (err) {
                         return reject(err);
                     }
-
+                    console.log(competition);
                     return resolve(competition);
                 });
             });
@@ -61,7 +61,7 @@ module.exports = function (models) {
             })
         },
         createCompetition(competition) { //competition object is created in the controller
-            const passed = extractPassed(competition.startDate, competition.endDate);
+            // const passed = extractPassed(competition.startDate, competition.endDate);
             const newCompetition = new Competition({
                 name: competition.name,
                 place: competition.place,
@@ -71,7 +71,8 @@ module.exports = function (models) {
                 joinedUsers: [],
                 points: competition.points,
                 level: competition.level,
-                passed: passed,
+                startDate: competition.startDate,
+                endDate: competition.endDate,
                 location: competition.location
             });
 
@@ -154,7 +155,7 @@ module.exports = function (models) {
                 const placeRegex = { place: regex };
                 const categoryRegex = { category: regex };
 
-                Competition.find({$or: [nameRegex, placeRegex, categoryRegex]}, (err, competitions) => {
+                Competition.find({ $or: [nameRegex, placeRegex, categoryRegex] }, (err, competitions) => {
                     if (err) {
                         return reject(err);
                     }
