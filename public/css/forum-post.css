@@ -1,0 +1,28 @@
+/*!
+ * Start Bootstrap - Blog Post (http://startbootstrap.com/)
+ * Copyright 2013-2016 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
+ */
+
+.comment-input{
+    margin-top:0px !important;
+}
+
+.likes{
+    font-size: 1.2em;
+}
+
+.likes button{
+    margin-left: 1em;
+}
+
+.comments{
+    margin-top: 4em;
+}
+
+.post-description{
+    font-size: 2em !important;
+}
+/*.comment-info{
+    margin: 0px !important;
+}*/

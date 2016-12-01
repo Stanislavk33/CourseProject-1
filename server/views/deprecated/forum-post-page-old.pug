@@ -1,0 +1,39 @@
+extends _layout
+
+block styles
+    link(rel="stylesheet" type="text/css" href="/static/bower_components/toastr/toastr.css")
+
+block content
+    div(id="post-info" data-id=result.forumPost._id)
+        h1 #{result.forumPost.title}
+        p #{result.forumPost.description}
+        p Posted by #{result.forumPost.user.username}(#{result.forumPost.user.points})
+        p Posted on #{result.forumPost.date}
+        p.likes Likes: #{result.forumPost.likes}
+            span(id='post-likes-count') #{result.forumPost.likes}
+            if result.currentUser
+                if result.forumPost.usersLiked.indexOf(result.currentUser.username) < 0
+                    button.like-post Like
+                else
+                    button.unlike-post Unlike
+        if (result.forumPost.answers.length)
+            h3 Answers
+            each answer in result.forumPost.answers
+                div(id="post-answer-info" data-id=answer._id)
+                    p #{answer.user.username}(#{answer.user.points}) : #{answer.content}
+                    p Posted on #{answer.date}
+                    p.likes Likes:
+                        span(id='post-answer-likes-count') #{answer.likes}
+                        if result.currentUser
+                            if answer.usersLiked.indexOf(result.currentUser.username) < 0
+                                button.like-post-answer Like
+                            else
+                                button.unlike-post-answer Unlike
+        form(action=`/forum/${result._id}/comment` method="post")
+            label(for="comment")
+            input(id="comment" class="form-control" type="text" name="content" placeholder="Comment")
+            input(type="submit" class="btn btn-lg" value="Comment")    
+        block scripts
+        script(src="/static/bower_components/jquery/dist/jquery.min.js")
+        script(src="/static/bower_components/toastr/toastr.js")
+        script(src="/static/js/like-unlike-forum.js")     

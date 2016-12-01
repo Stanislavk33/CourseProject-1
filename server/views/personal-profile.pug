@@ -3,7 +3,7 @@ extends user-profile
 block edit
     .col-md-2.col-md-offset-12
         button.btn.btn-info
-            a(href="/users/" + result.username + "/edit")
+            a(href="/users/" + result.userForProfile.username + "/edit")
                 i.material-icons border_color 
 
 block joinedCompetitions
@@ -12,7 +12,7 @@ block joinedCompetitions
         | Joined Competitions
         b.caret
       ul.dropdown-menu.btn-info
-        each competition in result.joinedCompetitions
+        each competition in result.userForProfile.joinedCompetitions
             li
             a(href="/competitions/"+ competition.id) #{competition.name}
             span #{competition.place}
@@ -23,14 +23,14 @@ block atendedCompetitions
         | Atended Competitions
         b.caret
       ul.dropdown-menu.btn-info
-            each competition in result.attendedCompetitions
+            each competition in result.userForProfile.attendedCompetitions
                 li
                     div 
                         a(href="/competitions/"+ competition.id) #{competition.name}
                         span #{competition.place}
 
 block progress
-    each category in result.progress.categoriesPoints
+    each category in result.userForProfile.progress.categoriesPoints
         .progress
         .progress-bar.progress-bar-success(style='width: 35%')
             span.sr-only 35% Complete (success)
