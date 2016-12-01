@@ -14,7 +14,7 @@ module.exports = function(config) {
         User = require('../models/user-model'),
         UserGallery = require('../models/user-gallery-model'),
         ForumPost = require('../models/forum-post-model'),
-
+        validator = require('../utilities/validator'),
         models = { Competition, Category, User, UserGallery, ForumPost },
         data = {};
 
@@ -22,7 +22,7 @@ module.exports = function(config) {
         .filter(x => x.includes('-data'))
         .forEach(file => {
             const dataModule =
-                require(path.join(__dirname, file))(models);
+                require(path.join(__dirname, file))(models, validator);
             Object.keys(dataModule)
                 .forEach(key => {
                     data[key] = dataModule[key];

@@ -4,16 +4,35 @@
 const mongoose = require('mongoose'),
     encryptor = require('../utilities/encryptor'),
     Schema = mongoose.Schema,
+    constants = require('../utilities/constants'),
     progressbarSchema = require('./progressbar-model');
 
 const userSchema = new Schema({
-    username: { type: String, unique: true, required: true },
-    firstName: { type: String, match: /^[A-Z]([a-z]?)+$/, required: true },
-    lastName: { type: String, match: /^[A-Z]([a-z]?)+$/, required: true },
+    username: {
+        type: String,
+        unique: true,
+        required: true,
+        minlength: constants.MIN_NAME_LENGTH,
+        maxlength: constants.MAX_NAME_LENGTH
+    },
+    firstName: {
+        type: String,
+        match: constants.NAME_REGEX,
+        required: true,
+        minlength: constants.MIN_NAME_LENGTH,
+        maxlength: constants.MAX_NAME_LENGTH
+    },
+    lastName: {
+        type: String,
+        match: constants.NAME_REGEX,
+        required: true,
+        minlength: constants.MIN_NAME_LENGTH,
+        maxlength: constants.MAX_NAME_LENGTH
+    },
     passHash: { type: String, required: true },
     salt: { type: String, required: true },
     birthDate: { type: Date },
-    email: { type: String },
+    email: { type: String, match: constants.EMAIL_REGEX },
     image: { type: String, default: '' },
     competitions: [{
         // TODO: decide on information
@@ -21,7 +40,7 @@ const userSchema = new Schema({
     facebookId: { type: String },
     facebookToken: { type: String },
     progress: { type: progressbarSchema },
-    inRole: { type: String, default: 'normal' }
+    inRole: { type: String, default: 'normal', minlength: constants.MIN_ROLE_LENGTH, maxlength: constants.MAX_ROLE_LENGTH }
 });
 
 userSchema.methods = {

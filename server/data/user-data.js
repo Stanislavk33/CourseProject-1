@@ -2,7 +2,7 @@
 
 const hashing = require("../utilities/encryptor");
 
-module.exports = function(models) {
+module.exports = function(models, validator) {
     const User = models.User;
 
     return {
@@ -74,7 +74,9 @@ module.exports = function(models) {
         createUser(user) { //user object is created in the controller
             const salt = hashing.getSalt(),
                 passHash = hashing.getPassHash(salt, user.passHash);
-
+            if (!validator.isValidUser(user)) {
+                return reject({ error: "Invalid information" });
+            }
             const newUser = new User({
                 username: user.username,
                 firstName: user.firstName,
@@ -151,6 +153,9 @@ module.exports = function(models) {
         },
         updatePoints(username, points, category) {
             return new Promise((resolve, reject) => {
+                if (!validator.isValidPoints(points)) {
+                    reject({ error: "Invalid points count" });
+                }
                 let currentPoints = 0;
                 const user = User.findOne({ username })
                     .then((user) => {

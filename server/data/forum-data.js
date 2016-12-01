@@ -1,7 +1,7 @@
 /* globals module require */
 'use strict';
 
-module.exports = function (models) {
+module.exports = function(models) {
     const ForumPost = models.ForumPost;
 
     return {
@@ -10,29 +10,30 @@ module.exports = function (models) {
                 limit = pageSize;
 
             return Promise.all([
-                new Promise((resolve, reject) => {
-                    ForumPost.find()
-                        .skip(skip)
-                        .limit(limit)
-                        .exec((err, forumPosts) => {
-                            if (err) {
-                                return reject(err);
-                            }
+                    new Promise((resolve, reject) => {
+                        ForumPost.find()
+                            .sort({ 'date': 'asc' })
+                            .skip(skip)
+                            .limit(limit)
+                            .exec((err, forumPosts) => {
+                                if (err) {
+                                    return reject(err);
+                                }
 
-                            return resolve(forumPosts);
-                        });
-                }),
-                new Promise((resolve, reject) => {
-                    ForumPost.count({})
-                        .exec((err, count) => {
-                            if (err) {
-                                return reject(err);
-                            }
+                                return resolve(forumPosts);
+                            });
+                    }),
+                    new Promise((resolve, reject) => {
+                        ForumPost.count({})
+                            .exec((err, count) => {
+                                if (err) {
+                                    return reject(err);
+                                }
 
-                            return resolve(count);
-                        })
-                })
-            ])
+                                return resolve(count);
+                            })
+                    })
+                ])
                 .then(results => {
                     const [forumPosts, count] = results;
 
@@ -105,7 +106,7 @@ module.exports = function (models) {
                     })
             });
         },
-        incrementForumPostLikes(_id) { 
+        incrementForumPostLikes(_id) {
             return new Promise((resolve, reject) => {
                 ForumPost.findByIdAndUpdate({ '_id': _id }, { '$inc': { 'likes': 1 } },
                     (err) => {
@@ -117,7 +118,7 @@ module.exports = function (models) {
                     })
             });
         },
-        decrementForumPostLikes(_id) { 
+        decrementForumPostLikes(_id) {
             return new Promise((resolve, reject) => {
                 ForumPost.findByIdAndUpdate({ '_id': _id, "score": { "$gt": 0 } }, { '$inc': { 'likes': -1 } },
                     (err) => {
@@ -128,7 +129,7 @@ module.exports = function (models) {
                         return resolve();
                     })
             });
-        },  
+        },
         addUsernameToPostUsersLiked(postId, username) {
             return new Promise((resolve, reject) => {
                 ForumPost.findByIdAndUpdate({ '_id': postId }, { $push: { 'usersLiked': username } },
@@ -154,9 +155,9 @@ module.exports = function (models) {
             });
         },
         // TODO: updateForumPostAnswerLikes()
-        incrementForumPostAnswerLikes(_id, answerId) { 
+        incrementForumPostAnswerLikes(_id, answerId) {
             return new Promise((resolve, reject) => {
-                ForumPost.findOne({ '_id': _id})
+                ForumPost.findOne({ '_id': _id })
                     .then((forumPost) => {
                         let answers = forumPost.answers;
                         answers.forEach(answer => {
@@ -165,19 +166,19 @@ module.exports = function (models) {
                                 answer.likes = likes + 1;
                             }
                         });
-                        return(answers)
+                        return (answers)
                     }).then((updatedAnswers) => {
-                        ForumPost.findOneAndUpdate({ '_id': _id}, {'answers': updatedAnswers})
+                        ForumPost.findOneAndUpdate({ '_id': _id }, { 'answers': updatedAnswers })
                             .then((done) => {
-                                  resolve(done);
+                                resolve(done);
                             }).catch(err => reject(err));
                     });
             });
         },
-        decrementForumPostAnswerLikes(_id, answerId) { 
-            
+        decrementForumPostAnswerLikes(_id, answerId) {
+
             return new Promise((resolve, reject) => {
-                ForumPost.findOne({ '_id': _id})
+                ForumPost.findOne({ '_id': _id })
                     .then((forumPost) => {
                         let answers = forumPost.answers;
                         answers.forEach(answer => {
@@ -186,19 +187,19 @@ module.exports = function (models) {
                                 answer.likes = likes - 1;
                             }
                         });
-                        return(answers)
+                        return (answers)
                     }).then((updatedAnswers) => {
-                        ForumPost.findOneAndUpdate({ '_id': _id}, {'answers': updatedAnswers})
+                        ForumPost.findOneAndUpdate({ '_id': _id }, { 'answers': updatedAnswers })
                             .then((done) => {
-                                  resolve(done);
+                                resolve(done);
                             }).catch(err => reject(err));
                     });
             });
-        },  
+        },
         addUsernameToPostAnswerUsersLiked(postId, answerId, username) {
             return new Promise((resolve, reject) => {
 
-                ForumPost.findOne({ '_id': postId})
+                ForumPost.findOne({ '_id': postId })
                     .then((forumPost) => {
                         let answers = forumPost.answers;
                         answers.forEach(answer => {
@@ -207,18 +208,18 @@ module.exports = function (models) {
                                 usersLiked.push(username);
                             }
                         });
-                        return(answers)
+                        return (answers)
                     }).then((updatedAnswers) => {
-                        ForumPost.findOneAndUpdate({ '_id': postId}, {'answers': updatedAnswers})
+                        ForumPost.findOneAndUpdate({ '_id': postId }, { 'answers': updatedAnswers })
                             .then((done) => {
-                                  resolve(done);
+                                resolve(done);
                             }).catch(err => reject(err));
                     });
             });
         },
         removeUsernameFromPostAnswerUsersLiked(postId, answerId, username) {
             return new Promise((resolve, reject) => {
-                ForumPost.findOne({ '_id': postId})
+                ForumPost.findOne({ '_id': postId })
                     .then((forumPost) => {
                         let answers = forumPost.answers;
                         answers.forEach(answer => {
@@ -227,11 +228,11 @@ module.exports = function (models) {
                                 usersLiked.pull(username);
                             }
                         });
-                        return(answers)
+                        return (answers)
                     }).then((updatedAnswers) => {
-                        ForumPost.findOneAndUpdate({ '_id': postId}, {'answers': updatedAnswers})
+                        ForumPost.findOneAndUpdate({ '_id': postId }, { 'answers': updatedAnswers })
                             .then((done) => {
-                                  resolve(done);
+                                resolve(done);
                             }).catch(err => reject(err));
                     });
             });

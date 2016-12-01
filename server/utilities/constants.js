@@ -2,4 +2,28 @@
 
 module.exports = {
     competitionStatus: ['passed', 'ongoing', 'upcoming'],
+    MIN_NAME_LENGTH: 6,
+    MAX_NAME_LENGTH: 50,
+    MIN_COMPETITION_PLACE_LENGTH: 6,
+    MAX_COMPETITION_PLACE_LENGTH: 50,
+    MIN_CATEGORY_LENGTH: 6,
+    MAX_CATEGORY_LENGTH: 40,
+    MIN_DESCRIPTION_LENGTH: 5,
+    MAX_DESCRIPTION_LENGTH: 200,
+    MIN_POINTS: 5,
+    MAX_POINTS: 100,
+    MIN_LEVEL_LENGTH: 6,
+    MAX_LEVEL_LENGTH: 30,
+    MIN_LINK_LENGTH: 6,
+    MAX_LINK_LENGTH: 50,
+    MIN_TITLE_LENGTH: 6,
+    MAX_TITLE_LENGTH: 50,
+    MIN_FORUM_TITLE_LENGTH: 6,
+    MAX_FORUM_TITLE_LENGTH: 50,
+    EMAIL_REGEX: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+    NAME_REGEX: /^[A-Z]([a-z]?)+$/,
+    MIN_ROLE_LENGTH: 5,
+    MAX_ROLE_LENGTH: 10,
+    MIN_FORUM_POST_ANSWER_LENGTH: 5,
+    MAX_FORUM_POST_ANSWER_LENGTH: 300
 };
