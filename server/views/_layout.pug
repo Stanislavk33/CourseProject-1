@@ -42,8 +42,8 @@ html(lang='en')
             //- if result.isOrganizator
             li
               a.dropdown-toggle(href='/competitions/create') Create competition 
-
-          if result.user
+          
+          if result
             ul.nav.navbar-nav.navbar-right
               li
                 a.dropdown-toggle(href='/users/'+result.user.username) Profile

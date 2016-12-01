@@ -72,33 +72,35 @@ module.exports = function(models, validator) {
             });
         },
         createUser(user) { //user object is created in the controller
-            const salt = hashing.getSalt(),
-                passHash = hashing.getPassHash(salt, user.passHash);
-            if (!validator.isValidUser(user)) {
-                return reject({ error: "Invalid information" });
-            }
-            const newUser = new User({
-                username: user.username,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                passHash: passHash,
-                salt: salt,
-                birthDate: user.birthDate,
-                email: user.email,
-                image: user.image,
-                competitions: [],
-                progress: {
-                    totalPoints: 0,
-                    categoriesPoints: []
-                },
-                inRole: user.inRole
-            });
-            if (user.image) {
-                newUser.image = user.image
-            }
-
             return new Promise((resolve, reject) => {
+
+                const salt = hashing.getSalt(),
+                    passHash = hashing.getPassHash(salt, user.passHash);
+                if (!validator.isValidUser(user)) {
+                    return reject({ error: "Invalid information" });
+                }
+                const newUser = new User({
+                    username: user.username,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    passHash: passHash,
+                    salt: salt,
+                    birthDate: user.birthDate,
+                    email: user.email,
+                    image: user.image,
+                    competitions: [],
+                    progress: {
+                        totalPoints: 0,
+                        categoriesPoints: []
+                    },
+                    inRole: user.inRole
+                });
+
+                if (user.image) {
+                    newUser.image = user.image
+                }
                 newUser.save(err => {
+
                     if (err) {
                         return reject(err);
                     }
