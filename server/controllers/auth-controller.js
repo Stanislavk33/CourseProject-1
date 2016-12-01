@@ -5,7 +5,7 @@ const passport = require('passport');
 module.exports = (data) => {
     return {
         loadRegisterPage(req, res) {
-            return res.status(200).render('register');
+            return res.status(200).render('register', { result: { user: req.user } });
         },
         loadLoginPage(req, res) {
             return res.status(200).render('login', { result: { user: req.user } });
