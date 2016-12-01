@@ -18,7 +18,7 @@ mixin competitions-list(competitions)
               li
                 i.glyphicon.glyphicon-user
                 span By 
-                    a(href='/users/organizator') #{competition.organizator}
+                    a(href='/users/' + competition.organizator) #{competition.organizator}
           .col-xs-12.col-sm-12.col-md-7.excerpet
             h2
               a(href='/competitions/'+competition._id) #{competition.name}
