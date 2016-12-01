@@ -8,7 +8,7 @@ module.exports = (data) => {
 
             data.filterCompetitions(searchName)
                 .then((competitions) => {
-                    return res.status(200).render('searchpage', { result: { competitions, searchName } });
+                    return res.status(200).render('searchpage', { result: { competitions, searchName, user: req.user } });
                 })
         },
         searchUser(username, isLoggedIn, req, res) {
@@ -21,7 +21,7 @@ module.exports = (data) => {
             let query = { username: new RegExp(username, "i") };
             data.findUserWithIdAndName(query)
                 .then((users) => {
-                    return res.status(200).render('searchpage', { result: { users } });
+                    return res.status(200).render('searchpage', { result: { users, user: req.user } });
                 }, err => {
                     console.log(err);
                 });

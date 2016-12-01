@@ -1,0 +1,30 @@
+.forum.table > tbody > tr > td {
+    vertical-align: middle;
+}
+
+.forum .fa {
+    width: 1em;
+    text-align: center;
+    color: #0068AD;
+}
+
+.forum.table th.cell-stat {
+    width: 10em;
+}
+
+.forum.table th.cell-stat-2x {
+    width: 14em;
+}
+
+#create-forum{
+    color: white !important;
+}
+
+.forum .likes .btn{
+    margin-left:2em;
+}
+
+.pagination li a{
+    border: 1px solid #0068AD;
+    font-weight: bold;
+}

@@ -29,14 +29,17 @@ module.exports = (data) => {
         },
         getCreatePage(req, res) {
             data.getAllCategories()
-            .then(categories => {
-                return categories.map(c => c.title)
-            })
-            .then(categoriesTitles => {
-                return res.status(200).render('create-competition', {
-                    result: categoriesTitles
+                .then(categories => {
+                    return categories.map(c => c.title)
+                })
+                .then(categoriesTitles => {
+                    return res.status(200).render('create-competition', {
+                        result: {
+                            categoriesTitles,
+                            user: req.user
+                        }
+                    });
                 });
-            });
         },
         joinCompetition(req, res) {
             if (!req.isAuthenticated()) {
@@ -128,7 +131,7 @@ module.exports = (data) => {
         loadCompetitions(req, res) {
             data.getAllCompetitions()
                 .then(competitions => {
-                    res.render('competition-list', { result: competitions });
+                    res.render('competition-list', { result: { competitions, user: req.user } });
                 });
         },
         createCompetition(req, res) {

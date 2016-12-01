@@ -8,7 +8,7 @@ module.exports = (data) => {
             return res.status(200).render('register');
         },
         loadLoginPage(req, res) {
-            return res.status(200).render('login');
+            return res.status(200).render('login', { result: { user: req.user } });
         },
         register(req, res) {
             const user = {

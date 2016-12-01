@@ -1,6 +1,29 @@
 extends _layout
 
 block content
+    .section.section-full-screen.section-signup(style="background: blur;")
+        .container
+            .row
+                .col-md-8.col-md-offset-2
+                    .card.card-signup
+                        form.form(action="/forum/create" method="post")
+                            .header.header-info.text-center(style="height: 50%;")
+                                h2 Create new post
+                                .social-line
+                            .input-group
+                                span.input-group-addon
+                                    i.material-icons title
+                                .form-group.is-empty.has-info
+                                    input.form-control(id="post-title" type="text" name="title" placeholder="Title")
+                            .input-group
+                                span.input-group-addon
+                                    i.material-icons description
+                                .form-group.is-empty.has-info
+                                    textarea.form-control(id="post-description" type="text" name="description" placeholder="Description")
+                            .footer.text-center
+                                input(type="submit" id="create" class="btn btn-lg btn-info" value="Create")
+    
+    
     form(action="/forum/create" method="post")
         label(for="post-title") Title
         input(id="post-title" class="form-control" type="text" name="title" placeholder="Title")

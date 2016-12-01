@@ -3,7 +3,7 @@ extends _layout
 block content
     .main
         .container
-            //- section.col-xs-12.col-sm-6.col-md-12(id="info" data-id=result._id)
+            //- section.col-xs-12.col-sm-6.col-md-12(id="info" data-id=result.competition._id)
             //-     article.row
             //-       .col-xs-12.col-sm-12.col-md-3
             //-         a.thumbnail(href='#', title='Lorem ipsum')
@@ -13,23 +13,23 @@ block content
             //-         ul.meta-search
             //-           li
             //-             i.glyphicon.glyphicon-calendar
-            //-             span #{result.startDate}
+            //-             span #{result.competition.startDate}
             //-           li
             //-             i.glyphicon.glyphicon-tags
             //-             span 
-            //-               a(href='/categories/'+result.category) #{result.category}
+            //-               a(href='/categories/'+result.competition.category) #{result.competition.category}
             //-           li
             //-             i.glyphicon.glyphicon-user
             //-             span By 
-            //-                 a(href='/users/organizator') #{result.organizator}
+            //-                 a(href='/users/organizator') #{result.competition.organizator}
             //-       .col-xs-12.col-sm-12.col-md-3.excerpet
             //-         h2
-            //-           a(href='/competitions/'+result._id) #{result.name}
-            //-         p  #{result.place}
-            //-             span.hidden(id='latitude') #{result.location.latitude}
-            //-             span.hidden(id='longitude') #{result.location.longitude}
+            //-           a(href='/competitions/'+result.competition._id) #{result.competition.name}
+            //-         p  #{result.competition.place}
+            //-             span.hidden(id='latitude') #{result.competition.location.latitude}
+            //-             span.hidden(id='longitude') #{result.competition.location.longitude}
             //-         span.plus
-            //-           a(href='/competitions/' + result._id, title='Lorem ipsum') Go to page 
+            //-           a(href='/competitions/' + result.competition._id, title='Lorem ipsum') Go to page 
             //-       span.clearfix.borda
             //-       .col-md-4.competition-map(id="map")
             div.competition-info(id="info" data-id=result._id)
