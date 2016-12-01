@@ -1,7 +1,9 @@
 'use strict';
     function likePost(ev){
+        console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
         const $target = $(ev.target);
         const postId = $target.parents("#post-info").attr("data-id");
+        console.log('Post IIIIDDDD: ' + postId);
         $.ajax(`/forum/${postId}/like`, {
             method: "PUT"
         })
@@ -37,7 +39,7 @@
     }
     function likePostAnswer(ev){
         const $target = $(ev.target);
-        const postId = $target.parents("#post-answer-info").siblings('h1').attr("data-id");
+        const postId = $target.parents("#post-answer-info").parents('#post-info').attr("data-id");
         const postAnswerId = $target.parents("#post-answer-info").attr("data-id");
         $.ajax(`/forum/${postId}/comment/${postAnswerId}/like`, {
             method: "PUT"
@@ -56,7 +58,7 @@
     }
     function unlikePostAnswer(ev) {
         const $target = $(ev.target);
-        const postId = $target.parents("#post-answer-info").siblings('h1').attr("data-id");
+        const postId = $target.parents("#post-answer-info").parents('#post-info').attr("data-id");
         const postAnswerId = $target.parents("#post-answer-info").attr("data-id");
         $.ajax(`/forum/${postId}/comment/${postAnswerId}/unlike`, {
             method: "PUT"
