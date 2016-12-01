@@ -49,15 +49,10 @@ block content
                                 .form-group.is-empty.has-info
                                     input.form-control(type="text" id="level" placeholder="Level" name="level" class="form-control")
                             .input-group
-                                span.input-group-addon
-                                    i.material-icons explore
-                                .form-group.is-empty.has-info
-                                    input.form-control(type="text" id="longitude" placeholder="Longitude" name="longitude" class="form-control")
-                            .input-group
-                                span.input-group-addon
-                                    i.material-icons explore
-                                .form-group.is-empty.has-info
-                                    input.form-control(type="text" id="latitude" placeholder="Latitude" name="latitude" class="form-control")
+                               span.input-group-addon
+                                   i.material-icons picture_in_picture
+                               span.input-group-addon(style="display: block;") Upload Picture
+                                   input(type="file" id="tb-avatar" name="competitionPicture" value="Upload" class="btn btn-info")
                             div.container(id="map" style="height:300px;width:300px")
                             .footer.text-center
                                 input(type="submit" id="create" class="btn btn-lg btn-info" value="Create")
