@@ -69,17 +69,23 @@ a{
     left: 1.8%;
     right: auto;
     width: 96.66666666666666%;
-    color: #006CB7;
-    font-weight: bold;
     font-size: 1.5em;
 }
 
 .header-text a {
-    color: #006CB7;
-    z-index: 10000 !important;
+   z-index: 10000 !important;
 }
 
+.slider-text{
+    font-family: "Arial Black","Arial Bold", Georgia, sans-serif;
+    font-weight: 900;
+    text-shadow: -1px 0 #0068AD, 0 1px #0068AD, 1px 0 #0068AD, 0 -1px #0068AD;
+    color: black;
+}
 
+.slider-text a{
+    z-index: 10000000000000000000000000000 !important;
+}
 /*-----------Competition list--------------*/
 
 hgroup {
@@ -203,5 +209,16 @@ hgroup h2 {
     align-items:center;
      z-index: 10;
 }*/
+
+/*-------Competition-----------*/
+.competition-map{
+    width: 300px;
+    height: 300px;
+    vertical-align: bottom;
+}
+
+.competition-info{
+    margin-top: 3em;
+}
 
 .upcomming-competitions {}

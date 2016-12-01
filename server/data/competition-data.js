@@ -71,7 +71,6 @@ module.exports = function (models) {
                 joinedUsers: [],
                 points: competition.points,
                 level: competition.level,
-                keys: competition.keys,
                 passed: passed,
                 location: competition.location
             });

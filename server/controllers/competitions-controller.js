@@ -123,10 +123,7 @@ module.exports = (data) => {
         },
         createCompetition(req, res) {
             let body = req.body,
-                user = req.user.username,
-                keys = body.keys
-                .split(' ')
-                .filter(x => x !== '');
+                user = req.user.username;
 
             console.log(body.competitionName + "   asdsadsa");
             data.createCompetition({
@@ -138,7 +135,6 @@ module.exports = (data) => {
                     level: body.level,
                     startDate: body.startDate,
                     endDate: body.endDate,
-                    keys: keys,
                     location: { longitude: body.longitude, latitude: body.latitude }
                 })
                 .then(competition => {

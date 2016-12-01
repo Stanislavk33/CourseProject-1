@@ -21,7 +21,6 @@ const competitionSchema = new Schema({
     },
     points: { type: Number, required: true },
     level: { type: String, required: true },
-    keys: [String],
     location: {
         latitude: { type: String },
         longitude: { type: String }
