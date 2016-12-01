@@ -27,8 +27,7 @@ module.exports = (data) => {
             data.createUser(user)
                 .then(dbUser => {
                     res.status(201)
-                        .send('<h1>Registered</h1>')
-                        .redirect('/home');
+                        .redirect('/auth/login');
                 })
                 .catch(err => res.status(500).json(err));
         },
@@ -52,7 +51,7 @@ module.exports = (data) => {
                         return;
                     }
 
-                    res.status(201).send(`<h1>Hello ${user.username}!</h1>`);
+                    res.status(201).redirect('/home');
                 });
             });
 

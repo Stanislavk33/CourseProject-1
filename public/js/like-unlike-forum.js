@@ -1,9 +1,7 @@
 'use strict';
     function likePost(ev){
-        console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
         const $target = $(ev.target);
         const postId = $target.parents("#post-info").attr("data-id");
-        console.log('Post IIIIDDDD: ' + postId);
         $.ajax(`/forum/${postId}/like`, {
             method: "PUT"
         })

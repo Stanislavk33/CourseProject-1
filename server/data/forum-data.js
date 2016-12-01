@@ -188,7 +188,6 @@ module.exports = function (models) {
                         });
                         return(answers)
                     }).then((updatedAnswers) => {
-                        console.log(updatedAnswers);
                         ForumPost.findOneAndUpdate({ '_id': _id}, {'answers': updatedAnswers})
                             .then((done) => {
                                   resolve(done);
@@ -210,7 +209,6 @@ module.exports = function (models) {
                         });
                         return(answers)
                     }).then((updatedAnswers) => {
-                        console.log(updatedAnswers);
                         ForumPost.findOneAndUpdate({ '_id': postId}, {'answers': updatedAnswers})
                             .then((done) => {
                                   resolve(done);
@@ -231,7 +229,6 @@ module.exports = function (models) {
                         });
                         return(answers)
                     }).then((updatedAnswers) => {
-                        console.log(updatedAnswers);
                         ForumPost.findOneAndUpdate({ '_id': postId}, {'answers': updatedAnswers})
                             .then((done) => {
                                   resolve(done);
