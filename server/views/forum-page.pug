@@ -15,7 +15,7 @@ block content
 
           if result.user 
             .btn.btn-success                        
-                a(href="/forum/create")(id="create-forum") Create Post
+                a(href="/forum/create" id="create-forum") Create Post
           .table-responsive
             table.table.forum.table-striped
               thead
@@ -50,7 +50,16 @@ block content
                                   button.btn.btn-info.like-post Like
                               else
                                   button.btn.btn-info.unlike-post Unlike
-
+                                  
+          ul.pagination
+            - for(let i = 1; i <= result.params.pages; i+=1 )
+              li
+                  if result.params.page === i
+                      a.disabled(href="/forum?page=" + i)
+                          = i
+                  else
+                      a(href="/forum?page=" + i)
+                          = i
         
 block scripts
     script(src="/static/bower_components/jquery/dist/jquery.min.js")

@@ -28,7 +28,6 @@ module.exports = (data) => {
                     if (count % PAGE_SIZE !== 0) {
                         pages += 1;
                     }
-                    console.log(parseInt(pages, 10));
 
                     // if (parseInt(pages, 10) < pages) {
                     //     pages = parseInt(pages, 10);

@@ -23,3 +23,8 @@
 .forum .likes .btn{
     margin-left:2em;
 }
+
+.pagination li a{
+    border: 1px solid #0068AD;
+    font-weight: bold;
+}
