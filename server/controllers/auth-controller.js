@@ -5,10 +5,10 @@ const passport = require('passport');
 module.exports = (data) => {
     return {
         loadRegisterPage(req, res) {
-            return res.status(200).render('register', { result: { user: req.user } });
+            return res.status(200).render('register', { result: { } });
         },
         loadLoginPage(req, res) {
-            return res.status(200).render('login', { result: { user: req.user } });
+            return res.status(200).render('login', { result: { } });
         },
         register(req, res) {
             const user = {

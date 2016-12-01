@@ -43,7 +43,7 @@ html(lang='en')
             li
               a.dropdown-toggle(href='/competitions/create') Create competition 
           
-          if result
+          if result.user
             ul.nav.navbar-nav.navbar-right
               li
                 a.dropdown-toggle(href='/users/'+result.user.username) Profile
