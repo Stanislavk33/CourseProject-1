@@ -14,18 +14,17 @@ html(lang='en')
     link(href='/static/css/home.css', rel='stylesheet')
     block styles
   body.landing-page
-    .navbar.navbar-info
+    .navbar.navbar-info.navbar-fixed-top
       .container-fluid
         .navbar-header
-          .navbar-header
-            button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1', aria-expanded='false')
+            button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar')
               span.sr-only Toggle navigation
               span.icon-bar
               span.icon-bar
               span.icon-bar
-            |  
-            a(href='/home')
+            a(href='/')
               img.navbar-brand(src='http://www.iconarchive.com/download/i89703/alecive/flatwoken/Apps-Home.ico')
+              .riple-container
         .navbar-collapse.collapse.navbar-inverse-collapse
           ul.nav.navbar-nav
             li
@@ -57,21 +56,9 @@ html(lang='en')
               li
                 a.dropdown-toggle(href='/auth/register') Register
               
-          ul.nav.navbar-nav.navbar-right.col-md-2.col-md-offset-2
-            li.dropdown
-              a.dropdown-toggle(href='index.html', data-toggle='dropdown')
-                | Filter by
-                b.caret
-              ul.dropdown-menu
-                li
-                  a(href='') Username
-                li
-                  a(href='') Category
-                li
-                  a(href='') Competition name
           form.navbar-form.navbar-right(action="/search" method="get")
             .form-group
-              input.form-control.col-sm-8(type='text', placeholder='Search')
+              input.form-control.col-sm-8(type='text', placeholder='Search competitions' name='search')
             |  
             button.glyphicon.glyphicon-search
     block content

@@ -1,14 +1,19 @@
 extends _layout
+include ./_mixins/competitions-mixin
 
 block content
-    each competition in result.competitions
-        h3 
-            a(href="/competitions/"+ competition._id)= competition.name
-        h4 Category: #{competition.category}
-        h4 #{competition.status}
-        h4 #{competition.place}
-        p By #{competition.organizator}
-        br
+    .main
+        .container
+            if result.searchName
+                hgroup.mb20
+                    h2 Search results for: #{result.searchName}
+            else  
+                hgroup.mb20
+                    h2 All competitions
+            if result.competitions.length
+                +competitions-list(result.competitions)
+            else
+                h3 No competitions found!
        
 
             

@@ -44,13 +44,11 @@ $("#create").on("click", function(ev) {
     let points = $("#points").val();
     let level = $("#level").val();
     let category = $("#category").val();
-    let keys = $("#keys").val();
     let startDate = $("#startDate").val();
     let endDate = $("#endDate").val();
 
-    let data = { competitionName, place, points, level, category, keys, latitude, longitude, startDate, endDate }
+    let data = { competitionName, place, points, level, category, latitude, longitude, startDate, endDate }
 
-    console.log(data);
     ev.preventDefault();
 
     $.ajax("/competitions/create", {

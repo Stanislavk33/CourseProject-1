@@ -4,13 +4,11 @@ module.exports = (data) => {
     return {
         search(req, res) {
             const body = req.body,
-                params = req.query;
-            console.log(body);
-            console.log(params);
-            // TODO:  validation
-            data.filterCompetitions(params)
+                searchName = req.query.search || '';
+
+            data.filterCompetitions(searchName)
                 .then((competitions) => {
-                    return res.status(200).render('searchpage', { result: { competitions } });
+                    return res.status(200).render('searchpage', { result: { competitions, searchName } });
                 })
         },
         searchUser(username, isLoggedIn, req, res) {

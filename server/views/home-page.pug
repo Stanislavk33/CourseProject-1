@@ -144,23 +144,46 @@ block content
         
         .section.text-center.section-landing
           .row
-              .col-md-2.col-md-offset-0
-                h2.title Upcomming competitions
+              .col-md-6
+                h3.title.home-list-title Upcomming competitions
                 ul.upcomming
-                    each commingCompetition in result.upcommingCompetitions
-                        li 
-                            a(href="/competitions/" + commingCompetition._id) #{commingCompetition.place}
-                            div #{commingCompetition.name}
+                    each competition in result.upcommingCompetitions
+                        article.search-result.row
+                          .col-xs-4.col-sm-4
+                            a.home-thumbnail(href='#', title='Lorem ipsum')
+                              //- img(src='/static/imgs/competitions-imgs/'+competition.image, alt='Competition image')
+                              img(src='http://lorempixel.com/250/140/people', alt='Lorem ipsum')
+                          .col-xs-4.col-sm-4.right-border
+                            ul.meta-search
+                              li
+                                i.glyphicon.glyphicon-calendar
+                                span #{competition.startDate}
+                              li
+                                i.glyphicon.glyphicon-tags
+                                span 
+                                  a(href='/categories/'+competition.category) #{competition.category}
+                          .col-xs-4.col-sm-4.excerpet
+                            h3
+                              a(href='/competitions/'+competition._id) #{competition.name}
+                            p  #{competition.place}
+                          span.clearfix.borda
+                        //- li 
+                        //-     a(href="/competitions/" + commingCompetition._id) #{commingCompetition.place}
+                        //-     div #{commingCompetition.name}
+              
 
-              .col-md-2.col-md-offset-6
-                h2.title Top Users
-                table.table.table-hover
-                  thead.thead-inverse
-                    tr.success
-                        th.text-success User
-                        th.text-success Points
-                    each topUser in result.topUsers
-                        tr
-                            td
-                                a(href="/users/" + topUser.username) #{topUser.username}
-                            td #{topUser.progress.totalPoints}
+              .col-md-3.col-md-offset-2
+                h3.title.home-list-title Top Users
+                .table-responsive
+                  table.table.users-table
+                    thead.thead-inverse
+                      tr
+                          th #
+                          th User
+                          th Points
+                    -for(let i=0; i < result.topUsers.length; i+=1)
+                       tr
+                          td #{i}
+                          td
+                              a(href="/users/" + result.topUsers[i].username) #{result.topUsers[i].username}
+                          td #{result.topUsers[i].progress.totalPoints}

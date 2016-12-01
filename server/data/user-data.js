@@ -198,9 +198,14 @@ module.exports = function(models) {
         },
         searchUsersByName(name) {
             return new Promise((resolve, reject) => {
-                const usernameRegex = { username: { $regex: `.*${name}.*` } };
-                const firstNameRegex = { firstName: { $regex: `.*${name}.*` } };
-                const lastNameRegex = { lastName: { $regex: `.*${name}.*` } };
+
+                // const usernameRegex = { username: { $regex: `.*${name}.*` } };
+                // const firstNameRegex = { firstName: { $regex: `.*${name}.*` } };
+                // const lastNameRegex = { lastName: { $regex: `.*${name}.*` } };
+                const regex = { $regex: new RegExp(`.*${name}.*`, 'i') };
+                const usernameRegex = { username: regex };
+                const firstNameRegex = { firstName: regex };
+                const lastNameRegex = { lastName: regex };
 
                 User.find({ $or: [usernameRegex, firstNameRegex, lastNameRegex] }, (err, users) => {
                     if (err) {
