@@ -1,33 +1,58 @@
 extends _layout
 
 block styles
+    link(rel="stylesheet" type="text/css" href="/static/css/forum.css")
     link(rel="stylesheet" type="text/css" href="/static/bower_components/toastr/toastr.css")
 
 block content
-    ul.list.list-horizontal.list-pages.text-center
-        - for(let i = 1; i <= result.params.pages; i+=1 )
-            li
-                if result.params.page === i
-                    a.btn.btn-danger.disabled(href="/forum?page=" + i)
-                        = i
-                else
-                    a.btn.btn-danger(href="/forum?page=" + i)
-                        = i
-    each forumPost in result.forumPosts
-        div(id="post-info" data-id=forumPost._id)
-            h3.forum-post
-                a(href="/forum/"+ forumPost._id)= forumPost.title
-            p Posted by #{forumPost.user.username}(#{forumPost.user.points})
-            p.likes Likes: 
-                span(id='post-likes-count') #{forumPost.likes}
-                if result.user
-                    if forumPost.usersLiked.indexOf(result.user.username) < 0
-                        button.like-post Like
-                    else
-                        button.unlike-post Unlike            
-    if result.user                           
-        a(href="/forum/create") Create Post
-    block scripts
+    .main
+        .container(style='margin-top: 35px')
+          .page-header.page-heading
+            h1.pull-left Forum
+            .clearfix
+          p.lead This is the right place to discuss any upcoming competitions or ideas for new ones. Feel free to leave any suggestions for the future development of 
+            i Conquer Bulgaria.
+
+          if result.user 
+            .btn.btn-success                        
+                a(href="/forum/create")(id="create-forum") Create Post
+          .table-responsive
+            table.table.forum.table-striped
+              thead
+                tr
+                  th.cell-stat
+                  th
+                    h3 Posts
+                  th.cell-stat.text-center.hidden-xs.hidden-sm 
+                      h4 Created by
+                  th.cell-stat.text-center.hidden-xs.hidden-sm 
+                      h4 Answers
+                  th.cell-stat-2x.hidden-xs.hidden-sm
+                tbody
+                each forumPost in result.forumPosts
+                  tr(id="post-info" data-id=forumPost._id)
+                    td.text-center
+                      i.fa.fa-comments-o.fa-2x.text-primary
+                    td
+                      h3
+                        a(href="/forum/"+ forumPost._id)= forumPost.title
+                        br
+                        small #{forumPost.description}
+                    td.text-center.hidden-xs.hidden-sm
+                      a(href='/users/'+ forumPost.user.username) #{forumPost.user.username} (#{forumPost.user.points})
+                    td.text-center.hidden-xs.hidden-sm
+                      | #{forumPost.answers.length}
+                    td.hidden-xs.hidden-sm
+                      p.likes Likes: 
+                          span(id='post-likes-count') #{forumPost.likes}
+                          if result.user
+                              if forumPost.usersLiked.indexOf(result.user.username) < 0
+                                  button.btn.btn-info.like-post Like
+                              else
+                                  button.btn.btn-info.unlike-post Unlike
+
+        
+block scripts
     script(src="/static/bower_components/jquery/dist/jquery.min.js")
     script(src="/static/bower_components/toastr/toastr.js")
     script(src="/static/js/like-unlike-forum.js")

@@ -21,7 +21,7 @@ module.exports = (data) => {
                             .redirect('/error');
                     }
 
-                    return res.status(200).render(view, { result: { user: req.user } });
+                    return res.status(200).render(view, { result: {userForProfile: user, user: req.user } });
                 })
                 .catch((err) => {
                     return res.status(500).json(err);

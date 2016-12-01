@@ -8,23 +8,23 @@ block content
           .container
             .row
                 .col-md-3(style="margin-top: 5px;")
-                    img.img-rounded(src='/static/imgs/user-images/'+result.image, alt='Rounded Image')
-                    h3 Username: #{result.username}
+                    img.img-rounded(src='/static/imgs/user-images/'+result.userForProfile.image, alt='Rounded Image')
+                    h3 Username: #{result.userForProfile.username}
                 .col-md-6.col-md-offset-1
                     .name
-                        h3 Full name: #{result.firstName} #{result.lastName}
+                        h3 Full name: #{result.userForProfile.firstName} #{result.userForProfile.lastName}
                         if result.birthDate
                             div
                                 strong Birth date: 
-                                span #{result.birthDate}
+                                span #{result.userForProfile.birthDate}
                         h3 Progress
                         
                         block progress
                         table
                             tr
                                 td Total points
-                                td #{result.progress.totalPoints}
-                            each category in result.progress.categoriesPoints
+                                td #{result.userForProfile.progress.totalPoints}
+                            each category in result.userForProfile.progress.categoriesPoints
                                 tr
                                     td #{category.name}
                                     td #{category.points}
