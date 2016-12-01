@@ -2,19 +2,29 @@ extends _layout
 include ./_mixins/competitions-mixin
 
 block content
-    .main
+    .section.section-full-screen.section-signup(style="background: blur;")
         .container
-            if result.searchName
-                hgroup.mb20
-                    h2 Search results for: #{result.searchName}
-            else  
-                hgroup.mb20
-                    h2 All competitions
-            if result.competitions.length
-                +competitions-list(result.competitions)
-            else
-                h3 No competitions found!
-       
+            .row
+                .col-md-12.col-md-offset-0
+                    .card.card-signup
+                        if result.searchName
+                            form.form(method="post")
+                                .header.header-info.text-center(style="height: 25%;")
+                                    h2 Search results for: #{result.searchName}
+                                    .social-line
+                        else  
+                            form.form(method="post")
+                                .header.header-info.text-center(style="height: 25%;")
+                                    h2 All competitions
+                                    .social-line
+                        if result.competitions.length
+                            +competitions-list(result.competitions)
+                        else
+                            .header.header-info.text-center(style="padding-top: 20px;height: 25%;")
+                                h2 No competitions found!
+                                .social-line
+
+
 
             
 

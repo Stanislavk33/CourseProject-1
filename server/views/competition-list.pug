@@ -2,8 +2,13 @@ extends _layout
 include ./_mixins/competitions-mixin
 
 block content
-    .main
-        .container
-            hgroup.mb20
-                h2 All competitions
-            +competitions-list(result)
+    .section.section-full-screen.section-signup(style="background: blur;")
+            .container
+                .row
+                    .col-md-12.col-md-offset-0
+                        .card.card-signup
+                            form.form(method="post")
+                                .header.header-info.text-center(style="height: 50%;")
+                                    h2 All competitions
+                                    .social-line
+                                +competitions-list(result)

@@ -1,37 +1,42 @@
 extends _layout
 
 block content
+   .wrapper
+      .header.header-filter(style="background-image: url('/static/imgs/nature-wallpapers26.jpg');")
+      .main.main-raised(style="margin-top: -500px;")
+        .profile-content
+          .container
+            .row
+                .col-md-3(style="margin-top: 5px;")
+                    img.img-rounded(src='/static/imgs/user-images/'+result.image, alt='Rounded Image')
+                    h4 Username: #{result.username}
+                .col-md-6.col-md-offset-1
+                    .name
+                        h2 Full name: #{result.firstName} #{result.lastName}
+                        
+                        if(result.birthDate)
+                            div
+                                strong Birth date: 
+                                span #{result.birthDate}
 
-    h2 #{result.firstName} #{result.lastName}
-    h3 #{result.username}
+                        h3 Progress
+                        table
+                            tr
+                                td Total points
+                                td #{result.progress.totalPoints}
+                            each category in result.progress.categoriesPoints
+                                tr
+                                    td #{category.name}
+                                    td #{category.points}
 
-    img(src="/static/imgs/user-images/"+result.image)
+                        block edit
+                        
+                        h3 Attended Competitions
+                        ul
+                            each competition in result.attendedCompetitions
+                                li
+                                    div 
+                                        a(href="/competitions/"+ competition.id) #{competition.name}
+                                        span #{competition.place}
 
-    if(result.birthDate)
-        div
-            strong Birth date: 
-            span #{result.birthDate}
-
-    h3 Progress
-    table
-        tr
-            td Total points
-            td #{result.progress.totalPoints}
-        each category in result.progress.categoriesPoints
-            tr
-                td #{category.name}
-                td #{category.points}
-
-    block edit
-    
-    h3 Attended Competitions
-    ul
-        each competition in result.attendedCompetitions
-            li
-                div 
-                    a(href="/competitions/"+ competition.id) #{competition.name}
-                    span #{competition.place}
-
-    block joinedCompetitions            
-    
-
+                        block joinedCompetitions            
