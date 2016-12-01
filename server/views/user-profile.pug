@@ -9,17 +9,17 @@ block content
             .row
                 .col-md-3(style="margin-top: 5px;")
                     img.img-rounded(src='/static/imgs/user-images/'+result.image, alt='Rounded Image')
-                    h4 Username: #{result.username}
+                    h3 Username: #{result.username}
                 .col-md-6.col-md-offset-1
                     .name
-                        h2 Full name: #{result.firstName} #{result.lastName}
-                        
-                        if(result.birthDate)
+                        h3 Full name: #{result.firstName} #{result.lastName}
+                        if result.birthDate
                             div
                                 strong Birth date: 
                                 span #{result.birthDate}
-
                         h3 Progress
+                        
+                        block progress
                         table
                             tr
                                 td Total points
@@ -28,15 +28,9 @@ block content
                                 tr
                                     td #{category.name}
                                     td #{category.points}
-
-                        block edit
                         
-                        h3 Attended Competitions
-                        ul
-                            each competition in result.attendedCompetitions
-                                li
-                                    div 
-                                        a(href="/competitions/"+ competition.id) #{competition.name}
-                                        span #{competition.place}
+                        block joinedCompetitions
+                        block atendedCompetitions 
+                        block edit  
 
-                        block joinedCompetitions            
+                                 
