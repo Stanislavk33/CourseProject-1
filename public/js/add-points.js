@@ -1,5 +1,7 @@
 'use strict';
 
+var app = app || {};
+
 $('.addPoints').on('click', function(ev) {
 
     let dataId = $(this).attr('data-id'),
@@ -17,15 +19,23 @@ $('.addPoints').on('click', function(ev) {
         competitionId
     };
 
-    $.ajax('/users/addPoints', {
-        method: 'PUT',
-        data: JSON.stringify(data),
-        contentType: 'application/json'
-    }).
-    done(() => {
-            toastr.success('magic');
+    app.requester.put('/users/addPoints', JSON.stringify(data))
+        .then(resp => {
+            toastr.success(resp);
         })
-        .fail(() => {
-            toastr.error('You are a fail!')
+        .catch(err => {
+            console.log(err);
         })
+
+    // $.ajax('/users/addPoints', {
+    //     method: 'PUT',
+    //     data: JSON.stringify(data),
+    //     contentType: 'application/json'
+    // }).
+    // done(() => {
+    //         toastr.success('magic');
+    //     })
+    //     .fail(() => {
+    //         toastr.error('You are a fail!')
+    //     })
 });
