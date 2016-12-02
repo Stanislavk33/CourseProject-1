@@ -1,13 +1,17 @@
 /* globals require  */
 
-const config = require('./server/config/');
+const config = require('./server/config/'),
 
-const app = require('./server/config/application');
+app = require('./server/config/application'),
 
-const data = require('./server/data')(config);
+data = require('./server/data')(config),
+
+multer = require('multer'),
+uploadUserImage = multer({ dest: './public/imgs/user-images/' }),
+uploadCompetitionImage = multer({ dest: './public/imgs/competition-images/'});
 
 require('./server/config/passport')(app, data);
-require('./server/routers')(app, data)
+require('./server/routers')({ app, data, uploadUserImage, uploadCompetitionImage });
 
 app.listen(config.port);
 

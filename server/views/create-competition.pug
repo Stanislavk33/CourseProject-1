@@ -6,7 +6,7 @@ block content
             .row
                 .col-md-8.col-md-offset-2
                     .card.card-signup
-                        form.form(method="post")
+                        form.form(method="post" enctype="multipart/form-data")
                             .header.header-info.text-center(style="height: 50%;")
                                 h2 Create new competition
                                 .social-line
@@ -52,7 +52,7 @@ block content
                                span.input-group-addon
                                    i.material-icons picture_in_picture
                                span.input-group-addon(style="display: block;") Upload Picture
-                                   input(type="file" id="tb-avatar" name="competitionPicture" value="Upload" class="btn btn-info")
+                                   input(type="file" id="tb-competition" name="competitionPicture" value="Upload" class="btn btn-info")
                             div.container(id="map" style="height:300px;width:300px")
                             .footer.text-center
                                 input(type="submit" id="create" class="btn btn-lg btn-info" value="Create")

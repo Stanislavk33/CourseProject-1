@@ -1,17 +1,15 @@
 'use strict';
 
-const express = require('express'),
-    multer = require('multer'),
-    upload = multer({ dest: './public/imgs/user-images/' });
+const express = require('express');
 
-module.exports = ({ app, data, authentication }) => {
+module.exports = ({ app, data, authentication, uploadUserImage }) => {
     const controller = require('./../controllers/auth-controller')(data);
 
     const router = new express.Router();
 
     router
         .get('/register', controller.loadRegisterPage)
-        .post('/register', upload.single('avatar'), controller.register)
+        .post('/register', uploadUserImage.single('avatar'), controller.register)
         .get('/login', controller.loadLoginPage)
         .post('/login', controller.loginLocal)
         .get('/logout', authentication.isAuthenticated, controller.logout)

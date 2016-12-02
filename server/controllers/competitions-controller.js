@@ -141,6 +141,7 @@ module.exports = (data) => {
             level: body.level,
             startDate: body.startDate,
             endDate: body.endDate,
+            image: req.file ? req.file.filename : 'default.jpg',
             location: { longitude: body.longitude, latitude: body.latitude }
         })
             .then(competition => {

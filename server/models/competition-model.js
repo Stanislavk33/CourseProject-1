@@ -50,6 +50,7 @@ const competitionSchema = new Schema({
     },
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },
+    image: { type: String},
     points: {
         type: Number,
         required: true,
