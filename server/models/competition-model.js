@@ -67,9 +67,7 @@ const competitionSchema = new Schema({
         latitude: { type: String },
         longitude: { type: String }
     },
-    usersLiked: [{
-        user: String
-    }],
+    usersLiked: [String],
 });
 
 

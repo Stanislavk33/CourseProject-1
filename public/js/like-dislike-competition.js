@@ -11,6 +11,8 @@ function likeCompetition(ev) {
             const likes = $likesSpan.html();
             $likesSpan.html(+likes + 1);
             $target.html("Dislike");
+            $target.removeClass('btn-success');
+            $target.addClass('btn-danger');
             $target.one('click', dislikeCompetition);
             toastr.success("Competition liked!");
         })
@@ -30,6 +32,8 @@ function dislikeCompetition(ev) {
             const likes = $likesSpan.html();
             $likesSpan.html(+likes - 1);
             $target.html("Like");
+            $target.removeClass('btn-danger');
+            $target.addClass('btn-success');
             $target.one('click', likeCompetition);
             toastr.success("Competition disliked!");
         })
