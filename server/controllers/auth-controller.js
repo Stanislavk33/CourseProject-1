@@ -5,10 +5,10 @@ const passport = require('passport');
 module.exports = (data) => {
     return {
         loadRegisterPage(req, res) {
-            return res.status(200).render('register', { result: { } });
+            return res.status(200).render('register', { result: {} });
         },
         loadLoginPage(req, res) {
-            return res.status(200).render('login', { result: { } });
+            return res.status(200).render('login', { result: {} });
         },
         register(req, res) {
             const user = {
@@ -25,13 +25,13 @@ module.exports = (data) => {
             };
 
             data.createUser(user)
-                .then(dbUser => {
-                    res.status(201)
-                        .redirect('/auth/login');
+                .then(() => {
+                    res.json({ success: 'Registration successfull' })
                 })
-                .catch((err) => {
+                .catch(() => {
                     // TODO: redirect to another page
-                    res.status(500).redirect('/500');
+                    res.json({ error: 'Registration failed' })
+                    res.status(500).end();
                 });
         },
         loginLocal(req, res, next) {
@@ -42,10 +42,7 @@ module.exports = (data) => {
                 }
 
                 if (!user) {
-                    res.json({
-                        success: false,
-                        message: 'Invalid username or password'
-                    });
+                    res.json({ error: 'Invalid username or password' });
                 }
 
                 req.login(user, err => {
@@ -65,7 +62,7 @@ module.exports = (data) => {
             res.status(200).redirect('/home');
         },
         loginUserFacebook(req, res, next) {
-            const auth = passport.authenticate('facebook', { scope: ['user'] }, function(error, user) {
+            const auth = passport.authenticate('facebook', { scope: ['user'] }, function (error, user) {
                 if (error) {
                     console.log(error);
                     next(error);
@@ -73,10 +70,7 @@ module.exports = (data) => {
                 }
 
                 if (!user) {
-                    res.json({
-                        success: false,
-                        message: 'Invalid name or password!'
-                    });
+                    res.json({ error: 'Invalid name or password!' });
                 }
 
                 req.login(user, error => {

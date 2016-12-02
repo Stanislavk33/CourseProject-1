@@ -56,4 +56,9 @@ block content
                                 span.input-group-addon(style="display: block;") Upload avatar
                                 input(type="file" id="tb-avatar" name="avatar" value="Upload" class="btn btn-info")
                             .footer.text-center
-                                input(type="submit" value="Register" class="btn btn-lg btn-info")
+                                input(type="submit" id="btn-register" value="Register" class="btn btn-lg btn-info")
+
+block scripts 
+    script(src="/static/utils/requester.js")
+    script(src="/static/utils/notifier.js")
+    script(src="/static/js/register.js")
