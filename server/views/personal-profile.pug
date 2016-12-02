@@ -1,10 +1,11 @@
 extends user-profile
 
 block edit
-    .col-md-2.col-md-offset-12
-        button.btn.btn-info
-            a(href="/users/" + result.userForProfile.username + "/edit")
-                i.material-icons border_color 
+    .row-md-2.row-md-offset-5
+        .col-md-2.col-md-offset-12
+            button.btn.btn-info
+                a(href="/users/" + result.userForProfile.username + "/edit")
+                    i.material-icons border_color 
 
 block joinedCompetitions
     .col-md-1.dropdown
@@ -16,25 +17,3 @@ block joinedCompetitions
             li
             a(href="/competitions/"+ competition.id) #{competition.name}
             span #{competition.place}
-
-block atendedCompetitions
-    .col-md-offset-5.dropdown
-      a.btn.btn-simple.btn-info.dropdown-toggle(href='#', data-toggle='dropdown')
-        | Atended Competitions
-        b.caret
-      ul.dropdown-menu.btn-info
-            each competition in result.userForProfile.attendedCompetitions
-                li
-                    div 
-                        a(href="/competitions/"+ competition.id) #{competition.name}
-                        span #{competition.place}
-
-block progress
-    each category in result.userForProfile.progress.categoriesPoints
-        .progress
-        .progress-bar.progress-bar-success(style='width: 35%')
-            span.sr-only 35% Complete (success)
-        .progress-bar.progress-bar-warning(style='width: 20%')
-            span.sr-only 20% Complete (warning)
-        .progress-bar.progress-bar-danger(style='width: 10%')
-            span.sr-only 10% Complete (danger)

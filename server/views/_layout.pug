@@ -45,13 +45,20 @@ html(lang='en')
           
           if result.user
             ul.nav.navbar-nav.navbar-right
-              li
-                a.dropdown-toggle(href='/users/'+result.user.username) Profile
-                  if result.user.isAdmin
+               li.dropdown
+                  a.dropdown-toggle(href='#', data-toggle='dropdown', aria-expanded='false')
+                    span#username #{result.user.username}
+                    i.material-icons face
+                    b.caret
+                    .ripple-container
+                  ul.dropdown-menu
                     li
-                      a(href="/profile") Admin
-              li
-                a.dropdown-toggle(href='/auth/logout') Logout
+                      a(href='/users/'+result.user.username) Profile
+                        if result.user.isAdmin
+                          li
+                            a(href="/users/"+result.user.username) Admin
+                    li
+                      a(href='/auth/logout') Logout
               
           else
             ul.nav.navbar-nav.navbar-right

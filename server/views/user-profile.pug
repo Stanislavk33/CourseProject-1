@@ -8,7 +8,7 @@ block content
           .container
             .row
                 .col-md-3(style="margin-top: 5px;")
-                    img.img-rounded(src='/static/imgs/user-images/'+result.userForProfile.image, alt='Rounded Image')
+                    img.img-rounded(src='/static/imgs/user-images/'+result.userForProfile.image, width="250px", height="auto;",alt='Rounded Image')
                     h3 Username: #{result.userForProfile.username}
                 .col-md-6.col-md-offset-1
                     .name
@@ -17,20 +17,34 @@ block content
                             div
                                 strong Birth date: 
                                 span #{result.userForProfile.birthDate}
-                        h3 Progress
-                        
                         block progress
                         table
                             tr
-                                td Total points
-                                td #{result.userForProfile.progress.totalPoints}
+                                td Total points: #{result.userForProfile.progress.totalPoints}
+                            
+                        h3 Progress
                             each category in result.userForProfile.progress.categoriesPoints
-                                tr
-                                    td #{category.name}
-                                    td #{category.points}
-                        
-                        block joinedCompetitions
-                        block atendedCompetitions 
-                        block edit  
+                                .progress
+                                .progress-bar.progress-bar-info(style='width: 100%')
+                                    span.sr-only #{category.name}: #{category.points}
+                                .progress-bar.progress-bar-warning(style='width: 20%')
+                                    span.sr-only 20% Complete (warning)
+                                .progress-bar.progress-bar-danger(style='width: 10%')
+                                    span.sr-only 10% Complete (danger)
 
+                    block joinedCompetitions
+                    block atendedCompetitions
+                        .col-md-offset-5.dropdown
+                            a.btn.btn-simple.btn-info.dropdown-toggle(href='#', data-toggle='dropdown')
+                                | Atended Competitions
+                                b.caret
+                            ul.dropdown-menu.btn-info
+                                    each competition in result.userForProfile.attendedCompetitions
+                                        li
+                                            div 
+                                                a(href="/competitions/"+ competition.id) #{competition.name}
+                                                span #{competition.place}
+                    block edit 
+
+                         
                                  

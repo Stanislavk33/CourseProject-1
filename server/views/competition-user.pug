@@ -11,17 +11,17 @@ block like
         p.likes Likes: 
             span(id='competition-likes-count') #{result.likes}
             if result.usersLiked.indexOf(user.username) < 0
-                button.like-competition Like
+                button.btn.btn-success.like-competition Like
             else
-                button.dislike-competition Dislike    
+                button.btn.btn-danger.dislike-competition Dislike    
 
 block joining
     if result.hasJoined
-        button(id="leave") Leave
-        button.hidden(id="join") Join
+        button.btn.btn-danger(id="leave") Leave
+        button.hidden.btn.btn-success(id="join") Join
     else
-        button.hidden(id="leave") Leave
-        button(id="join") Join
+        button.hidden.btn.btn-danger(id="leave") Leave
+        button.btn.btn-success(id="join") Join
 
 block scripts
     script(src="/static/bower_components/jquery/dist/jquery.min.js")
