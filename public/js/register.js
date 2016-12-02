@@ -19,7 +19,7 @@ $("#btn-register").on("click", (ev) => {
     testUsername = pattern.test(username);
     testFirstName = pattern.test(firstName);
     testLastName = pattern.test(lastName);
-    
+
     if (!testUsername) {
         console.log("testUsername");
         app.notifier.showNotification("Username must contain only letters, numbers and must be between 6 and 50 symbols long", "error");
@@ -51,7 +51,6 @@ $("#btn-register").on("click", (ev) => {
 
     app.requester.postWithFile('/auth/register', formData)
         .then(resp => {
-
             if (resp.success) {
                 app.notifier.showNotification(resp.success, "success");
                 setTimeout(function() {

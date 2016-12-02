@@ -1,5 +1,7 @@
 'use strict';
 
+var app = app || {};
+
 function likeCompetition(ev) {
     const $target = $(ev.target);
     const competitionId = $target.parents("#competition-info").attr("data-id");
@@ -14,10 +16,10 @@ function likeCompetition(ev) {
             $target.removeClass('btn-success');
             $target.addClass('btn-danger');
             $target.one('click', dislikeCompetition);
-            toastr.success("Competition liked!");
+            app.notifier.showNotification("Competition liked!", "success");
         })
         .fail((err) => {
-            toastr.err(err.message);
+            app.notifier.showNotification(err.message, "error");
         });
 }
 
@@ -35,10 +37,10 @@ function dislikeCompetition(ev) {
             $target.removeClass('btn-danger');
             $target.addClass('btn-success');
             $target.one('click', likeCompetition);
-            toastr.success("Competition disliked!");
+            app.notifier.showNotification("Competition disliked!", "success");
         })
         .fail((err) => {
-            toastr.err(err.message);
+            app.notifier.showNotification(err.message, "error");
         });
 }
 

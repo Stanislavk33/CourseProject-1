@@ -13,14 +13,16 @@ var app = app || {};
                 const username = result.result.username,
                     points = result.result.points,
                     $newRow = $("<tr>").appendTo($("#joined-users"));
+
                 $("<a>").attr("href", `/users/${username}`).html(username).appendTo("<td>").appendTo($newRow);
                 // $("<td>").html(points).appendTo($newRow);
-                toastr.success("You joined!");
+                
+                app.notifier.showNotification("You joined this competition", "success");
                 $("#leave").removeClass("hidden");
                 $("#join").addClass("hidden");
             })
             .fail((err) => {
-                toastr.err(err.message);
+                app.notifier.showNotification(err.message, "error");
             });
 
         ev.preventDefault();
@@ -37,10 +39,11 @@ var app = app || {};
                 $('tr:contains('+ result.username+')').remove();
                 $("#leave").addClass("hidden");
                 $("#join").removeClass("hidden");
-                toastr.success("You left this competition!");
+                
+                app.notifier.showNotification("You left this competition!", "success")
             })
             .fail((err) => {
-                toastr.error(err.message);
+                app.notifier.showNotification(err.message, "error");
             });
 
         ev.preventDefault();

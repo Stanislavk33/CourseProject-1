@@ -1,4 +1,6 @@
 'use strict';
+
+var app = app || {};
     function likePost(ev){
         const $target = $(ev.target);
         const postId = $target.parents("#post-info").attr("data-id");
@@ -11,10 +13,10 @@
                 $likesSpan.html(+likes + 1);
                 $target.html('Unlike');
                 $target.one('click', unlikePost);
-                toastr.success("Post liked!");
+                app.notifier.showNotification("Post liked!", "success");
             })
             .fail((err) => {
-                toastr.err(err.message);
+                app.notifier.showNotification(err.message, "error");
             });
     }
     function unlikePost(ev) {
@@ -29,10 +31,10 @@
                 $likesSpan.html(+likes - 1);
                 $target.html('Like');
                 $target.one('click', likePost);
-                toastr.success("Post unliked!");
+                app.notifier.showNotification("Post unliked!", "success");
             })
             .fail((err) => {
-                toastr.err(err.message);
+                app.notifier.showNotification(err.message, "error");
             });
     }
     function likePostAnswer(ev){
@@ -48,10 +50,10 @@
                 $likesSpan.html(+likes + 1);
                 $target.html('Unlike');
                 $target.one('click', unlikePostAnswer);
-                toastr.success("Post answer liked!");
+                app.notifier.showNotification("Post answer liked!", "success");
             })
             .fail((err) => {
-                toastr.err(err.message);
+                app.notifier.showNotification(err.message, "error");
             });
     }
     function unlikePostAnswer(ev) {
@@ -67,10 +69,10 @@
                 $likesSpan.html(+likes - 1);
                 $target.html('Like');
                 $target.one('click', likePostAnswer);
-                toastr.success("Post answer unliked!");
+                app.notifier.showNotification("Post answer unliked!", "success");
             })
             .fail((err) => {
-                toastr.err(err.message);
+                app.notifier.showNotification(err.message, "error");
             });
     }
     
