@@ -41,6 +41,9 @@ module.exports = function(models) {
         createCategory(category) {
             const newCategory = new Category({
                 title: category.title,
+                description: category.description,
+                image: category.image,
+                link: category.link,
                 competitions: []
             });
 
