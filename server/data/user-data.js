@@ -93,7 +93,9 @@ module.exports = function(models, validator) {
                         totalPoints: 0,
                         categoriesPoints: []
                     },
-                    roles: ['normal']
+                    roles: ['normal'],
+                    facebookId: user.facebookId
+                    // facebookToken: user.facebookToken
                 });
 
                 if (user.image) {

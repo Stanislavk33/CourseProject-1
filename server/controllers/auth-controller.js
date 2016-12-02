@@ -64,7 +64,6 @@ module.exports = (data) => {
         loginUserFacebook(req, res, next) {
             const auth = passport.authenticate('facebook', { scope: ['user'] }, function (error, user) {
                 if (error) {
-                    console.log(error);
                     next(error);
                     return;
                 }
@@ -79,11 +78,14 @@ module.exports = (data) => {
                         return;
                     }
 
-                    res.redirect('/profile');
+                    res.redirect('/home');
                 });
             });
 
             auth(req, res, next);
+        },
+        facebookAuthenticate(req, res) {
+            passport.authenticate('facebook')(req, res);
         }
     }
 }

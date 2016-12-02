@@ -6,7 +6,7 @@ module.exports = {
             lengthValidation(constants.MIN_NAME_LENGTH, constants.MAX_NAME_LENGTH, user.lastName) &&
             lengthValidation(constants.MIN_NAME_LENGTH, constants.MAX_NAME_LENGTH, user.username) &&
             constants.NAME_REGEX.test(user.firstName) && constants.NAME_REGEX.test(user.lastName) &&
-            user.email && constants.EMAIL_REGEX.test(user.email)) {
+            (user.email ? constants.EMAIL_REGEX.test(user.email) : true)) {
             return true;
         }
 

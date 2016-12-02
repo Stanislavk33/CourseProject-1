@@ -4,7 +4,7 @@
 const config = require('../index.js');
 const FacebookStrategy = require('passport-facebook');
 
-module.exports = function(passport, data) {
+module.exports = function (passport, data) {
 
     passport.use(new FacebookStrategy({
         clientID: "964923163611936",
@@ -12,26 +12,38 @@ module.exports = function(passport, data) {
         callbackURL: 'http://localhost:3001/auth/facebook/callback'
     }, (token, refreshToken, profile, done) => {
         process.nextTick(() => {
+            console.log('here');
             data.findUserByFacebookId(profile.id)
                 .then((user) => {
                     if (user) {
                         return done(null, user);
                     } else {
+                        const names = profile.displayName.split(' ');
 
-                        console.log(profile);
+                        // TODO: fix constants
 
-                        data.createUser({
-                            username: profile.displayName,
-                            firstname: profile.name.givenName || profile.displayName,
-                            lastname: profile.name.familyName || profile.displayName,
+                        const firstName = names[0] + 'a';
+                        const lastName = names[1] || names[0];
+
+                        return data.createUser({
+                            username: profile.displayName.replace(' ', ''),
+                            firstName: profile.name.givenName || firstName,
+                            lastName: profile.name.familyName || lastName,
                             passHash: profile.displayName,
-                            facebookId: profile.id,
-                            facebookToken: token
-                        }).then(user => {
-                            return done(null, user);
-                        }).catch(err => done(err, false));
+                            image: 'default.png',
+                            facebookId: profile.id
+                            // facebookToken: token
+                        });
+
                     }
-                }).catch(err => done(err, false));
+                })
+                .then(user => {
+                    if (user) {
+                        return done(null, user);
+                    }
+                    return;
+                })
+                .catch(err => done(err, false));
         });
     }));
 }
