@@ -202,25 +202,58 @@ module.exports = function(models, validator) {
                     });
             });
         },
-        searchUsersByName(name) {
+        searchUsersByName(name, page, size) {
+            const regex = { $regex: new RegExp(`.*${name}.*`, 'i') },
+                usernameRegex = { username: regex },
+                firstNameRegex = { firstName: regex },
+                lastNameRegex = { lastName: regex },
+                skip = (page - 1) * size,
+                limit = size;
             return new Promise((resolve, reject) => {
-
-                // const usernameRegex = { username: { $regex: `.*${name}.*` } };
-                // const firstNameRegex = { firstName: { $regex: `.*${name}.*` } };
-                // const lastNameRegex = { lastName: { $regex: `.*${name}.*` } };
-                const regex = { $regex: new RegExp(`.*${name}.*`, 'i') };
-                const usernameRegex = { username: regex };
-                const firstNameRegex = { firstName: regex };
-                const lastNameRegex = { lastName: regex };
-
-                User.find({ $or: [usernameRegex, firstNameRegex, lastNameRegex] }, (err, users) => {
+                User.find({ $or: [usernameRegex, firstNameRegex, lastNameRegex] }, {}, { skip: skip, limit: limit }, function(err, users) {
                     if (err) {
                         return reject(err);
-                    }
-                    console.log(users);
+                    };
+
                     return resolve(users);
-                })
+                });
             });
+            // return new Promise((resolve, reject) => {
+
+
+            //     User.find({ $or: [usernameRegex, firstNameRegex, lastNameRegex] })
+            //         .sort({ 'progress.totalPoints': 'asc' })
+            //         .skip(skip)
+            //         .limit(limit)
+            //         .then(users => {
+            //             if (users) {
+            //                 return resolve(users)
+            //             }
+            //         }).catch(err => {
+            //             return reject(err);
+            //         })
+
+
+            // return Promise.all([
+            //         new Promise((resolve, reject) => {
+            //             ForumPost.find()
+            //                 .sort({ 'date': 'asc' })
+            //                 .skip(skip)
+            //                 .limit(limit)
+            //                 .exec((err, forumPosts) => {
+            //                     if (err) {
+            //                         return reject(err);
+            //                     }
+
+            //                     return resolve(forumPosts);
+            //                 });
+            // .then(user => {
+            //     if (user) {
+            //         return resolve(user);
+            //     }
+            // }).catch(err => {
+            //     return reject(err);
+            // })
         },
         findUserByFacebookId(facebookId) {
             return new Promise((resolve, reject) => {

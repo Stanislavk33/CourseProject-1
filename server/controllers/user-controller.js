@@ -21,7 +21,7 @@ module.exports = (data) => {
                             .redirect('/error');
                     }
 
-                    return res.status(200).render(view, { result: {userForProfile: user, user: req.user } });
+                    return res.status(200).render(view, { result: { userForProfile: user, user: req.user } });
                 })
                 .catch((err) => {
                     return res.status(500).json(err);
@@ -114,10 +114,12 @@ module.exports = (data) => {
                 })
         },
         loadUsers(req, res) {
+            let page = req.query.page || 1
+            const count = 2;
             if (req.query.search) {
                 const searchName = req.query.search;
                 console.log(searchName);
-                data.searchUsersByName(searchName)
+                data.searchUsersByName(searchName, page, count)
                     .then(users => {
                         console.log(searchName);
                         return res.status(200).render('users', { result: { users, searchName, user: req.user } });
