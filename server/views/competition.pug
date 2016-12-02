@@ -1,80 +1,59 @@
 extends _layout
 
 block content
-    .main
-        .container
-            //- section.col-xs-12.col-sm-6.col-md-12(id="info" data-id=result.competition._id)
-            //-     article.row
-            //-       .col-xs-12.col-sm-12.col-md-3
-            //-         a.thumbnail(href='#', title='Lorem ipsum')
-            //-           //- img(src='/static/imgs/competitions-imgs/'+competition.image, alt='Competition image')
-            //-           img(src='http://lorempixel.com/250/140/people', alt='Lorem ipsum')
-            //-       .col-xs-12.col-sm-12.col-md-2.right-border
-            //-         ul.meta-search
-            //-           li
-            //-             i.glyphicon.glyphicon-calendar
-            //-             span #{result.competition.startDate}
-            //-           li
-            //-             i.glyphicon.glyphicon-tags
-            //-             span 
-            //-               a(href='/categories/'+result.competition.category) #{result.competition.category}
-            //-           li
-            //-             i.glyphicon.glyphicon-user
-            //-             span By 
-            //-                 a(href='/users/organizator') #{result.competition.organizator}
-            //-       .col-xs-12.col-sm-12.col-md-3.excerpet
-            //-         h2
-            //-           a(href='/competitions/'+result.competition._id) #{result.competition.name}
-            //-         p  #{result.competition.place}
-            //-             span.hidden(id='latitude') #{result.competition.location.latitude}
-            //-             span.hidden(id='longitude') #{result.competition.location.longitude}
-            //-         span.plus
-            //-           a(href='/competitions/' + result.competition._id, title='Lorem ipsum') Go to page 
-            //-       span.clearfix.borda
-            //-       .col-md-4.competition-map(id="map")
-            div.competition-info(id="info" data-id=result._id)
-                .row
-                    .col-md-4
-                        img.img-rounded.img-responsive(src='http://lorempixel.com/250/140/people', alt='Lorem ipsum')
-                    .col-md-4
-                        h1.title #{result.name}
-                        h2 #{result.place}
-                        h3 Organized by
-                            a(href="/users/" +result.organizator)  #{result.organizator}
-                        h3 Category: #{result.category}
-                        h3 Level: #{result.level}
-                        h3 Points: #{result.points}
-                        span.hidden(id='latitude') #{result.location.latitude}
-                        span.hidden(id='longitude') #{result.location.longitude}
-                        if result.passed
-                            h3 #{result.passed}
-                        else
-                            h3.active-comp Active
-
-                    .col-md-4.competition-map(id="map")                
-                .row 
-                    block like
-                .row
-                    block joining
-                .row     
-                   h2 Joined users
-                   table(id="joined-users")
-                       tr
-                           th User
-                       each user in result.joinedUsers
-                           tr 
-                               td
-                                   a(href="/users/" + user.username) #{user.username}
-                               
-                               if result.isOrgan
-                               td
-                                   button.addPoints(data-id=user.username +" "+ result.points data-category=result.category) addPoints
+    .wrapper
+        .header.header-filter(style="background-image: url('/static/imgs/nature-wallpapers26.jpg');")
+        .main.main-raised(style="margin-top: -500px;")
+            .profile-content
+                .container
+                    div.competition-info(id="info" data-id=result.competition._id)
+                    .row
+                        .col-md-4
+                            .competition-map(id="map")
+                            img.img-rounded.img-responsive(src='http://lorempixel.com/250/140/people',width="300px", height="auto;", alt='Lorem ipsum')
+                            block like
+                        .col-md-6
+                            .col-md-4
+                            if result.competition.passed
+                                span.label.label-warning #{result.competition.passed}
+                            else
+                                span.label.label-success.active-comp Active
+                            .col-md-4
+                            block joining 
+                            h2.title Category name: #{result.competition.name}
+                            h2 Place: #{result.competition.place}
+                            h3 Organized by:
+                                a(href="users/" +result.competition.organizator)  #{result.competition.organizator}
+                            h3 Category: #{result.competition.category}
+                            h3 Level: #{result.competition.level}
+                            h3 Points: #{result.competition.points}
+                            span #{result.competition.startDate}
+                            span #{result.competition.endDate}
+                            span.hidden(id='latitude') #{result.competition.location.latitude}
+                            span.hidden(id='longitude') #{result.competition.location.longitude}
+                        .col-md-8
+                            h2.title Joined users
+                            table.table.users-table(id="joined-users")
+                                thead
+                                    tr
+                                        th User
+                                        th Add points
+                                    each user in result.competition.joinedUsers
+                                        tr 
+                                            td
+                                                a.title(href="/users/" + user.username) #{user.username}
+                                            
+                                            if result.competition.isOrgan
+                                            td
+                                                button.btn.btn-info.addPoints(data-id=user.username +" "+ result.competition.points data-category=result.competition.category) addPoints
 block scripts
+
     script(src="/static/bower_components/jquery/dist/jquery.min.js")
     script(src="/static/bower_components/toastr/toastr.js")
     script(src="/static/js/competition.js")
     script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0PmHg9An9AdDbib9-jYefjSKSnapzFLQ&callback=initMap")
     block additional-scripts
+
 
     
                 

@@ -24,7 +24,7 @@ module.exports = (data) => {
                     }
 
                     competition.passed = competition.getPassed();
-                    res.render(view, { result: competition, user: user });
+                    res.render(view, { result:{ competition, user: user} });
                 });
         },
         getCreatePage(req, res) {
