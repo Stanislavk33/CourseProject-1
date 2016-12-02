@@ -26,14 +26,15 @@ module.exports = (data) => {
         },
         createCategory(req, res) {
             let body = req.body;
-
+            console.log(body);
             data.createCategory({
                     title: body.title,
                     description: body.description,
-                    image: req.file ? req.file.filename : null
+                    image: req.file ? req.file.filename : null,
+                    link: body.title.replace(' ', '-')
                 })
                 .then(category => {
-                    res.redirect(`/categories/${category._id}`);
+                    res.redirect(`/categories/${category.link}`);
                 })
                 .catch(err => {
                     console.log(err);
