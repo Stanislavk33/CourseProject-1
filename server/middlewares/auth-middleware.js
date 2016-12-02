@@ -25,5 +25,16 @@ module.exports = {
                 })
                 .render('error-page-401');
         }
+    },
+    isSameUser(req,res,next){
+        if (req.isAuthenticated() && req.user.username === req.params.username) {
+            next();
+        } else {
+            res.status(401).json({
+                    success: false,
+                    message: 'Not authorized'
+                })
+                .render('error-page-401');
+        }
     }
 }

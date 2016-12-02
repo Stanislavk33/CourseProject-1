@@ -72,6 +72,7 @@ module.exports = function(models) {
                 level: competition.level,
                 startDate: competition.startDate,
                 endDate: competition.endDate,
+                image: competition.image,
                 location: competition.location
             });
 

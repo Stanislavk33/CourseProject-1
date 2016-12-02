@@ -3,20 +3,20 @@
 
 const express = require('express');
 
-module.exports = (app, data) => {
+module.exports = ({ app, data,authentication }) => {
     const controller = require('./../controllers/forum-controller')(data),
         router = new express.Router();
 
     router
         .get('/', controller.loadForumPosts)
-        .get('/create', /* is authenticated middleWare here */ controller.getCreatePage)
+        .get('/create',  controller.getCreatePage)
         .post('/create', controller.createForumPost)
         .get('/:id', controller.getByID)
-        .post('/:id/comment', /* is authenticated middleWare here */ controller.addComment)
-        .put('/:id/like', /* is authenticated middleWare here */ controller.AddLikeToPost)
-        .put('/:id/unlike', /* is authenticated middleWare here */ controller.UnlikePost)
-        .put('/:id/comment/:answerid/like', /* is authenticated middleWare here */ controller.AddLikeToAnswer)
-        .put('/:id/comment/:answerid/unlike', /* is authenticated middleWare here */ controller.UnlikePostAnswer)
+        .post('/:id/comment', authentication.isAuthenticated, controller.addComment)
+        .put('/:id/like', authentication.isAuthenticated, controller.AddLikeToPost)
+        .put('/:id/unlike', authentication.isAuthenticated, controller.UnlikePost)
+        .put('/:id/comment/:answerid/like',authentication.isAuthenticated, controller.AddLikeToAnswer)
+        .put('/:id/comment/:answerid/unlike', authentication.isAuthenticated, controller.UnlikePostAnswer)
 
     app.use('/forum', router);
 };

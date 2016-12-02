@@ -40,7 +40,7 @@ const userSchema = new Schema({
     facebookId: { type: String },
     facebookToken: { type: String },
     progress: { type: progressbarSchema },
-    inRole: { type: String, default: 'normal', minlength: constants.MIN_ROLE_LENGTH, maxlength: constants.MAX_ROLE_LENGTH }
+    roles:[ { type: String, default: 'normal', minlength: constants.MIN_ROLE_LENGTH, maxlength: constants.MAX_ROLE_LENGTH }]
 });
 
 userSchema.methods = {

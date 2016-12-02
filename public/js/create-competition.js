@@ -57,17 +57,31 @@ $("#create").on("click", function(ev) {
     let category = $("#category").val();
     let startDate = $("#startDate").val();
     let endDate = $("#endDate").val();
+    let image = $('#tb-competition')[0].files[0];
 
+    // let data = { competitionName, place, points, level, category, latitude, longitude, startDate, endDate }
 
-
-    let data = { competitionName, place, points, level, category, latitude, longitude, startDate, endDate }
+    let formData = new FormData();
+    formData.append('competitionImage', image);
+    formData.append('competitionName', competitionName);
+    formData.append('place', place);
+    formData.append('points', points);
+    formData.append('level', level);
+    formData.append('category', category);
+    formData.append('latitude', latitude);
+    formData.append('longitude', longitude);
+    formData.append('startDate', startDate);
+    formData.append('endDate', endDate);
 
     ev.preventDefault();
 
     $.ajax("/competitions/create", {
+        async: true,
         method: "POST",
-        data: JSON.stringify(data),
-        contentType: "application/json"
+        data: formData,
+        contentType: false,
+        cache: false,
+        processData: false
     }).
     done(() => {
             toastr.success("magic");

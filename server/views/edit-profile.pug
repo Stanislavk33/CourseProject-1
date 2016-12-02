@@ -6,7 +6,7 @@ block content
             .row
                 .col-md-4.col-md-offset-4
                     .card.card-signup
-                        form.form(action="/users/"+result.username+"/edit" method="post" enctype="multipart/form-data")
+                        form.form(action="/users/"+result.user.username+"/edit" method="post" enctype="multipart/form-data")
                             .header.header-info.text-center(style="height: 50%;")
                                 h4 Edit
                                 .social-line
@@ -18,15 +18,15 @@ block content
                             .input-group
                                 span.input-group-addon
                                     i.material-icons email
-                                input.form-control(type="email" id="tb-email" placeholder="Edit e-mail" name="email" class="form-control" value=result.email)
+                                input.form-control(type="email" id="tb-email" placeholder="Edit e-mail" name="email" class="form-control" value=result.user.email)
                             .input-group
                                 span.input-group-addon 
                                     i.material-icons face
-                                input.form-control(type="text" id="tb-first-name" placeholder="Edit first name" name="firstname" class="form-control" value=result.firstName)
+                                input.form-control(type="text" id="tb-first-name" placeholder="Edit first name" name="firstname" class="form-control" value=result.user.firstName)
                             .input-group
                                 span.input-group-addon
                                     i.material-icons face
-                                input.form-control(type="text" id="tb-last-name" placeholder="Edit last name" name="lastname" class="form-control" value=result.lastName)
+                                input.form-control(type="text" id="tb-last-name" placeholder="Edit last name" name="lastname" class="form-control" value=result.user.lastName)
                             .input-group
                                 span.input-group-addon
                                     i.material-icons picture_in_picture
