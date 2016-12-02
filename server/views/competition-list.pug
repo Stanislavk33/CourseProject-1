@@ -17,8 +17,8 @@ block content
                                         - for(let i = 1; i <= result.params.pagesCount; i+=1 )
                                             li
                                                 if result.params.page === i
-                                                    a.disabled(href=`/users?search=${result.searchName}&page=${i}`)
+                                                    a.disabled(href=`/competitions?page=${i}`)
                                                         = i
                                                 else
-                                                    a(href=`/users?search=${result.searchName}&page=${i}`)
+                                                    a(href=`/competitions?page=${i}`)
                                                         = i

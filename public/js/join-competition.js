@@ -1,5 +1,7 @@
 'use strict';
 
+var app = app || {};
+
 (function () {
     $('#join').on('click', function (ev) {
         const competitionId = $('#info').attr('data-id');

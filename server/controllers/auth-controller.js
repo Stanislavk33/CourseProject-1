@@ -29,7 +29,10 @@ module.exports = (data) => {
                     res.status(201)
                         .redirect('/auth/login');
                 })
-                .catch(err => res.status(500).json(err));
+                .catch((err) => {
+                    // TODO: redirect to another page
+                    res.status(500).redirect('/500');
+                });
         },
         loginLocal(req, res, next) {
             const auth = passport.authenticate('local', (err, user) => {
@@ -59,7 +62,7 @@ module.exports = (data) => {
         },
         logout(req, res) {
             req.logout();
-            res.status(200).send('<h1>Logged Out</h1>');
+            res.status(200).redirect('/home');
         },
         loginUserFacebook(req, res, next) {
             const auth = passport.authenticate('facebook', { scope: ['user'] }, function(error, user) {

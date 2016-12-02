@@ -8,7 +8,6 @@ module.exports = (data) => {
             let view = 'competition';
             let username;
             let user = req.user;
-
             if (req.isAuthenticated()) {
                 view = 'competition-user';
                 username = user.username;
@@ -25,6 +24,9 @@ module.exports = (data) => {
 
                     competition.passed = competition.getPassed();
                     res.render(view, { result: { competition, user: user } });
+                })
+                .catch((err) => {
+                    res.status(500).redirect('/500');
                 });
         },
         getCreatePage(req, res) {
@@ -39,6 +41,9 @@ module.exports = (data) => {
                             user: req.user
                         }
                     });
+                })
+                .catch((err) => {
+                    res.status(500).redirect('/500');
                 });
         },
         joinCompetition(req, res) {
@@ -63,35 +68,28 @@ module.exports = (data) => {
                         }
                     });
                 })
-                .catch(error => {
-                    res.status(500).json(error);
+                .catch((err) => {
+                    res.status(500).redirect('/500');
                 });
         },
         leaveCompetition(req, res) {
-            if (!req.isAuthenticated()) {
-                res.status(400).json({
-                    success: false,
-                    message: 'Not authorized to join competition.'
-                });
-            } else {
-                const username = req.user.username,
-                    id = req.params.id;
+            const username = req.user.username,
+                id = req.params.id;
 
-                data.removeUserFromCompetition(id, username)
-                    .then((competition) => {
-                        return data.removeCompetitionFromUser(username, id);
-                    })
-                    .then(() => {
-                        // TODO: what to return;
-                        res.status(200).json({
-                            success: true,
-                            username
-                        });
-                    })
-                    .catch(error => {
-                        res.status(500).json(error);
+            data.removeUserFromCompetition(id, username)
+                .then((competition) => {
+                    return data.removeCompetitionFromUser(username, id);
+                })
+                .then(() => {
+                    // TODO: what to return;
+                    res.status(200).json({
+                        success: true,
+                        username
                     });
-            }
+                })
+                .catch((err) => {
+                    res.status(500).redirect('/500');
+                });
         },
         likeCompetition(req, res) {
             const competitionId = req.params.id;
@@ -105,6 +103,9 @@ module.exports = (data) => {
                 })
                 .then((competition) => {
                     res.json(JSON.stringify(competition.likes + 1));
+                })
+                .catch((err) => {
+                    res.status(500).redirect('/500');
                 });
         },
         dislikeCompetition(req, res) {
@@ -119,24 +120,24 @@ module.exports = (data) => {
                 })
                 .then((competition) => {
                     res.json(JSON.stringify(competition.likes + 1));
+                })
+                .catch((err) => {
+                    res.status(500).redirect('/500');
                 });
         },
         loadCompetitions(req, res) {
+
             const page = +req.query.page || 1,
                 count = 2;
-
-            data.getAllCompetitions(page, count)
-                .then(competitions => {
-                    const pagesCount = Math.ceil(competitions.length / count);
-                   
+            Promise.all([data.getAllCompetitions(page, count), data.getCompetitionsCount()])
+                .then(([competitions, compCount]) => {
+                    const pagesCount = Math.ceil(compCount / count);
                     res.render('competition-list', { result: { competitions, user: req.user, params: { pagesCount, page } } });
                 });
         },
         createCompetition(req, res) {
             let body = req.body,
                 user = req.user.username;
-
-            console.log(body.competitionName + "   asdsadsa");
             data.createCompetition({
                     name: body.competitionName,
                     place: body.place,
@@ -150,15 +151,14 @@ module.exports = (data) => {
                     location: { longitude: body.longitude, latitude: body.latitude }
                 })
                 .then(competition => {
-                    data.addCompetitionToCategory(competition)
-                        .then(() => {
-                            res.redirect(`/competitions/${competition._id}`);
-                        }).catch(err => {
-                            res.status(500).json(err);
-                        });
-                }).catch(err => {
+                    return data.addCompetitionToCategory(competition)
+                })
+                .then((competition) => {
+                    res.redirect(`/competitions/${competition._id}`);
+                })
+                .catch(err => {
                     console.log(err);
-                    res.status(500).json(err);
+                    res.status(500).redirect('/500');
                 });
         }
     };

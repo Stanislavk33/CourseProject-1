@@ -20,6 +20,9 @@ module.exports = (data) => {
                             user: req.user
                         }
                     })
+                })
+                .catch((err) => {
+                    res.status(500).redirect('/500');
                 });
         }
     }

@@ -1,9 +1,9 @@
-const app = app || {};
+var app = app || {};
 
 (function() {
     'use strict';
 
-    function request(method, url, data) {
+    function makeRequest(method, url, data) {
         let promise = new Promise((resolve, reject) => {
             $.ajax({
                 url,
@@ -20,6 +20,27 @@ const app = app || {};
 
         return promise;
     }
+
+    function makeRequestWithFile(method, url, data) {
+        let promise = new Promise((resolve, reject) => {
+            $.ajax({
+                async: true,
+                url,
+                type: "POST",
+                data,
+                contentType: false,
+                cache: false,
+                processData: false,
+                success(response) {
+                    resolve(response);
+                },
+                error(error) {
+                    reject(error);
+                }
+            });
+        });
+        return promise;
+}
 
     class Requester {
         get(url) {

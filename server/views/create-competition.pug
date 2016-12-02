@@ -41,7 +41,7 @@ block content
                                 .form-group.is-empty.has-info
                                    select(id="category" class="form-control" name="category")
                                      option(value="") Choose Category
-                                     each category in result
+                                     each category in result.categoriesTitles
                                         option(value= category) #{category}
                             .input-group
                                 span.input-group-addon
@@ -58,6 +58,7 @@ block content
                                 input(type="submit" id="create" class="btn btn-lg btn-info" value="Create")
 
 block scripts 
+    script(src="/static/utils/requester.js")
     script(src="/static/bower_components/toastr/toastr.js")
     script(src="/static/js/create-competition.js") 
     script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0PmHg9An9AdDbib9-jYefjSKSnapzFLQ&callback=initMap")

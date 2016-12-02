@@ -6,11 +6,12 @@ module.exports = function(models) {
 
     return {
         getAllCompetitions(page, size) {
+
             const skip = (page - 1) * size,
                 limit = size;
 
             return new Promise((resolve, reject) => {
-                Competition.find({
+                Competition.find({}, {}, {
                     skip,
                     limit,
                     sort: {
@@ -20,7 +21,6 @@ module.exports = function(models) {
                     if (err) {
                         return reject(err);
                     };
-
                     return resolve(competition);
                 });
             });
@@ -90,7 +90,7 @@ module.exports = function(models) {
                     if (err) {
                         return reject(err);
                     }
-
+                    console.log(newCompetition.name);
                     return resolve(newCompetition);
                 });
             });
@@ -199,8 +199,18 @@ module.exports = function(models) {
                                 resolve(done);
                             }).catch(er => reject(er));
                     });
+            })
+        },
 
+        getCompetitionsCount() {
+            return new Promise((resolve, reject) => {
+                Competition.count({}, (err, count) => {
+                    if (err) {
+                        return reject(err);
+                    }
 
+                    return resolve(count);
+                })
             })
         }
     };
