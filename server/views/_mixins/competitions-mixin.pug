@@ -1,3 +1,6 @@
+block styles
+    link(rel="stylesheet" type="text/css" href="/static/css/competitions.css")
+
 mixin competitions-list(competitions)
     section.col-xs-12.col-sm-6.col-md-12
     each competition in competitions
@@ -14,7 +17,8 @@ mixin competitions-list(competitions)
               li
                 i.glyphicon.glyphicon-tags
                 span 
-                  a(href='/categories/'+competition.category) #{competition.category}
+                  //- href='/categories/'+competition.category)
+                  a.category-title #{competition.category}
               li
                 i.glyphicon.glyphicon-user
                 span By 
@@ -26,3 +30,5 @@ mixin competitions-list(competitions)
             span.plus
               a(href='/competitions/' + competition._id, title='Lorem ipsum') Go to page 
           span.clearfix.borda
+block scripts
+    script(src="/static/js/load-category.js")

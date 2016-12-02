@@ -31,7 +31,7 @@ module.exports = (data) => {
                     title: body.title,
                     description: body.description,
                     image: req.file ? req.file.filename : null,
-                    link: body.title.replace(' ', '-')
+                    link: body.title.replace(' ', '-').toLowerCase()
                 })
                 .then(category => {
                     res.redirect(`/categories/${category.link}`);
