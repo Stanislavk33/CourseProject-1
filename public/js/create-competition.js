@@ -33,14 +33,12 @@ $(function() {
     $(".datepicker").datepicker({ dateFormat: "yyyy-mm-dd" });
 });
 
-
 $("#create").on("click", function(ev) {
     if (!marker) {
-        toastr.error("You should choose a location on the map.")
+        app.notifier.showNotification("You should choose a location on the map", "error");
 
         ev.preventDefault();
         return false;
-
     }
 
     let latitude = marker.getPosition().lat();
@@ -72,7 +70,7 @@ $("#create").on("click", function(ev) {
 
     app.requester.postWithFile('/competitions/create', formData)
         .then(resp => {
-            toastr.success(resp)
+            app.notifier.showNotification(resp, "success");
         })
         .catch(err => {
             console.log(err);

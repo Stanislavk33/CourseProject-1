@@ -21,7 +21,7 @@ $('.addPoints').on('click', function(ev) {
 
     app.requester.put('/users/addPoints', JSON.stringify(data))
         .then(resp => {
-            toastr.success(resp);
+            app.notifier.showNotification(resp, "success");
         })
         .catch(err => {
             console.log(err);
