@@ -145,6 +145,7 @@ module.exports = (data) => {
                 place: body.place,
                 organizator: user,
                 category: body.category,
+                description: body.description,
                 points: body.points,
                 level: body.level,
                 startDate: body.startDate,

@@ -64,6 +64,7 @@ module.exports = function(models) {
             const newCompetition = new Competition({
                 name: competition.name,
                 place: competition.place,
+                description: competition.description,
                 likes: 0,
                 organizator: competition.organizator,
                 category: competition.category,
