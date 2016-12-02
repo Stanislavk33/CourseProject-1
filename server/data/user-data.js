@@ -202,6 +202,22 @@ module.exports = function(models, validator) {
                     });
             });
         },
+        getCountOfFilteredUsers(name) {
+            const regex = { $regex: new RegExp(`.*${name}.*`, 'i') },
+                usernameRegex = { username: regex },
+                firstNameRegex = { firstName: regex },
+                lastNameRegex = { lastName: regex };
+
+            return new Promise((resolve, reject) => {
+                User.count({ $or: [usernameRegex, firstNameRegex, lastNameRegex] }, function(err, usersCount) {
+                    if (err) {
+                        return reject(err);
+                    }
+
+                    return resolve(usersCount);
+                })
+            })
+        },
         searchUsersByName(name, page, size) {
             const regex = { $regex: new RegExp(`.*${name}.*`, 'i') },
                 usernameRegex = { username: regex },
@@ -218,42 +234,6 @@ module.exports = function(models, validator) {
                     return resolve(users);
                 });
             });
-            // return new Promise((resolve, reject) => {
-
-
-            //     User.find({ $or: [usernameRegex, firstNameRegex, lastNameRegex] })
-            //         .sort({ 'progress.totalPoints': 'asc' })
-            //         .skip(skip)
-            //         .limit(limit)
-            //         .then(users => {
-            //             if (users) {
-            //                 return resolve(users)
-            //             }
-            //         }).catch(err => {
-            //             return reject(err);
-            //         })
-
-
-            // return Promise.all([
-            //         new Promise((resolve, reject) => {
-            //             ForumPost.find()
-            //                 .sort({ 'date': 'asc' })
-            //                 .skip(skip)
-            //                 .limit(limit)
-            //                 .exec((err, forumPosts) => {
-            //                     if (err) {
-            //                         return reject(err);
-            //                     }
-
-            //                     return resolve(forumPosts);
-            //                 });
-            // .then(user => {
-            //     if (user) {
-            //         return resolve(user);
-            //     }
-            // }).catch(err => {
-            //     return reject(err);
-            // })
         },
         findUserByFacebookId(facebookId) {
             return new Promise((resolve, reject) => {

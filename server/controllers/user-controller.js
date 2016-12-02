@@ -114,20 +114,32 @@ module.exports = (data) => {
                 })
         },
         loadUsers(req, res) {
-            let page = req.query.page || 1
+            let page = +req.query.page || 1
             const count = 2;
             if (req.query.search) {
                 const searchName = req.query.search;
                 console.log(searchName);
-                data.searchUsersByName(searchName, page, count)
-                    .then(users => {
-                        console.log(searchName);
-                        return res.status(200).render('users', { result: { users, searchName, user: req.user } });
+                Promise.all([data.searchUsersByName(searchName, page, count), data.getCountOfFilteredUsers(searchName)])
+                    .then(([users, usersCount]) => {
+                        let pagesCount = Math.floor(usersCount / count);
+                        if ((usersCount % count) !== 0) {
+                            pagesCount += 1;
+                        }
+
+                        return res.status(200).render('users', {
+                            result: {
+                                users,
+                                searchName,
+                                user: req.user,
+                                params: { pagesCount, page }
+                            }
+                        });
                     })
                     .catch(err => {
                         console.log(err);
                         return res.status(500).json(err).render('error', { result: { user: req.user } });
                     });
+
             } else {
                 data.getTopUsers()
                     .then(users => {
