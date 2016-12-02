@@ -50,7 +50,7 @@ const competitionSchema = new Schema({
     },
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },
-    image: { type: String},
+    image: { type: String },
     points: {
         type: Number,
         required: true,
@@ -69,7 +69,6 @@ const competitionSchema = new Schema({
     },
     usersLiked: [String],
 });
-
 
 competitionSchema.methods.getPassed = function() {
     if (+Date.now() > +new Date(this.endDate)) {

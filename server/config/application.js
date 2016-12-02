@@ -17,7 +17,7 @@ console.log(path.resolve(__dirname + '/../../public'));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(session({ secret: 'james bond 007' }));
+app.use(session({ secret: 'james bond 007', resave: true, saveUninitialized: true }));
 
 
 module.exports = app;

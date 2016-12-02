@@ -39,9 +39,14 @@ html(lang='en')
               a.dropdown-toggle(href='/users') Users          
             li
               a.dropdown-toggle(href='/forum') Forum
-            if result.isOrganizator
-              li
-                a.dropdown-toggle(href='/competitions/create') Create competition 
+            if result.user
+              if result.user.isOrganizator
+                li
+                  a.dropdown-toggle(href='/competitions/create') Create competition
+              if result.user.isAdmin
+                li
+                  a.dropdown-toggle(href='/categories/create') Create category
+
           
           if result.user
             ul.nav.navbar-nav.navbar-right

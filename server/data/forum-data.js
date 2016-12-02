@@ -8,47 +8,30 @@ module.exports = function(models) {
         getForumPosts({ page, pageSize }) {
             const skip = (page - 1) * pageSize,
                 limit = pageSize;
+            return new Promise((resolve, reject) => {
+                ForumPost.find({}, {}, {
+                    sort: { 'date': -1 },
+                    skip,
+                    limit
+                }, (err, forumPosts) => {
+                    if (err) {
+                        return reject(err);
+                    }
 
-            return Promise.all([
-                    new Promise((resolve, reject) => {
-                        ForumPost.find()
-                            .sort({ 'date': 'asc' })
-                            .skip(skip)
-                            .limit(limit)
-                            .exec((err, forumPosts) => {
-                                if (err) {
-                                    return reject(err);
-                                }
-
-                                return resolve(forumPosts);
-                            });
-                    }),
-                    new Promise((resolve, reject) => {
-                        ForumPost.count({})
-                            .exec((err, count) => {
-                                if (err) {
-                                    return reject(err);
-                                }
-
-                                return resolve(count);
-                            })
-                    })
-                ])
-                .then(results => {
-                    const [forumPosts, count] = results;
-
-                    return { forumPosts, count };
+                    return resolve(forumPosts);
                 })
+            })
+        },
+        getForumPostCount() {
+            return new Promise((resolve, reject) => {
+                ForumPost.count({}, (err, count) => {
+                    if (err) {
+                        return reject(err);
+                    }
 
-            // return new Promise((resolve, reject) => {
-            //     ForumPost.find((err, forumPosts) => {
-            //         if (err) {
-            //             return reject(err);
-            //         }
-
-            //         return resolve(forumPosts);
-            //     });
-            // })
+                    return resolve(count);
+                })
+            })
         },
         getForumPostById(_id) {
             return new Promise((resolve, reject) => {
