@@ -47,6 +47,7 @@ $("#create").on("click", function(ev) {
     let longitude = marker.getPosition().lng();
     let competitionName = $("#competitionName").val();
     let place = $("#place").val();
+    let description = $("#description").val();
     let points = $("#points").val();
     let level = $("#level").val();
     let category = $("#category").val();
@@ -58,6 +59,7 @@ $("#create").on("click", function(ev) {
     formData.append('competitionImage', image);
     formData.append('competitionName', competitionName);
     formData.append('place', place);
+    formData.append('description',description);
     formData.append('points', points);
     formData.append('level', level);
     formData.append('category', category);

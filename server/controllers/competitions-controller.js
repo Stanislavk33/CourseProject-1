@@ -8,7 +8,6 @@ module.exports = (data) => {
             let view = 'competition';
             let username;
             let user = req.user;
-
             if (req.isAuthenticated()) {
                 view = 'competition-user';
                 username = user.username;
@@ -127,24 +126,24 @@ module.exports = (data) => {
                 });
         },
         loadCompetitions(req, res) {
-            data.getAllCompetitions()
-                .then(competitions => {
-                    res.render('competition-list', { result: { competitions, user: req.user } });
-                })
-                .catch((err) => {
-                    res.status(500).redirect('/500');
+
+            const page = +req.query.page || 1,
+                count = 2;
+            Promise.all([data.getAllCompetitions(page, count), data.getCompetitionsCount()])
+                .then(([competitions, compCount]) => {
+                    const pagesCount = Math.ceil(compCount / count);
+                    res.render('competition-list', { result: { competitions, user: req.user, params: { pagesCount, page } } });
                 });
         },
         createCompetition(req, res) {
             let body = req.body,
                 user = req.user.username;
-
-            console.log(body.competitionName + "   asdsadsa");
             data.createCompetition({
                 name: body.competitionName,
                 place: body.place,
                 organizator: user,
                 category: body.category,
+                description: body.description,
                 points: body.points,
                 level: body.level,
                 startDate: body.startDate,
@@ -155,7 +154,7 @@ module.exports = (data) => {
                 .then(competition => {
                     return data.addCompetitionToCategory(competition)
                 })
-                .then(() => {
+                .then((competition) => {
                     res.redirect(`/competitions/${competition._id}`);
                 })
                 .catch(err => {

@@ -9,7 +9,7 @@ module.exports = ({ app, data, authentication, uploadCompetitionImage }) => {
 
     router
         .get('/', controller.loadCompetitions)
-        .get('/create',authentication.isInRole('normal'),/* authentication.isInRole('organizator')*/controller.getCreatePage) // :id should be last
+        .get('/create',authentication.isInRole('normal'),/* authentication.isInRole('organizator')*/controller.getCreatePage)
         .get('/:id', controller.getByID)
         .put('/:id/like', authentication.isAuthenticated, controller.likeCompetition)
         .put('/:id/dislike', authentication.isAuthenticated, controller.dislikeCompetition)

@@ -7,41 +7,9 @@ module.exports = (data) => {
     return {
         loadForumPosts(req, res) {
             const page = Number(req.query.page || DEFAULT_PAGE);
-
-            data.getForumPosts({ page, pageSize: PAGE_SIZE })
-                .then((result) => {
-
-                    const { forumPosts, count } = result;
-
-                    if (count === 0) {
-                        return res.render('forum-page', {
-                            result: { forumPosts, params: { page, pages: 0 }, user: req.user }
-                        });
-                    }
-                    
-                    if (page < 1) {
-                        return res.redirect('/forum?page=1');
-                    }
-
-                    let pages = (count / PAGE_SIZE) | 0;
-
-                    if (count % PAGE_SIZE !== 0) {
-                        pages += 1;
-                    }
-
-                    // if (parseInt(pages, 10) < pages) {
-                    //     pages = parseInt(pages, 10);
-                    //     pages += 1;
-                    // }
-
-
-                    if (page > pages) {
-                        page = pages;
-
-                        return res.redirect(`/forum?page=${page}`);
-                    }
-
-                    const user = req.user;
+            Promise.all([data.getForumPosts({ page, pageSize: PAGE_SIZE }), data.getForumPostCount()])
+                .then(([forumPosts, allPostsCount]) => {
+                    const pages = Math.ceil(allPostsCount / PAGE_SIZE);
 
                     return res.status(200).render('forum-page', {
                         result: { forumPosts, user: req.user, params: { page, pages } }
@@ -59,10 +27,10 @@ module.exports = (data) => {
                 user = req.user;
 
             data.createForumPost({
-                title: body.title,
-                description: body.description,
-                user: { username: user.username, points: user.progress.totalPoints }
-            })
+                    title: body.title,
+                    description: body.description,
+                    user: { username: user.username, points: user.progress.totalPoints }
+                })
                 .then(() => {
                     res.redirect('/forum')
                 }).catch((err) => {
@@ -86,9 +54,9 @@ module.exports = (data) => {
                 id = req.params.id;
 
             data.addAnswerToForumPost(id, {
-                content: body.content,
-                user: { username: req.user.username, points: req.user.progress.totalPoints }
-            })
+                    content: body.content,
+                    user: { username: req.user.username, points: req.user.progress.totalPoints }
+                })
                 .then(() => {
                     res.redirect('/forum/' + id)
                 }).catch((err) => {

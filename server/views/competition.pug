@@ -23,7 +23,7 @@ block content
                             h2.title Category name: #{result.competition.name}
                             h2 Place: #{result.competition.place}
                             h3 Organized by:
-                                a(href="users/" +result.competition.organizator)  #{result.competition.organizator}
+                                a(href="/users/" +result.competition.organizator)  #{result.competition.organizator}
                             h3 Category: #{result.competition.category}
                             h3 Level: #{result.competition.level}
                             h3 Points: #{result.competition.points}

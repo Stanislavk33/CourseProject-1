@@ -5,14 +5,23 @@ module.exports = function(models) {
     const Competition = models.Competition;
 
     return {
-        getAllCompetitions() {
+        getAllCompetitions(page, size) {
+
+            const skip = (page - 1) * size,
+                limit = size;
+
             return new Promise((resolve, reject) => {
-                Competition.find((err, competitions) => {
+                Competition.find({}, {}, {
+                    skip,
+                    limit,
+                    sort: {
+                        likes: -1 //Sort by Date Added DESC
+                    }
+                }, function(err, competition) {
                     if (err) {
                         return reject(err);
-                    }
-
-                    return resolve(competitions);
+                    };
+                    return resolve(competition);
                 });
             });
         },
@@ -64,6 +73,7 @@ module.exports = function(models) {
             const newCompetition = new Competition({
                 name: competition.name,
                 place: competition.place,
+                description: competition.description,
                 likes: 0,
                 organizator: competition.organizator,
                 category: competition.category,
@@ -81,7 +91,7 @@ module.exports = function(models) {
                     if (err) {
                         return reject(err);
                     }
-
+                    console.log(newCompetition.name);
                     return resolve(newCompetition);
                 });
             });
@@ -136,12 +146,13 @@ module.exports = function(models) {
         },
         getLatestUpcommingCompetitions() {
             return new Promise((resolve, reject) => {
-                const competitions = Competition.find({ passed: 'upcoming' })
-                    // .sort({ dateCreated: -1 })
-                    .sort({ 'startDate': 'asc' })
-                    .limit(5);
-
-                resolve(competitions);
+                Competition.find({ startDate: { $gt: Date.now() } }, {}, { sort: { startDate: 1 } }, (err, competitions) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    console.log(competitions)
+                    return resolve(competitions);
+                })
             })
         },
         filterCompetitions(searchName) {
@@ -190,8 +201,18 @@ module.exports = function(models) {
                                 resolve(done);
                             }).catch(er => reject(er));
                     });
+            })
+        },
 
+        getCompetitionsCount() {
+            return new Promise((resolve, reject) => {
+                Competition.count({}, (err, count) => {
+                    if (err) {
+                        return reject(err);
+                    }
 
+                    return resolve(count);
+                })
             })
         }
     };

@@ -41,6 +41,9 @@ module.exports = function(models) {
         createCategory(category) {
             const newCategory = new Category({
                 title: category.title,
+                description: category.description,
+                image: category.image,
+                link: category.link,
                 competitions: []
             });
 
@@ -65,11 +68,13 @@ module.exports = function(models) {
                     place: competition.place
                 }
                 Category.findOneAndUpdate({ 'title': competition.category }, { $push: { 'competitions': competitionToAdd } },
-                    (err) => {
+                    (err, category) => {
                         if (err) {
                             return reject(err);
                         }
-                        return resolve();
+                        console.log("DSA");
+                        console.log(category);
+                        return resolve(category);
                     })
             });
         }
