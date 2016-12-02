@@ -42,125 +42,118 @@ module.exports = (data) => {
                 });
         },
         joinCompetition(req, res) {
-            if (!req.isAuthenticated()) {
-                res.status(400).json({
-                    success: false,
-                    message: 'Not authorized to join competition.'
-                });
-            } else {
-                const username = req.user.username,
-                    id = req.params.id;
+            const username = req.user.username,
+                id = req.params.id;
 
-                // TODO: what will the request return
-                data.addJoinedUserToCompetition(id, username)
-                    .then((competition) => {
-                        const userCompetition = {
-                            _id: competition._id,
-                            name: competition.name,
-                            place: competition.place
+            // TODO: what will the request return
+            data.addJoinedUserToCompetition(id, username)
+                .then((competition) => {
+                    const userCompetition = {
+                        _id: competition._id,
+                        name: competition.name,
+                        place: competition.place
+                    }
+                    return data.addCompetitionToUser(username, userCompetition);
+                })
+                .then((user) => {
+                    res.status(200).json({
+                        result: {
+                            username: user.username,
+                            points: user.progress.totalPoints
                         }
-                        return data.addCompetitionToUser(username, userCompetition);
-                    })
-                    .then((user) => {
-                        res.status(200).json({
-                            result: {
-                                username: user.username,
-                                points: user.progress.totalPoints
-                            }
-                        });
-                    })
-                    .catch(error => {
-                        res.status(500).json(error);
                     });
-            }
+                })
+                .catch(error => {
+                    res.status(500).json(error);
+                });
         },
         leaveCompetition(req, res) {
-            if (!req.isAuthenticated()) {
-                res.status(400).json({
-                    success: false,
-                    message: 'Not authorized to join competition.'
-                });
-            } else {
-                const username = req.user.username,
-                    id = req.params.id;
+        if (!req.isAuthenticated()) {
+            res.status(400).json({
+                success: false,
+                message: 'Not authorized to join competition.'
+            });
+        } else {
+            const username = req.user.username,
+                id = req.params.id;
 
-                data.removeUserFromCompetition(id, username)
-                    .then((competition) => {
-                        return data.removeCompetitionFromUser(username, id);
-                    })
-                    .then(() => {
-                        // TODO: what to return;
-                        res.status(200).json({
-                            success: true,
-                            username
-                        });
-                    })
-                    .catch(error => {
-                        res.status(500).json(error);
+            data.removeUserFromCompetition(id, username)
+                .then((competition) => {
+                    return data.removeCompetitionFromUser(username, id);
+                })
+                .then(() => {
+                    // TODO: what to return;
+                    res.status(200).json({
+                        success: true,
+                        username
                     });
-            }
-        },
-        likeCompetition(req, res) {
-            const competitionId = req.params.id;
-            let update = { $inc: { likes: 1 } };
-            data.updateCompetition(competitionId, update, null)
-                .then((competition) => {
-                    let user = req.user.username;
-                    competition.usersLiked.push(user);
-                    competition.save();
-                    return competition;
                 })
-                .then((competition) => {
-                    res.json(JSON.stringify(competition.likes + 1));
-                });
-        },
-        dislikeCompetition(req, res) {
-            const competitionId = req.params.id;
-            let update = { $inc: { likes: -1 } };
-            data.updateCompetition(competitionId, update, null)
-                .then((competition) => {
-                    let user = req.user.username;
-                    competition.usersLiked.pull(user);
-                    competition.save();
-                    return competition;
-                })
-                .then((competition) => {
-                    res.json(JSON.stringify(competition.likes + 1));
-                });
-        },
-        loadCompetitions(req, res) {
-            data.getAllCompetitions()
-                .then(competitions => {
-                    res.render('competition-list', { result: { competitions, user: req.user } });
-                });
-        },
-        createCompetition(req, res) {
-            let body = req.body,
-                user = req.user.username;
-
-            console.log(body.competitionName + "   asdsadsa");
-            data.createCompetition({
-                    name: body.competitionName,
-                    place: body.place,
-                    organizator: user,
-                    category: body.category,
-                    points: body.points,
-                    level: body.level,
-                    startDate: body.startDate,
-                    endDate: body.endDate,
-                    location: { longitude: body.longitude, latitude: body.latitude }
-                })
-                .then(competition => {
-                    data.addCompetitionToCategory(competition)
-                        .then(() => {
-                            res.redirect(`/competitions/${competition._id}`);
-                        }).catch(err => {
-                            res.status(500).json(err);
-                        });
-                }).catch(err => {
-                    console.log(err);
-                    res.status(500).json(err);
+                .catch(error => {
+                    res.status(500).json(error);
                 });
         }
-    };
+    },
+    likeCompetition(req, res) {
+        const competitionId = req.params.id;
+        let update = { $inc: { likes: 1 } };
+        data.updateCompetition(competitionId, update, null)
+            .then((competition) => {
+                let user = req.user.username;
+                competition.usersLiked.push(user);
+                competition.save();
+                return competition;
+            })
+            .then((competition) => {
+                res.json(JSON.stringify(competition.likes + 1));
+            });
+    },
+    dislikeCompetition(req, res) {
+        const competitionId = req.params.id;
+        let update = { $inc: { likes: -1 } };
+        data.updateCompetition(competitionId, update, null)
+            .then((competition) => {
+                let user = req.user.username;
+                competition.usersLiked.pull(user);
+                competition.save();
+                return competition;
+            })
+            .then((competition) => {
+                res.json(JSON.stringify(competition.likes + 1));
+            });
+    },
+    loadCompetitions(req, res) {
+        data.getAllCompetitions()
+            .then(competitions => {
+                res.render('competition-list', { result: { competitions, user: req.user } });
+            });
+    },
+    createCompetition(req, res) {
+        let body = req.body,
+            user = req.user.username;
+
+        console.log(body.competitionName + "   asdsadsa");
+        data.createCompetition({
+            name: body.competitionName,
+            place: body.place,
+            organizator: user,
+            category: body.category,
+            points: body.points,
+            level: body.level,
+            startDate: body.startDate,
+            endDate: body.endDate,
+            location: { longitude: body.longitude, latitude: body.latitude }
+        })
+            .then(competition => {
+                data.addCompetitionToCategory(competition)
+                    .then(() => {
+                        res.redirect(`/competitions/${competition._id}`);
+                    }).catch(err => {
+                        res.status(500).json(err);
+                    });
+            }).catch(err => {
+                console.log(err);
+                res.status(500).json(err);
+            });
+    }
+};
 };

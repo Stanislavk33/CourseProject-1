@@ -21,7 +21,7 @@ module.exports = (data) => {
                             .redirect('/error');
                     }
 
-                    return res.status(200).render(view, { result: {userForProfile: user, user: req.user } });
+                    return res.status(200).render(view, { result: { userForProfile: user, user: req.user } });
                 })
                 .catch((err) => {
                     return res.status(500).json(err);
@@ -31,27 +31,13 @@ module.exports = (data) => {
             const username = req.params.username;
             console.log(username);
 
-            if (req.isAuthenticated() && req.user.username === username) {
-                data.getUserByUsername(username)
-                    .then((user) => {
-                        return res.status(200).render('edit-profile', { result: { user: req.user } });
-                    })
-            } else {
-                return res.status(400).json({
-                    success: false,
-                    message: 'Not authorized!'
-                })
-            }
+            data.getUserByUsername(username)
+                .then((user) => {
+                    return res.status(200).render('edit-profile', { result: { user: req.user } });
+                });
         },
         editProfile(req, res) {
             const username = req.params.username;
-
-            if (!req.isAuthenticated() || req.user.username !== username) {
-                return res.status(400).json({
-                    success: false,
-                    message: 'Not authorized!'
-                })
-            }
 
             const userInfo = {
                 firstName: req.body.firstName,

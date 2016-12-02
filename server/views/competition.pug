@@ -40,7 +40,7 @@ block content
                         h1.title #{result.name}
                         h2 #{result.place}
                         h3 Organized by
-                            a(href="users/" +result.organizator)  #{result.organizator}
+                            a(href="/users/" +result.organizator)  #{result.organizator}
                         h3 Category: #{result.category}
                         h3 Level: #{result.level}
                         h3 Points: #{result.points}
@@ -70,13 +70,11 @@ block content
                                td
                                    button.addPoints(data-id=user.username +" "+ result.points data-category=result.category) addPoints
 block scripts
-
     script(src="/static/bower_components/jquery/dist/jquery.min.js")
     script(src="/static/bower_components/toastr/toastr.js")
-    script(src="/static/js/add-points.js")
     script(src="/static/js/competition.js")
     script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0PmHg9An9AdDbib9-jYefjSKSnapzFLQ&callback=initMap")
-
+    block additional-scripts
 
     
                 

@@ -2,7 +2,7 @@
 
 const express = require('express');
 
-module.exports = (app, data) => {
+module.exports = ({ app, data }) => {
     const controller = require('./../controllers/search-controller')(data);
 
     const router = new express.Router();

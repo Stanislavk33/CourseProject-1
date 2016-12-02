@@ -2,12 +2,13 @@
 'use strict';
 
 const fs = require('fs'),
-    path = require('path');
+    path = require('path'),
+    authentication = require('../middlewares/auth-middleware');
 
 module.exports = (app, data) => {
     fs.readdirSync('./server/routers')
         .filter(x => x.includes('-router'))
         .forEach(file => {
-            require(path.join(__dirname, file))(app, data);
+            require(path.join(__dirname, file))({ app, data, authentication });
         });
 };

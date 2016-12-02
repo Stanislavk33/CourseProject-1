@@ -93,7 +93,7 @@ module.exports = function(models, validator) {
                         totalPoints: 0,
                         categoriesPoints: []
                     },
-                    inRole: user.inRole
+                    roles: ['normal']
                 });
 
                 if (user.image) {
@@ -133,7 +133,7 @@ module.exports = function(models, validator) {
         },
         updateUserInRole(userId, role) {
             return new Promise((resolve, reject) => {
-                User.findByIdAndUpdate({ '_id': userId }, { $set: { 'inRole': role } },
+                User.findByIdAndUpdate({ '_id': userId }, { $push: { 'roles': role } },
                     (err) => {
                         if (err) {
                             return reject(err);

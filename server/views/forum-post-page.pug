@@ -59,12 +59,13 @@ block content
                            //- Author
              else 
                h3.comments No comments to this post 
-             .well
-               form(action=`/forum/${result.forumPost._id}/comment` method="post" role="form")
-                 .form-group.comment-input
-                   textarea.form-control.input-lg(name="content" placeholder="Leave a comment")
-                 input.btn.btn-info(type='submit' value="Comment")
-             hr
+             if result.user
+              .well
+                form(action=`/forum/${result.forumPost._id}/comment` method="post" role="form")
+                  .form-group.comment-input
+                    textarea.form-control.input-lg(name="content" placeholder="Leave a comment")
+                  input.btn.btn-info(type='submit' value="Comment")
+              hr
             
 block scripts
     script(src="/static/bower_components/toastr/toastr.js")
