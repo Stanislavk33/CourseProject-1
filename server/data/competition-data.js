@@ -145,12 +145,13 @@ module.exports = function(models) {
         },
         getLatestUpcommingCompetitions() {
             return new Promise((resolve, reject) => {
-                const competitions = Competition.find({ passed: 'upcoming' })
-                    // .sort({ dateCreated: -1 })
-                    .sort({ 'startDate': 'asc' })
-                    .limit(5);
-
-                resolve(competitions);
+                Competition.find({ startDate: { $gt: Date.now() } }, {}, { sort: { startDate: 1 } }, (err, competitions) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    console.log(competitions)
+                    return resolve(competitions);
+                })
             })
         },
         filterCompetitions(searchName) {
