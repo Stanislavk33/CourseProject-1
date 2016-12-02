@@ -24,8 +24,8 @@ module.exports = (data) => {
                     return res.status(200).render(view, { result: { userForProfile: user, user: req.user } });
                 })
                 .catch((err) => {
-                    return res.status(500).json(err);
-                })
+                    res.status(500).redirect('/500');
+                });
         },
         getEditPage(req, res) {
             const username = req.params.username;
@@ -34,6 +34,9 @@ module.exports = (data) => {
             data.getUserByUsername(username)
                 .then((user) => {
                     return res.status(200).render('edit-profile', { result: { user: req.user } });
+                })
+                .catch((err) => {
+                    res.status(500).redirect('/500');
                 });
         },
         editProfile(req, res) {
@@ -55,19 +58,24 @@ module.exports = (data) => {
                     return res.redirect(`/users/${username}`);
                 })
                 .catch((err) => {
-                    return res.status(500).json(err);
-                })
+                    res.status(500).redirect('/500');
+                });
         },
         logoutUser(req, res) {
             req.logout();
             res.redirect("/");
         },
+
+        // TODO: delete method if not used
         loadRegisterPage(req, res) {
             res.render("user/register", { result: { user: req.user } });
         },
+        // TODO: delete method if not used
         loadLoginPage(req, res) {
             res.render("user/login", { result: { user: req.user } });
         },
+
+        // TODO: delete method if not used
         getById(req, res) {
             data.getUserById(req.params.id)
                 .then(user => {
@@ -77,6 +85,9 @@ module.exports = (data) => {
                     }
 
                     // TODO: return res.render...
+                })
+                .catch((err) => {
+                    res.status(500).redirect('/500');
                 });
         },
         addPoints(req, res) {
@@ -98,6 +109,9 @@ module.exports = (data) => {
                                 .redirect('/error');
                         })
                 })
+                .catch((err) => {
+                    res.status(500).redirect('/500');
+                });
         },
         loadUsers(req, res) {
             let page = +req.query.page || 1
@@ -121,18 +135,16 @@ module.exports = (data) => {
                             }
                         });
                     })
-                    .catch(err => {
-                        console.log(err);
-                        return res.status(500).json(err).render('error', { result: { user: req.user } });
+                    .catch((err) => {
+                        res.status(500).redirect('/500');
                     });
-
             } else {
                 data.getTopUsers()
                     .then(users => {
                         return res.status(200).render('users', { result: { users, user: req.user } });
                     })
-                    .catch(err => {
-                        return res.status(500).json(err).render('error', { result: { user: req.user } });
+                    .catch((err) => {
+                        res.status(500).redirect('/500');
                     });
             }
         }

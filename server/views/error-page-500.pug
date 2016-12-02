@@ -1,0 +1,28 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    title Error page
+    link(href='/static/bower_components/bootstrap/dist/css/bootstrap.css', rel='stylesheet')    
+    link(href='/static/bower_components/material-kit/assets/css/bootstrap.min.css', rel='stylesheet')
+    link(href='/static/bower_components/material-kit/assets/css/material-kit.css', rel='stylesheet')
+    link(href='/static/css/error-page.css', rel='stylesheet')
+    block styles
+  body
+    .container
+      .row
+        .span12
+          .hero-unit.center
+            h1(style='color:white')
+              | HTTP Error 500 Internal server error
+              small
+                font(face='Tahoma', color='red') Error 500
+            br
+            p
+              | Sorry, an internal server error occured.
+            p
+              b You could just press this neat little button:
+            a.btn.btn-large.btn-info(href='/home')
+              i.icon-home.icon-white
+              |  Take Me Home
+              block content

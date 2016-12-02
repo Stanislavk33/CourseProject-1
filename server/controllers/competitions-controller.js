@@ -24,7 +24,10 @@ module.exports = (data) => {
                     }
 
                     competition.passed = competition.getPassed();
-                    res.render(view, { result:{ competition, user: user} });
+                    res.render(view, { result: { competition, user: user } });
+                })
+                .catch((err) => {
+                    res.status(500).redirect('/500');
                 });
         },
         getCreatePage(req, res) {
@@ -39,6 +42,9 @@ module.exports = (data) => {
                             user: req.user
                         }
                     });
+                })
+                .catch((err) => {
+                    res.status(500).redirect('/500');
                 });
         },
         joinCompetition(req, res) {
@@ -63,17 +69,11 @@ module.exports = (data) => {
                         }
                     });
                 })
-                .catch(error => {
-                    res.status(500).json(error);
+                .catch((err) => {
+                    res.status(500).redirect('/500');
                 });
         },
         leaveCompetition(req, res) {
-        if (!req.isAuthenticated()) {
-            res.status(400).json({
-                success: false,
-                message: 'Not authorized to join competition.'
-            });
-        } else {
             const username = req.user.username,
                 id = req.params.id;
 
@@ -88,73 +88,80 @@ module.exports = (data) => {
                         username
                     });
                 })
-                .catch(error => {
-                    res.status(500).json(error);
+                .catch((err) => {
+                    res.status(500).redirect('/500');
+                });
+        },
+        likeCompetition(req, res) {
+            const competitionId = req.params.id;
+            let update = { $inc: { likes: 1 } };
+            data.updateCompetition(competitionId, update, null)
+                .then((competition) => {
+                    let user = req.user.username;
+                    competition.usersLiked.push(user);
+                    competition.save();
+                    return competition;
+                })
+                .then((competition) => {
+                    res.json(JSON.stringify(competition.likes + 1));
+                })
+                .catch((err) => {
+                    res.status(500).redirect('/500');
+                });
+        },
+        dislikeCompetition(req, res) {
+            const competitionId = req.params.id;
+            let update = { $inc: { likes: -1 } };
+            data.updateCompetition(competitionId, update, null)
+                .then((competition) => {
+                    let user = req.user.username;
+                    competition.usersLiked.pull(user);
+                    competition.save();
+                    return competition;
+                })
+                .then((competition) => {
+                    res.json(JSON.stringify(competition.likes + 1));
+                })
+                .catch((err) => {
+                    res.status(500).redirect('/500');
+                });
+        },
+        loadCompetitions(req, res) {
+            data.getAllCompetitions()
+                .then(competitions => {
+                    res.render('competition-list', { result: { competitions, user: req.user } });
+                })
+                .catch((err) => {
+                    res.status(500).redirect('/500');
+                });
+        },
+        createCompetition(req, res) {
+            let body = req.body,
+                user = req.user.username;
+
+            console.log(body.competitionName + "   asdsadsa");
+            data.createCompetition({
+                name: body.competitionName,
+                place: body.place,
+                organizator: user,
+                category: body.category,
+                points: body.points,
+                level: body.level,
+                startDate: body.startDate,
+                endDate: body.endDate,
+                image: req.file ? req.file.filename : 'default.jpg',
+                location: { longitude: body.longitude, latitude: body.latitude }
+            })
+                .then(competition => {
+                    return data.addCompetitionToCategory(competition)
+                })
+                .then(() => {
+                    res.redirect(`/competitions/${competition._id}`);
+                })
+                .catch(err => {
+                    console.log(err);
+                    res.status(500).redirect('/500');
                 });
         }
-    },
-    likeCompetition(req, res) {
-        const competitionId = req.params.id;
-        let update = { $inc: { likes: 1 } };
-        data.updateCompetition(competitionId, update, null)
-            .then((competition) => {
-                let user = req.user.username;
-                competition.usersLiked.push(user);
-                competition.save();
-                return competition;
-            })
-            .then((competition) => {
-                res.json(JSON.stringify(competition.likes + 1));
-            });
-    },
-    dislikeCompetition(req, res) {
-        const competitionId = req.params.id;
-        let update = { $inc: { likes: -1 } };
-        data.updateCompetition(competitionId, update, null)
-            .then((competition) => {
-                let user = req.user.username;
-                competition.usersLiked.pull(user);
-                competition.save();
-                return competition;
-            })
-            .then((competition) => {
-                res.json(JSON.stringify(competition.likes + 1));
-            });
-    },
-    loadCompetitions(req, res) {
-        data.getAllCompetitions()
-            .then(competitions => {
-                res.render('competition-list', { result: { competitions, user: req.user } });
-            });
-    },
-    createCompetition(req, res) {
-        let body = req.body,
-            user = req.user.username;
-
-        console.log(body.competitionName + "   asdsadsa");
-        data.createCompetition({
-            name: body.competitionName,
-            place: body.place,
-            organizator: user,
-            category: body.category,
-            points: body.points,
-            level: body.level,
-            startDate: body.startDate,
-            endDate: body.endDate,
-            image: req.file ? req.file.filename : 'default.jpg',
-            location: { longitude: body.longitude, latitude: body.latitude }
-        })
-            .then(competition => {
-                data.addCompetitionToCategory(competition)
-                    .then(() => {
-                        res.redirect(`/competitions/${competition._id}`);
-                    }).catch(err => {
-                        res.status(500).json(err);
-                    });
-            }).catch(err => {
-                console.log(err);
-                res.status(500).json(err);
-            });
-    }
-};
+    };
 };
