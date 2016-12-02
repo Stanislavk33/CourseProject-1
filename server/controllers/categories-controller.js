@@ -8,7 +8,7 @@ module.exports = (data) => {
                     return res.status(200).render('categories', { result: { categories, user: req.user } });
                 })
                 .catch(err => {
-                    res.status(500).render('error', { result: { user: req.user } });
+                    res.status(500).redirect('/500');
                 });
         },
         getCategoryByTitle(req, res) {
@@ -18,7 +18,7 @@ module.exports = (data) => {
                     return res.status(200).render('category', { result: category, user: req.user });
                 })
                 .catch(err => {
-                    res.status(500).render('error', { result: { user: req.user } });
+                    res.status(500).redirect('/500');
                 })
         }
     }

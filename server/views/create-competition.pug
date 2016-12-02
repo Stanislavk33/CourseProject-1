@@ -41,7 +41,7 @@ block content
                                 .form-group.is-empty.has-info
                                    select(id="category" class="form-control" name="category")
                                      option(value="") Choose Category
-                                     each category in result
+                                     each category in result.categoriesTitles
                                         option(value= category) #{category}
                             .input-group
                                 span.input-group-addon

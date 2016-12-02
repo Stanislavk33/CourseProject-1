@@ -47,7 +47,9 @@ module.exports = (data) => {
                         result: { forumPosts, user: req.user, params: { page, pages } }
                     });
                 })
-                .catch(err => { res.status(404).send(err); });
+                .catch((err) => {
+                    res.status(500).redirect('/500');
+                });
         },
         getCreatePage(req, res) {
             return res.status(200).render('create-forum-post', { result: { user: req.user } });
@@ -59,12 +61,12 @@ module.exports = (data) => {
             data.createForumPost({
                 title: body.title,
                 description: body.description,
-                user: { username: user.username, points: user.progress.totalPoints}
+                user: { username: user.username, points: user.progress.totalPoints }
             })
                 .then(() => {
                     res.redirect('/forum')
-                }).catch(err => {
-                    console.log(err);
+                }).catch((err) => {
+                    res.status(500).redirect('/500');
                 });
         },
         getByID(req, res) { //
@@ -73,6 +75,9 @@ module.exports = (data) => {
             data.getForumPostById(id)
                 .then(forumPost => {
                     res.render('forum-post-page', { result: { forumPost, currentUser, user: req.user } });
+                })
+                .catch((err) => {
+                    res.status(500).redirect('/500');
                 });
         },
         addComment(req, res) { //
@@ -81,13 +86,13 @@ module.exports = (data) => {
                 id = req.params.id;
 
             data.addAnswerToForumPost(id, {
-                    content: body.content,
-                    user: { username: req.user.username, points: req.user.progress.totalPoints }
-                })
+                content: body.content,
+                user: { username: req.user.username, points: req.user.progress.totalPoints }
+            })
                 .then(() => {
                     res.redirect('/forum/' + id)
-                }).catch(err => {
-                    console.log(err);
+                }).catch((err) => {
+                    res.status(500).redirect('/500');
                 });
         },
         AddLikeToPost(req, res) {
@@ -97,8 +102,8 @@ module.exports = (data) => {
                 .then(() => data.addUsernameToPostUsersLiked(id, req.user.username))
                 .then(() => {
                     res.send('');
-                }).catch(err => {
-                    console.log(err);
+                }).catch((err) => {
+                    res.status(500).redirect('/500');
                 });
         },
         UnlikePost(req, res) {
@@ -108,8 +113,8 @@ module.exports = (data) => {
                 .then(() => data.removeUsernameFromPostUsersLiked(id, req.user.username))
                 .then(() => {
                     res.send('');
-                }).catch(err => {
-                    console.log(err);
+                }).catch((err) => {
+                    res.status(500).redirect('/500');
                 });
         },
         AddLikeToAnswer(req, res) {
@@ -119,8 +124,8 @@ module.exports = (data) => {
                 .then(() => data.addUsernameToPostAnswerUsersLiked(postId, answerId, req.user.username))
                 .then(() => {
                     res.send('');
-                }).catch(err => {
-                    console.log(err);
+                }).catch((err) => {
+                    res.status(500).redirect('/500');
                 });
         },
         UnlikePostAnswer(req, res) {
@@ -130,8 +135,8 @@ module.exports = (data) => {
                 .then(() => data.removeUsernameFromPostAnswerUsersLiked(postId, answerId, req.user.username))
                 .then(() => {
                     res.send('');
-                }).catch(err => {
-                    console.log(err);
+                }).catch((err) => {
+                    res.status(500).redirect('/500');
                 });
         }
     };

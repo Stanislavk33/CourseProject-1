@@ -10,7 +10,12 @@ module.exports = (data) => {
                 .then((competitions) => {
                     return res.status(200).render('searchpage', { result: { competitions, searchName, user: req.user } });
                 })
+                .catch((err) => {
+                    res.status(500).redirect('/500');
+                });
         },
+
+        // TODO: delete method if not used
         searchUser(username, isLoggedIn, req, res) {
             let user = req.user;
             if (user) {
@@ -24,6 +29,9 @@ module.exports = (data) => {
                     return res.status(200).render('searchpage', { result: { users, user: req.user } });
                 }, err => {
                     console.log(err);
+                })
+                .catch((err) => {
+                    res.status(500).redirect('/500');
                 });
         }
     };
