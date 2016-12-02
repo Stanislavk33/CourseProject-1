@@ -18,7 +18,7 @@ module.exports = (data) => {
                             result: { forumPosts, params: { page, pages: 0 }, user: req.user }
                         });
                     }
-
+                    
                     if (page < 1) {
                         return res.redirect('/forum?page=1');
                     }

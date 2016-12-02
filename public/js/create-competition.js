@@ -1,5 +1,7 @@
 'use strict';
 
+var app = app || {};
+
 let marker;
 
 function initMap() {
@@ -12,7 +14,6 @@ function initMap() {
     google.maps.event.addListener(map, 'click', function(event) {
         marker = addMarker(event.latLng, map, marker);
     });
-
 }
 
 function addMarker(location, map, oldMarker) {
@@ -42,12 +43,6 @@ $("#create").on("click", function(ev) {
 
     }
 
-    console.log($("#startDate").val());
-    console.log("aaaaaaaaaaaaaaaaaaaa");
-    console.log($("#endDate").val());
-    console.log("bbbbbbbbbbbbbbbbbb");
-
-
     let latitude = marker.getPosition().lat();
     let longitude = marker.getPosition().lng();
     let competitionName = $("#competitionName").val();
@@ -58,8 +53,6 @@ $("#create").on("click", function(ev) {
     let startDate = $("#startDate").val();
     let endDate = $("#endDate").val();
     let image = $('#tb-competition')[0].files[0];
-
-    // let data = { competitionName, place, points, level, category, latitude, longitude, startDate, endDate }
 
     let formData = new FormData();
     formData.append('competitionImage', image);
@@ -75,18 +68,11 @@ $("#create").on("click", function(ev) {
 
     ev.preventDefault();
 
-    $.ajax("/competitions/create", {
-        async: true,
-        method: "POST",
-        data: formData,
-        contentType: false,
-        cache: false,
-        processData: false
-    }).
-    done(() => {
-            toastr.success("magic");
+    app.requester.postWithFile('/competitions/create', formData)
+        .then(resp => {
+            toastr.success(resp)
         })
-        .fail(() => {
-            toastr.error("You are a fail!")
-        })
+        .catch(err => {
+            console.log(err);
+        });
 });
