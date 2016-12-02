@@ -5,10 +5,10 @@ const fs = require('fs'),
     path = require('path'),
     authentication = require('../middlewares/auth-middleware');
 
-module.exports = (app, data) => {
+module.exports = ({ app, data, uploadUserImage, uploadCompetitionImage }) => {
     fs.readdirSync('./server/routers')
         .filter(x => x.includes('-router'))
         .forEach(file => {
-            require(path.join(__dirname, file))({ app, data, authentication });
+            require(path.join(__dirname, file))({ app, data, authentication, uploadUserImage, uploadCompetitionImage});
         });
 };

@@ -3,7 +3,7 @@
 
 const express = require('express');
 
-module.exports = ({ app, data,authentication }) => {
+module.exports = ({ app, data, authentication, uploadCompetitionImage }) => {
     const controller = require('./../controllers/competitions-controller')(data),
         router = new express.Router();
 
@@ -18,7 +18,7 @@ module.exports = ({ app, data,authentication }) => {
 
     // TODO
     // api/competiions/create
-    .post('/create', controller.createCompetition);
+    .post('/create', uploadCompetitionImage.single('competitionImage'), controller.createCompetition);
 
     app.use('/competitions', router);
 };

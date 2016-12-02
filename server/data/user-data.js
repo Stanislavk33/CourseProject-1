@@ -202,24 +202,37 @@ module.exports = function(models, validator) {
                     });
             });
         },
-        searchUsersByName(name) {
+        getCountOfFilteredUsers(name) {
+            const regex = { $regex: new RegExp(`.*${name}.*`, 'i') },
+                usernameRegex = { username: regex },
+                firstNameRegex = { firstName: regex },
+                lastNameRegex = { lastName: regex };
+
             return new Promise((resolve, reject) => {
-
-                // const usernameRegex = { username: { $regex: `.*${name}.*` } };
-                // const firstNameRegex = { firstName: { $regex: `.*${name}.*` } };
-                // const lastNameRegex = { lastName: { $regex: `.*${name}.*` } };
-                const regex = { $regex: new RegExp(`.*${name}.*`, 'i') };
-                const usernameRegex = { username: regex };
-                const firstNameRegex = { firstName: regex };
-                const lastNameRegex = { lastName: regex };
-
-                User.find({ $or: [usernameRegex, firstNameRegex, lastNameRegex] }, (err, users) => {
+                User.count({ $or: [usernameRegex, firstNameRegex, lastNameRegex] }, function(err, usersCount) {
                     if (err) {
                         return reject(err);
                     }
-                    console.log(users);
-                    return resolve(users);
+
+                    return resolve(usersCount);
                 })
+            })
+        },
+        searchUsersByName(name, page, size) {
+            const regex = { $regex: new RegExp(`.*${name}.*`, 'i') },
+                usernameRegex = { username: regex },
+                firstNameRegex = { firstName: regex },
+                lastNameRegex = { lastName: regex },
+                skip = (page - 1) * size,
+                limit = size;
+            return new Promise((resolve, reject) => {
+                User.find({ $or: [usernameRegex, firstNameRegex, lastNameRegex] }, {}, { skip: skip, limit: limit }, function(err, users) {
+                    if (err) {
+                        return reject(err);
+                    };
+
+                    return resolve(users);
+                });
             });
         },
         findUserByFacebookId(facebookId) {
