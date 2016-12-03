@@ -17,8 +17,7 @@ module.exports = ({data}) => {
             data.getUserByUsername(username, asPersonalPage)
                 .then((user) => {
                     if (!user) {
-                        return res.status(400)
-                            .redirect('/error');
+                        throw new Error("No user found!");
                     }
 
                     return res.status(200).render(view, { result: { userForProfile: user, user: req.user } });
@@ -33,6 +32,9 @@ module.exports = ({data}) => {
 
             data.getUserByUsername(username)
                 .then((user) => {
+                    if (!user) {
+                        throw new Error("No user found!");
+                    }
                     return res.status(200).render('users/edit-profile', { result: { user: req.user } });
                 })
                 .catch((err) => {
@@ -96,21 +98,19 @@ module.exports = ({data}) => {
                 category = req.body.category,
                 competitionId = req.body.competitionId;
 
-                // TODO: fix redirect
+            // TODO: fix redirect
             data.updatePoints(username, points, category)
                 .then(user => {
-                    if (user === null) {
-                        return res.status(400)
-                            .redirect('/error');
+                    if (!user) {
+                        throw new Error("No user found!");
                     }
                 }).then(() => {
                     data.updateAttendedStatusToUser(username, competitionId)
-                        .then(()=>{
+                        .then(() => {
                             return res.status(200);
                         })
                         .catch(er => {
-                            return res.status(400)
-                                .redirect('/error');
+                            throw er;
                         })
                 })
                 .catch((err) => {

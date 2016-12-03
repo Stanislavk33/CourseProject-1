@@ -41,7 +41,7 @@ module.exports = {
     isValidForumPost(forumPost) {
         if (lengthValidation(constants.MIN_TITLE_LENGTH, constants.MAX_TITLE_LENGTH, forumPost.title) &&
             lengthValidation(constants.MIN_DESCRIPTION_LENGTH, constants.MAX_DESCRIPTION_LENGTH, forumPost.description),
-            lengthValidation(constants.MIN_NAME_LENGTH, constants.MAX_NAME_LENGTH, forumPost.user)) {
+            lengthValidation(constants.MIN_NAME_LENGTH, constants.MAX_NAME_LENGTH, forumPost.user.username)) {
             return true;
         }
 

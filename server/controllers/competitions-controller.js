@@ -14,6 +14,10 @@ module.exports = ({data}) => {
             }
             data.getCompetitionById(id)
                 .then(competition => {
+                    if (!competition) {
+                        throw new Error("No competition found!");
+                    }
+
                     if (username === competition.organizator) {
                         // view = 'some-new-view';
                         competition.isOrganizator = true;
@@ -53,6 +57,10 @@ module.exports = ({data}) => {
             // TODO: what will the request return
             data.addJoinedUserToCompetition(id, username)
                 .then((competition) => {
+                    if (!competition) {
+                        throw new Error("No competition found!");
+                    }
+
                     const userCompetition = {
                         _id: competition._id,
                         name: competition.name,
@@ -96,6 +104,10 @@ module.exports = ({data}) => {
             let update = { $inc: { likes: 1 } };
             data.updateCompetition(competitionId, update, null)
                 .then((competition) => {
+                    if (!competition) {
+                        throw new Error("No competition found!");
+                    }
+
                     let user = req.user.username;
                     competition.usersLiked.push(user);
                     competition.save();
@@ -113,6 +125,10 @@ module.exports = ({data}) => {
             let update = { $inc: { likes: -1 } };
             data.updateCompetition(competitionId, update, null)
                 .then((competition) => {
+                    if (!competition) {
+                        throw new Error("No competition found!");
+                    }
+
                     let user = req.user.username;
                     competition.usersLiked.pull(user);
                     competition.save();
@@ -131,7 +147,7 @@ module.exports = ({data}) => {
                 count = 2;
             Promise.all([data.getAllCompetitions(page, count), data.getCompetitionsCount()])
                 .then(([competitions, compCount]) => {
-                    competitions.forEach(x=>{
+                    competitions.forEach(x => {
                         x.passed = x.getPassed();
                     });
                     const pagesCount = Math.ceil(compCount / count);
