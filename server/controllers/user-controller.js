@@ -4,21 +4,20 @@ module.exports = ({data}) => {
     return {
         getProfile(req, res) {
             const username = req.params.username;
-            let view = 'user-profile';
+            let view = 'users/user-profile';
             let asPersonalPage = false;
 
             if (req.isAuthenticated()) {
                 if (req.user.username === username) {
                     asPersonalPage = true;
-                    view = 'personal-profile';
+                    view = 'users/personal-profile';
                 }
             }
 
             data.getUserByUsername(username, asPersonalPage)
                 .then((user) => {
                     if (!user) {
-                        return res.status(400)
-                            .redirect('/error');
+                        throw new Error("No user found!");
                     }
 
                     return res.status(200).render(view, { result: { userForProfile: user, user: req.user } });
@@ -33,7 +32,10 @@ module.exports = ({data}) => {
 
             data.getUserByUsername(username)
                 .then((user) => {
-                    return res.status(200).render('edit-profile', { result: { user: req.user } });
+                    if (!user) {
+                        throw new Error("No user found!");
+                    }
+                    return res.status(200).render('users/edit-profile', { result: { user: req.user } });
                 })
                 .catch((err) => {
                     res.status(500).redirect('/500');
@@ -68,11 +70,11 @@ module.exports = ({data}) => {
 
         // TODO: delete method if not used
         loadRegisterPage(req, res) {
-            res.render("user/register", { result: { user: req.user } });
+            res.render("users/user/register", { result: { user: req.user } });
         },
         // TODO: delete method if not used
         loadLoginPage(req, res) {
-            res.render("user/login", { result: { user: req.user } });
+            res.render("users/user/login", { result: { user: req.user } });
         },
 
         // TODO: delete method if not used
@@ -96,21 +98,19 @@ module.exports = ({data}) => {
                 category = req.body.category,
                 competitionId = req.body.competitionId;
 
-                // TODO: fix redirect
+            // TODO: fix redirect
             data.updatePoints(username, points, category)
                 .then(user => {
-                    if (user === null) {
-                        return res.status(400)
-                            .redirect('/error');
+                    if (!user) {
+                        throw new Error("No user found!");
                     }
                 }).then(() => {
                     data.updateAttendedStatusToUser(username, competitionId)
-                        .then(()=>{
+                        .then(() => {
                             return res.status(200);
                         })
                         .catch(er => {
-                            return res.status(400)
-                                .redirect('/error');
+                            throw er;
                         })
                 })
                 .catch((err) => {
@@ -130,7 +130,7 @@ module.exports = ({data}) => {
                             pagesCount += 1;
                         }
 
-                        return res.status(200).render('users', {
+                        return res.status(200).render('users/users', {
                             result: {
                                 users,
                                 searchName,
@@ -145,7 +145,7 @@ module.exports = ({data}) => {
             } else {
                 data.getTopUsers()
                     .then(users => {
-                        return res.status(200).render('users', { result: { users, user: req.user } });
+                        return res.status(200).render('users/users', { result: { users, user: req.user } });
                     })
                     .catch((err) => {
                         res.status(500).redirect('/500');

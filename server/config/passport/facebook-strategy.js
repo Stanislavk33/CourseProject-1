@@ -12,7 +12,6 @@ module.exports = function (passport, data) {
         callbackURL: 'http://localhost:3001/auth/facebook/callback'
     }, (token, refreshToken, profile, done) => {
         process.nextTick(() => {
-            console.log('here');
             data.findUserByFacebookId(profile.id)
                 .then((user) => {
                     if (user) {
@@ -22,7 +21,7 @@ module.exports = function (passport, data) {
 
                         // TODO: fix constants
 
-                        const firstName = names[0] + 'a';
+                        const firstName = names[0];
                         const lastName = names[1] || names[0];
 
                         return data.createUser({

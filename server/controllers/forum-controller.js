@@ -11,7 +11,7 @@ module.exports = ({data}) => {
                 .then(([forumPosts, allPostsCount]) => {
                     const pages = Math.ceil(allPostsCount / PAGE_SIZE);
 
-                    return res.status(200).render('forum-page', {
+                    return res.status(200).render('forum/forum-page', {
                         result: { forumPosts, user: req.user, params: { page, pages } }
                     });
                 })
@@ -20,7 +20,7 @@ module.exports = ({data}) => {
                 });
         },
         getCreatePage(req, res) {
-            return res.status(200).render('create-forum-post', { result: { user: req.user } });
+            return res.status(200).render('forum/create-forum-post', { result: { user: req.user } });
         },
         createForumPost(req, res) {
             const body = req.body,
@@ -42,7 +42,7 @@ module.exports = ({data}) => {
             const currentUser = req.user;
             data.getForumPostById(id)
                 .then(forumPost => {
-                    res.render('forum-post-page', { result: { forumPost, currentUser, user: req.user } });
+                    res.render('forum/forum-post-page', { result: { forumPost, currentUser, user: req.user } });
                 })
                 .catch((err) => {
                     res.status(500).redirect('/500');
