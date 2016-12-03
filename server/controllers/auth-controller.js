@@ -35,12 +35,14 @@ module.exports = ({ data, passport }) => {
         loginLocal(req, res, next) {
             const auth = passport.authenticate('local', (err, user) => {
                 if (err) {
-                    next(err);
-                    return;
+                    return res.json({ error: "Invalid username or password"});
+                    // next(err);
+                    // return;
                 }
 
                 if (!user) {
                     res.json({ error: 'Invalid username or password' });
+                    return;
                 }
 
                 req.login(user, err => {
@@ -48,8 +50,7 @@ module.exports = ({ data, passport }) => {
                         next(err);
                         return;
                     }
-
-                    res.status(201).redirect('/home');
+                    res.status(201).json({ success: 'Login successfull' });
                 });
             });
 

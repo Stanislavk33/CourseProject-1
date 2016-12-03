@@ -80,7 +80,7 @@ $("#btn-register").on("click", (ev) => {
                 app.notifier.showNotification(resp.success, "success");
                 setTimeout(function () {
                     window.location.href = "/auth/login";
-                }, 1000);
+                }, 500);
             }
             else if (resp.error) {
                 app.notifier.showNotification(resp.error, "error");
