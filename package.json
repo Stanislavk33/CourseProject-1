@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "dev": "./node_modules/.bin/nodemon app.js",
-    "postinstall": "./node_modules/.bin/bower install",
+    "postinstall": "./node_modules/bower/bin/bower install",
+    //"postinstall": "bower cache clean && bower install",
     "test": "./node_modules/.bin",
     "start": "node app.js"
   },
@@ -21,6 +22,7 @@
   "homepage": "https://github.com/undefined42-Telerik/CourseProject#readme",
   "dependencies": {
     "body-parser": "^1.15.2",
+    "bower": "^1.8.0",
     "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
     "express-session": "^1.14.2",
@@ -33,7 +35,8 @@
     "typings": "^2.0.0"
   },
   "devDependencies": {
-    "nodemon": "^1.11.0",
-    "eslint": "^3.10.2"
+    "bower": "^1.8.0",
+    "eslint": "^3.10.2",
+    "nodemon": "^1.11.0"
   }
 }
