@@ -22,6 +22,10 @@ module.exports = function(models) {
                     if (err) {
                         return reject(err);
                     }
+                                   
+                    if(!category){
+                        return resolve(null);
+                    }
 
                     return resolve(category);
                 });

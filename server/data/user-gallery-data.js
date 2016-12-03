@@ -11,6 +11,10 @@ module.exports = function (models) {
                         return reject(err);
                     }
 
+                    if(!userGallery){
+                        return resolve(null);
+                    }
+
                     return resolve(userGallery);
                 });
             })
