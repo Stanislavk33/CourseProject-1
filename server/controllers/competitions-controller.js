@@ -131,6 +131,9 @@ module.exports = ({data}) => {
                 count = 2;
             Promise.all([data.getAllCompetitions(page, count), data.getCompetitionsCount()])
                 .then(([competitions, compCount]) => {
+                    competitions.forEach(x=>{
+                        x.passed = x.getPassed();
+                    });
                     const pagesCount = Math.ceil(compCount / count);
                     res.render('competition-list', { result: { competitions, user: req.user, params: { pagesCount, page } } });
                 });

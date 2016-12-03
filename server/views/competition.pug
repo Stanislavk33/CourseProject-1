@@ -13,7 +13,7 @@ block content
                     .row
                         .col-md-4
                             .competition-map(id="map")
-                            img.img-rounded.img-responsive(src='http://lorempixel.com/250/140/people',width="300px", height="auto;", alt='Lorem ipsum')
+                            img.img-rounded.img-responsive(src='/static/imgs/competition-images/'+result.competition.image,width="300px", height="auto;", alt='Competition image')
                             block like
                         .col-md-6
                             .col-md-4
@@ -23,7 +23,7 @@ block content
                                 span.label.label-success.active-comp Active
                             .col-md-4
                             block joining 
-                            h2.title Category name: #{result.competition.name}
+                            h2.title #{result.competition.name}
                             h2 Place: #{result.competition.place}
                             h3 Organized by:
                                 a(href="/users/" +result.competition.organizator)  #{result.competition.organizator}
@@ -31,8 +31,11 @@ block content
                                 a.category-title #{result.competition.category}
                             h3 Level: #{result.competition.level}
                             h3 Points: #{result.competition.points}
-                            span #{result.competition.startDate}
-                            span #{result.competition.endDate}
+                            br
+                            p.lead #{result.competition.description}
+                            span Start: #{result.competition.startDate}]
+                            br
+                            span End: #{result.competition.endDate}
                             span.hidden(id='latitude') #{result.competition.location.latitude}
                             span.hidden(id='longitude') #{result.competition.location.longitude}
                         .col-md-8
