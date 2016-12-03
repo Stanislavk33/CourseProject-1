@@ -4,13 +4,13 @@ module.exports = ({data}) => {
     return {
         getProfile(req, res) {
             const username = req.params.username;
-            let view = 'user-profile';
+            let view = 'users/user-profile';
             let asPersonalPage = false;
 
             if (req.isAuthenticated()) {
                 if (req.user.username === username) {
                     asPersonalPage = true;
-                    view = 'personal-profile';
+                    view = 'users/personal-profile';
                 }
             }
 
@@ -33,7 +33,7 @@ module.exports = ({data}) => {
 
             data.getUserByUsername(username)
                 .then((user) => {
-                    return res.status(200).render('edit-profile', { result: { user: req.user } });
+                    return res.status(200).render('users/edit-profile', { result: { user: req.user } });
                 })
                 .catch((err) => {
                     res.status(500).redirect('/500');
@@ -68,11 +68,11 @@ module.exports = ({data}) => {
 
         // TODO: delete method if not used
         loadRegisterPage(req, res) {
-            res.render("user/register", { result: { user: req.user } });
+            res.render("users/user/register", { result: { user: req.user } });
         },
         // TODO: delete method if not used
         loadLoginPage(req, res) {
-            res.render("user/login", { result: { user: req.user } });
+            res.render("users/user/login", { result: { user: req.user } });
         },
 
         // TODO: delete method if not used
@@ -130,7 +130,7 @@ module.exports = ({data}) => {
                             pagesCount += 1;
                         }
 
-                        return res.status(200).render('users', {
+                        return res.status(200).render('users/users', {
                             result: {
                                 users,
                                 searchName,
@@ -145,7 +145,7 @@ module.exports = ({data}) => {
             } else {
                 data.getTopUsers()
                     .then(users => {
-                        return res.status(200).render('users', { result: { users, user: req.user } });
+                        return res.status(200).render('users/users', { result: { users, user: req.user } });
                     })
                     .catch((err) => {
                         res.status(500).redirect('/500');

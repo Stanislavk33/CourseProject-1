@@ -5,11 +5,11 @@ module.exports = ({data}) => {
         getByID(req, res) {
             const id = req.params.id;
 
-            let view = 'competition';
+            let view = 'competitions/competition';
             let username;
             let user = req.user;
             if (req.isAuthenticated()) {
-                view = 'competition-user';
+                view = 'competitions/competition-user';
                 username = user.username;
             }
             data.getCompetitionById(id)
@@ -35,7 +35,7 @@ module.exports = ({data}) => {
                     return categories.map(c => c.title)
                 })
                 .then(categoriesTitles => {
-                    return res.status(200).render('create-competition', {
+                    return res.status(200).render('competitions/create-competition', {
                         result: {
                             categoriesTitles,
                             user: req.user
@@ -135,7 +135,7 @@ module.exports = ({data}) => {
                         x.passed = x.getPassed();
                     });
                     const pagesCount = Math.ceil(compCount / count);
-                    res.render('competition-list', { result: { competitions, user: req.user, params: { pagesCount, page } } });
+                    res.render('competitions/competition-list', { result: { competitions, user: req.user, params: { pagesCount, page } } });
                 });
         },
         createCompetition(req, res) {

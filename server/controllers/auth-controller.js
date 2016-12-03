@@ -3,10 +3,10 @@
 module.exports = ({ data, passport }) => {
     return {
         loadRegisterPage(req, res) {
-            return res.status(200).render('register', { result: {} });
+            return res.status(200).render('auth/register', { result: {} });
         },
         loadLoginPage(req, res) {
-            return res.status(200).render('login', { result: {} });
+            return res.status(200).render('auth/login', { result: {} });
         },
         register(req, res) {
             const user = {
