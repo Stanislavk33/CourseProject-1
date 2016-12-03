@@ -1,6 +1,6 @@
 'use strict';
 
-const hashing = require("../utilities/encryptor");
+const hashing = require('../utilities/encryptor');
 
 module.exports = function (models, validator) {
     const User = models.User;
@@ -74,7 +74,7 @@ module.exports = function (models, validator) {
                 const salt = hashing.getSalt(),
                     passHash = hashing.getPassHash(salt, user.passHash);
                 if (!validator.isValidUser(user)) {
-                    return reject({ error: "Invalid information" });
+                    return reject({ error: 'Invalid information' });
                 }
                 const newUser = new User({
                     username: user.username,
@@ -121,7 +121,7 @@ module.exports = function (models, validator) {
         },
         removeCompetitionFromUser(username, competitionId) {
             return new Promise((resolve, reject) => {
-                User.update({ username }, { $pull: { "joinedCompetitions": { _id: competitionId } } }, (err, user) => {
+                User.update({ username }, { $pull: { 'joinedCompetitions': { _id: competitionId } } }, (err, user) => {
                     if (err) {
                         return reject(err);
                     }
@@ -155,7 +155,7 @@ module.exports = function (models, validator) {
         updatePoints(username, points, category) {
             return new Promise((resolve, reject) => {
                 if (!validator.isValidPoints(points)) {
-                    reject({ error: "Invalid points count" });
+                    reject({ error: 'Invalid points count' });
                 }
                 let currentPoints = 0;
                 const user = User.findOne({ username })
@@ -203,7 +203,7 @@ module.exports = function (models, validator) {
         findUserWithIdAndName(query) {
             return new Promise((resolve, reject) => {
                 User.find(query)
-                    .select("_id username")
+                    .select('_id username')
                     .exec((err, users) => {
                         if (err) {
                             return reject(err);

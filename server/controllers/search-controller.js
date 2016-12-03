@@ -8,7 +8,7 @@ module.exports = ({data}) => {
 
             data.filterCompetitions(searchName)
                 .then((competitions) => {
-                    competitions.forEach(x=>{
+                    competitions.forEach(x => {
                         x.passed = x.getPassed();
                     });
                     return res.status(200).render('searchpage', { result: { competitions, searchName, user: req.user } });

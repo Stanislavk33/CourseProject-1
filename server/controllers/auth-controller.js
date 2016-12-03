@@ -35,7 +35,7 @@ module.exports = ({ data, passport }) => {
         loginLocal(req, res, next) {
             const auth = passport.authenticate('local', (err, user) => {
                 if (err) {
-                    return res.json({ error: "Invalid username or password"});
+                    return res.json({ error: 'Invalid username or password'});
                     // next(err);
                     // return;
                 }
