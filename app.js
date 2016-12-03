@@ -3,7 +3,8 @@
 const config = require('./server/config/'),
     app = require('./server/config/application'),
     data = require('./server/data')(config),
-    controllers = require('./server/controllers')({ app, data }),
+    passport = require('passport'),
+    controllers = require('./server/controllers')({  data, passport }),
 
     multer = require('multer'),
     uploadUserImage = multer({ dest: './public/imgs/user-images/' }),
