@@ -31,6 +31,11 @@ module.exports = function(models, validator) {
                     if (err) {
                         return reject(err);
                     }
+
+                    if(!competition){
+                        return resolve(null);
+                    }
+                    
                     return resolve(competition);
                 });
             });

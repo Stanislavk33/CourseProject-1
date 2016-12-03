@@ -68,7 +68,7 @@ module.exports = function (models, validator) {
                 });
             });
         },
-        createUser(user) { //user object is created in the controller
+        createUser(user) {
             return new Promise((resolve, reject) => {
 
                 const salt = hashing.getSalt(),

@@ -39,6 +39,10 @@ module.exports = function(models, validator) {
                     if (err) {
                         return reject(err);
                     }
+                    
+                    if(!forumPost){
+                        return resolve(null);
+                    }
 
                     return resolve(forumPost);
                 });
@@ -55,7 +59,7 @@ module.exports = function(models, validator) {
                 });
             })
         },
-        createForumPost(forumPost) { //forum post object is created in the controller
+        createForumPost(forumPost) { 
             const newForumPost = new ForumPost({
                 title: forumPost.title,
                 description: forumPost.description,
