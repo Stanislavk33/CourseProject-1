@@ -18,6 +18,34 @@ module.exports = {
         }
 
         return true;
+    },
+    isValidCategory(category) {
+        if (lengthValidation(constants.MIN_CATEGORY_LENGTH, constants.MAX_CATEGORY_LENGTH, category.title) &&
+            lengthValidation(constants.MIN_DESCRIPTION_LENGTH, constants.MAX_DESCRIPTION_LENGTH, category.description)) {
+            return true;
+        }
+
+        return false;
+    },
+    validateCompetition(competition) {
+        if (lengthValidation(constants.MIN_NAME_LENGTH, constants.MAX_NAME_LENGTH, competition.name) &&
+            lengthValidation(constants.MIN_COMPETITION_PLACE_LENGTH, constants.MAX_COMPETITION_PLACE_LENGTH, competition.place) &&
+            lengthValidation(constants.MIN_DESCRIPTION_LENGTH, constants.MAX_DESCRIPTION_LENGTH, competition.description) &&
+            lengthValidation(constants.MIN_NAME_LENGTH, constants.MAX_NAME_LENGTH, competition.organizator) &&
+            lengthValidation(constants.MIN_CATEGORY_LENGTH, constants.MAX_CATEGORY_LENGTH, competition.category)) {
+            return true;
+        }
+
+        return false;
+    },
+    isValidForumPost(forumPost) {
+        if (lengthValidation(constants.MIN_TITLE_LENGTH, constants.MAX_TITLE_LENGTH, forumPost.title) &&
+            lengthValidation(constants.MIN_DESCRIPTION_LENGTH, constants.MAX_DESCRIPTION_LENGTH, forumPost.description),
+            lengthValidation(constants.MIN_NAME_LENGTH, constants.MAX_NAME_LENGTH, forumPost.user)) {
+            return true;
+        }
+
+        return false;
     }
 }
 

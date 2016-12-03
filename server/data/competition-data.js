@@ -1,7 +1,7 @@
 /* globals module require */
 'use strict';
 
-module.exports = function(models) {
+module.exports = function(models, validator) {
     const Competition = models.Competition;
 
     return {
@@ -87,6 +87,9 @@ module.exports = function(models) {
             });
 
             return new Promise((resolve, reject) => {
+                if (!validator.validateCompetition(competition)) {
+                    return reject({ err: 'competition validation failed' })
+                }
                 newCompetition.save(err => {
                     if (err) {
                         return reject(err);
