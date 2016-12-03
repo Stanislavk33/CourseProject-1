@@ -6,10 +6,6 @@ $("#btn-login").on("click", (ev) => {
     let username = $("#tb-username").val();
     let password = $("#tb-password").val();
 
-    let formData = new FormData();
-    formData.append("username", username);
-    formData.append("password", password);
-
     let data = {
         username,
         password

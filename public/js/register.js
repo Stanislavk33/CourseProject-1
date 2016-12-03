@@ -2,11 +2,18 @@
 
 var app = app || {};
 
+console.log(app);
+
 $("#btn-register").on("click", (ev) => {
-    var pattern = new RegExp(/^[a-zA-Z0-9]{6,50}$/),
+    ev.preventDefault();
+
+    var nameAndPassPattern = new RegExp(/^[a-zA-Z0-9]{6,50}$/),
+        emailPattern = new RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i),
         testUsername,
         testFirstName,
         testLastName,
+        testEmail,
+        testPassword,
         username = $("#tb-username").val(),
         email = $("#tb-email").val(),
         password = $("#tb-password").val(),
@@ -16,18 +23,34 @@ $("#btn-register").on("click", (ev) => {
         lastName = $("#tb-last-name").val(),
         image = $("#tb-avatar")[0].files[0];
 
-    testUsername = pattern.test(username);
-    testFirstName = pattern.test(firstName);
-    testLastName = pattern.test(lastName);
+    testUsername = nameAndPassPattern.test(username);
+    testFirstName = nameAndPassPattern.test(firstName);
+    testLastName = nameAndPassPattern.test(lastName);
+    testPassword = nameAndPassPattern.test(password) && nameAndPassPattern.test(confirmPassword);
+    testEmail = emailPattern.test(email);
+
+
 
     if (!testUsername) {
-        console.log("testUsername");
         app.notifier.showNotification("Username must contain only letters, numbers and must be between 6 and 50 symbols long", "error");
         return;
     }
 
+    if(!testEmail) {
+        app.notifier.showNotification("Email is not correct", "error");
+        return;
+    }
+
+
     if (password !== confirmPassword) {
-        app.notifier.showNotification("Password doesnt match!");
+        console.log('case');
+        app.notifier.showNotification("Password doesnt match!", "error");
+        return;
+    }
+
+    if(!testPassword) {
+        app.notifier.showNotification("Password must contain only letters, numbers and must be between 6 and 50 symbols long", "error");
+        return;
     }
 
     if (!testFirstName) {
@@ -49,21 +72,23 @@ $("#btn-register").on("click", (ev) => {
     formData.append('lastName', lastName);
     formData.append('birthDate', birthDate);
 
+    console.log(formData);
+
     app.requester.postWithFile('/auth/register', formData)
         .then(resp => {
             if (resp.success) {
                 app.notifier.showNotification(resp.success, "success");
-                setTimeout(function() {
+                setTimeout(function () {
                     window.location.href = "/auth/login";
                 }, 1000);
             }
             else if (resp.error) {
                 app.notifier.showNotification(resp.error, "error");
+                return;
             }
         })
         .catch(err => {
             console.log(err);
         })
 
-        ev.preventDefault();
 })

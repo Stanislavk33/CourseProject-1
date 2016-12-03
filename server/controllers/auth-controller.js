@@ -24,11 +24,11 @@ module.exports = ({ data, passport }) => {
 
             data.createUser(user)
                 .then(() => {
-                    res.json({ success: 'Registration successfull' })
+                    res.json({ success: 'Registration successfull' });
                 })
                 .catch(() => {
                     // TODO: redirect to another page
-                    res.json({ error: 'Registration failed' })
+                    res.json({ error: 'Registration failed' });
                     res.status(500).end();
                 });
         },
