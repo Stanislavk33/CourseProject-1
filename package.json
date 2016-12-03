@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "./node_modules/.bin/nodemon app.js",
     "postinstall": "./node_modules/bower/bin/bower install",
-    //"postinstall": "bower cache clean && bower install",
     "test": "./node_modules/.bin",
     "start": "node app.js"
   },
