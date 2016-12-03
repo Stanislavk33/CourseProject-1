@@ -52,7 +52,10 @@ describe("User data tests", () => {
             });
 
             data.getAllUsers()
-                .then()
-        })
+                .then(actualUser => {
+                    expect(actualUser).to.equal(users);
+                    done();
+                });
+        });
     });
 });
