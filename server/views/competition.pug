@@ -9,7 +9,7 @@ block content
         .main.main-raised(style="margin-top: -500px;")
             .profile-content
                 .container
-                    div.competition-info(id="info" data-id=result.competition._id)
+                    div.competition-info(id="info" data-id=result.competition._id )
                     .row
                         .col-md-4
                             .competition-map(id="map")
@@ -30,7 +30,8 @@ block content
                             h3 Category: 
                                 a.category-title #{result.competition.category}
                             h3 Level: #{result.competition.level}
-                            h3 Points: #{result.competition.points}
+                            h3 Points: 
+                                span(id="points") #{result.competition.points}
                             br
                             p.lead #{result.competition.description}
                             span Start: #{result.competition.startDate}]
@@ -44,15 +45,19 @@ block content
                                 thead
                                     tr
                                         th User
-                                        th Add points
+                                        if result.competition.isOrganizator
+                                            th Add points
                                     each user in result.competition.joinedUsers
                                         tr 
                                             td
                                                 a.title(href="/users/" + user.username) #{user.username}
                                             
-                                            if result.competition.isOrgan
-                                            td
-                                                button.btn.btn-info.addPoints(data-id=user.username +" "+ result.competition.points data-category=result.competition.category) addPoints
+                                            if result.competition.isOrganizator
+                                                td
+                                                    if user.attended
+                                                        span.label.label-success Points added
+                                                    else
+                                                        button.btn.btn-info.addPoints(data-username=user.username data-points=result.competition.points data-category=result.competition.category) Add Points
 block scripts
 
     script(src="/static/bower_components/jquery/dist/jquery.min.js")
@@ -61,6 +66,7 @@ block scripts
     script(src="/static/utils/notifier.js")
     script(src="/static/js/competition.js")
     script(src="/static/js/load-category.js")
+    script(src="/static/js/add-points.js")
     script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0PmHg9An9AdDbib9-jYefjSKSnapzFLQ&callback=initMap")
     block additional-scripts
 

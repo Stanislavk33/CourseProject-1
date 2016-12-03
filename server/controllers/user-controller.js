@@ -92,10 +92,12 @@ module.exports = ({data}) => {
         },
         addPoints(req, res) {
             const username = req.body.username,
-                points = req.body.points,
+                points = +req.body.points,
                 category = req.body.category,
                 competitionId = req.body.competitionId;
 
+                console.log(req.body);
+                // TODO: fix redirect
             data.updatePoints(username, points, category)
                 .then(user => {
                     if (user === null) {

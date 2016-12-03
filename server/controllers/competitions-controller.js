@@ -16,7 +16,7 @@ module.exports = ({data}) => {
                 .then(competition => {
                     if (username === competition.organizator) {
                         // view = 'some-new-view';
-                        competition.isOrgan = true;
+                        competition.isOrganizator = true;
                     }
                     if (competition.joinedUsers.find(x => x.username === username)) {
                         competition.hasJoined = true;
