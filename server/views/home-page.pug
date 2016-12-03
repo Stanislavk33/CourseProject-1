@@ -20,8 +20,8 @@ block content
               - for(let i = 0; i < result.topCompetitions.length; i+=1 )
                 if i === 0
                   .item(class='active')
-                    //- img.img-rounded(src='/static/imgs/competitions/'+result.topCompetitions[i].image, alt='Competition image')
-                    img.img-rounded(src='http://www.amazingwallpaperz.com/wp-content/uploads/3D-Landscape-Wallpaper-High-Definition.jpg' alt='Chania')
+                    img.img-rounded(src='/static/imgs/competitions/'+result.topCompetitions[i].image, alt='Competition image')
+                    //-img.img-rounded(src='http://www.amazingwallpaperz.com/wp-content/uploads/3D-Landscape-Wallpaper-High-Definition.jpg' alt='Chania')
                     .header-text.hidden-xs
                      .col-md-12.text-center.slider-text
                        h2 
@@ -30,20 +30,15 @@ block content
                          a(href='/competitions/'+ result.topCompetitions[i]._id) #{result.topCompetitions[i].place}
                 else
                   .item
-                    //- img.img-rounded(src='/static/imgs/competitions/'+result.topCompetitions[i].image, alt='Competition image')
-                    img.img-rounded(src='http://www.amazingwallpaperz.com/wp-content/uploads/3D-Landscape-Wallpaper-High-Definition.jpg', alt='Chania')
+                    img.img-rounded(src='/static/imgs/competitions/'+result.topCompetitions[i].image, alt='Competition image')
+                    //- img.img-rounded(src='http://www.amazingwallpaperz.com/wp-content/uploads/3D-Landscape-Wallpaper-High-Definition.jpg', alt='Chania')
                     .header-text.hidden-xs
                       .col-md-12.text-center.slider-text
                         h2 
                           a(href='/competitions/'+ result.topCompetitions[i]._id) #{result.topCompetitions[i].name}
                         h3 
                           a(href='/competitions/'+ result.topCompetitions[i]._id) #{result.topCompetitions[i].place}
-              //- .item
-              //-   img.img-rounded(src='http://media1.santabanta.com/full1/Outdoors/Landscapes/landscapes-229v.jpg', alt='Chania')
-              //- .item
-              //-   img.img-rounded(src='http://media1.santabanta.com/full1/Outdoors/Landscapes/landscapes-342a.jpg', alt='Flower')
-              //- .item
-              //-   img.img-rounded(src='http://media1.santabanta.com/full1/Outdoors/Landscapes/landscapes-284a.jpg', alt='Flower')
+            
             a.left.carousel-control(role='button', data-slide='prev' href="#myCarousel")
               span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
               |  
@@ -152,7 +147,7 @@ block content
                           .col-xs-4.col-sm-4
                             a.home-thumbnail(href='#', title='Lorem ipsum')
                               //- img(src='/static/imgs/competitions-imgs/'+competition.image, alt='Competition image')
-                              img(src='http://lorempixel.com/250/140/people', alt='Lorem ipsum')
+                              img(src='/static/imgs/competition-images/'+competition.image, alt='Competition image')
                           .col-xs-4.col-sm-4.right-border
                             ul.meta-search
                               li

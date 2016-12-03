@@ -9,11 +9,11 @@ block content
         .main.main-raised(style="margin-top: -500px;")
             .profile-content
                 .container
-                    div.competition-info(id="info" data-id=result.competition._id)
+                    div.competition-info(id="info" data-id=result.competition._id )
                     .row
                         .col-md-4
                             .competition-map(id="map")
-                            img.img-rounded.img-responsive(src='http://lorempixel.com/250/140/people',width="300px", height="auto;", alt='Lorem ipsum')
+                            img.img-rounded.img-responsive(src='/static/imgs/competition-images/'+result.competition.image,width="300px", height="auto;", alt='Competition image')
                             block like
                         .col-md-6
                             .col-md-4
@@ -23,16 +23,20 @@ block content
                                 span.label.label-success.active-comp Active
                             .col-md-4
                             block joining 
-                            h2.title Category name: #{result.competition.name}
+                            h2.title #{result.competition.name}
                             h2 Place: #{result.competition.place}
                             h3 Organized by:
                                 a(href="/users/" +result.competition.organizator)  #{result.competition.organizator}
                             h3 Category: 
                                 a.category-title #{result.competition.category}
                             h3 Level: #{result.competition.level}
-                            h3 Points: #{result.competition.points}
-                            span #{result.competition.startDate}
-                            span #{result.competition.endDate}
+                            h3 Points: 
+                                span(id="points") #{result.competition.points}
+                            br
+                            p.lead #{result.competition.description}
+                            span Start: #{result.competition.startDate}]
+                            br
+                            span End: #{result.competition.endDate}
                             span.hidden(id='latitude') #{result.competition.location.latitude}
                             span.hidden(id='longitude') #{result.competition.location.longitude}
                         .col-md-8
@@ -41,15 +45,19 @@ block content
                                 thead
                                     tr
                                         th User
-                                        th Add points
+                                        if result.competition.isOrganizator
+                                            th Add points
                                     each user in result.competition.joinedUsers
                                         tr 
                                             td
                                                 a.title(href="/users/" + user.username) #{user.username}
                                             
-                                            if result.competition.isOrgan
-                                            td
-                                                button.btn.btn-info.addPoints(data-id=user.username +" "+ result.competition.points data-category=result.competition.category) addPoints
+                                            if result.competition.isOrganizator
+                                                td
+                                                    if user.attended
+                                                        span.label.label-success Points added
+                                                    else
+                                                        button.btn.btn-info.addPoints(data-username=user.username data-points=result.competition.points data-category=result.competition.category) Add Points
 block scripts
 
     script(src="/static/bower_components/jquery/dist/jquery.min.js")
@@ -58,6 +66,7 @@ block scripts
     script(src="/static/utils/notifier.js")
     script(src="/static/js/competition.js")
     script(src="/static/js/load-category.js")
+    script(src="/static/js/add-points.js")
     script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0PmHg9An9AdDbib9-jYefjSKSnapzFLQ&callback=initMap")
     block additional-scripts
 

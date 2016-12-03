@@ -8,7 +8,7 @@ mixin competitions-list(competitions)
           .col-xs-12.col-sm-12.col-md-3
             a.thumbnail(href='#', title='Lorem ipsum')
               //- img(src='/static/imgs/competitions-imgs/'+competition.image, alt='Competition image')
-              img(src='http://lorempixel.com/250/140/people', alt='Lorem ipsum')
+              img(src='/static/imgs/competition-images/'+ competition.image, alt='Competition image')
           .col-xs-12.col-sm-12.col-md-2.right-border
             ul.meta-search
               li
@@ -27,6 +27,11 @@ mixin competitions-list(competitions)
             h2
               a(href='/competitions/'+competition._id) #{competition.name}
             p  #{competition.place}
+            if competition.passed
+                span.label.label-warning #{competition.passed}
+            else
+                span.label.label-success.active-comp Active
+            br
             span.plus
               a(href='/competitions/' + competition._id, title='Lorem ipsum') Go to page 
           span.clearfix.borda

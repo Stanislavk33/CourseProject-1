@@ -1,7 +1,7 @@
 /* globals module require */
 'use strict';
 
-module.exports = function(models) {
+module.exports = function(models, validator) {
     const ForumPost = models.ForumPost;
 
     return {
@@ -71,6 +71,9 @@ module.exports = function(models) {
             });
 
             return new Promise((resolve, reject) => {
+                if (!validator.isValidForumPost(forumPost)) {
+                    return reject({ error: "Invalid forum post information" });
+                }
                 newForumPost.save(err => {
                     if (err) {
                         return reject(err);

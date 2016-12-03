@@ -16,17 +16,17 @@ block like
                 button.btn.btn-danger.dislike-competition Dislike    
 
 block joining
-    if result.competition.hasJoined
-        button.btn.btn-danger(id="leave") Leave
-        button.hidden.btn.btn-success(id="join") Join
-    else
-        button.hidden.btn.btn-danger(id="leave") Leave
-        button.btn.btn-success(id="join") Join
+    if result.competition.passed !== 'passed'
+        if result.competition.hasJoined
+            button.btn.btn-danger(id="leave") Leave
+            button.hidden.btn.btn-success(id="join") Join
+        else
+            button.hidden.btn.btn-danger(id="leave") Leave
+            button.btn.btn-success(id="join") Join
 
 block additional-scripts
     script(src="/static/utils/requester.js")
     script(src="/static/js/add-points.js")
     script(src="/static/js/join-competition.js")
     script(src="/static/js/like-dislike-competition.js")
-    script(src="/static/js/add-points.js")
     

@@ -1,7 +1,7 @@
 /* globals module require */
 'use strict';
 
-module.exports = function(models) {
+module.exports = function(models, validator) {
     const Category = models.Category;
 
     return {
@@ -52,6 +52,10 @@ module.exports = function(models) {
             });
 
             return new Promise((resolve, reject) => {
+                if (!validator.isValidCategory(category)) {
+                    return reject({ err: 'category information is not correct' });
+                }
+
                 newCategory.save(err => {
                     if (err) {
                         return reject(err);
@@ -76,8 +80,6 @@ module.exports = function(models) {
                         if (err) {
                             return reject(err);
                         }
-                        console.log("DSA");
-                        console.log(category);
                         return resolve(category);
                     })
             });

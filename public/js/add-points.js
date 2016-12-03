@@ -4,11 +4,10 @@ var app = app || {};
 
 $('.addPoints').on('click', function(ev) {
 
-    let dataId = $(this).attr('data-id'),
-        devider = dataId.indexOf(' '),
-        username = dataId.substr(0, devider),
-        points = +dataId.substr(devider + 1, dataId.length),
-        category = $(this).attr('data-category'),
+    let element = $(ev.target),
+        username = element.attr('data-username'),
+        points = +element.attr('data-points'),
+        category = element.attr('data-category'),
         competitionId = $('#info').attr('data-id');
 
     ev.preventDefault();
@@ -19,7 +18,7 @@ $('.addPoints').on('click', function(ev) {
         competitionId
     };
 
-    app.requester.put('/users/addPoints', JSON.stringify(data))
+    app.requester.put('/users/addPoints', data)
         .then(resp => {
             app.notifier.showNotification(resp, "success");
         })

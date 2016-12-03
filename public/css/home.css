@@ -169,10 +169,10 @@ hgroup h2 {
 }*/
 
 
-/*.search-result span.plus {
-    position: absolute;
-    top: 110px;
-}*/
+span.plus {
+    display: inline-block;
+    margin-top: 1em;
+}
 
 .search-result span.plus a {
     background-color: #006CB7;
