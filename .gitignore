@@ -199,6 +199,4 @@ FakesAssemblies/
 *.sln
 
 # Ignoring user images
-public/imgs/user-images/
-public/imgs/categories-images/
-public/imgs/competitions-images/
+
