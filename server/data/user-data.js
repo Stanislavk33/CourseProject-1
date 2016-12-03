@@ -19,10 +19,7 @@ module.exports = function(models, validator) {
         },
         getTopUsers() {
             return new Promise((resolve, reject) => {
-                User.find({})
-                    .sort({ 'progress.totalPoints': 'desc' })
-                    .limit(10)
-                    .exec((err, users) => {
+                User.find({}, {}, { limit: 10, sort: { 'progress.totalPoints': -1 }, }, (err, users) => {
                         if (err) {
                             return reject(err);
                         }
@@ -95,7 +92,7 @@ module.exports = function(models, validator) {
                     },
                     roles: ['normal'],
                     facebookId: user.facebookId
-                    // facebookToken: user.facebookToken
+                        // facebookToken: user.facebookToken
                 });
 
                 if (user.image) {
@@ -248,6 +245,5 @@ module.exports = function(models, validator) {
                 })
             })
         }
-
     };
 }
