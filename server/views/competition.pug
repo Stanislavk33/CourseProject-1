@@ -1,5 +1,8 @@
 extends _layout
 
+block styles
+    link(rel="stylesheet" type="text/css" href="/static/css/competitions.css")
+
 block content
     .wrapper
         .header.header-filter(style="background-image: url('/static/imgs/nature-wallpapers26.jpg');")
@@ -24,7 +27,8 @@ block content
                             h2 Place: #{result.competition.place}
                             h3 Organized by:
                                 a(href="/users/" +result.competition.organizator)  #{result.competition.organizator}
-                            h3 Category: #{result.competition.category}
+                            h3 Category: 
+                                a.category-title #{result.competition.category}
                             h3 Level: #{result.competition.level}
                             h3 Points: #{result.competition.points}
                             span #{result.competition.startDate}
@@ -53,6 +57,7 @@ block scripts
     script(src="/static/utils/requester.js")
     script(src="/static/utils/notifier.js")
     script(src="/static/js/competition.js")
+    script(src="/static/js/load-category.js")
     script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0PmHg9An9AdDbib9-jYefjSKSnapzFLQ&callback=initMap")
     block additional-scripts
 

@@ -7,8 +7,4 @@ $('.category-title').on('click', function(ev){
     const categoryLink = categoryTitle.replace(' ', '-').toLowerCase();
     console.log('categoryLink');
     document.location.href = `/categories/${categoryLink}`
-
-    // $.ajax(`/categories/${categoryLink}`, {
-    //     method: "GET"
-    // })
 });
