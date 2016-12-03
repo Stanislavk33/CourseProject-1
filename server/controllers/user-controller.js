@@ -96,7 +96,6 @@ module.exports = ({data}) => {
                 category = req.body.category,
                 competitionId = req.body.competitionId;
 
-                console.log(req.body);
                 // TODO: fix redirect
             data.updatePoints(username, points, category)
                 .then(user => {
@@ -106,6 +105,9 @@ module.exports = ({data}) => {
                     }
                 }).then(() => {
                     data.updateAttendedStatusToUser(username, competitionId)
+                        .then(()=>{
+                            return res.status(200);
+                        })
                         .catch(er => {
                             return res.status(400)
                                 .redirect('/error');

@@ -12,9 +12,11 @@ var app = app || {};
             .done((result) => {
                 const username = result.result.username,
                     points = result.result.points,
-                    $newRow = $("<tr>").appendTo($("#joined-users"));
+                    $thead = $("#joined-users").find("thead"),
+                    $newRow = $("<tr>").appendTo($thead),
+                    $newCol = $("<td>").appendTo($newRow);
 
-                $("<a>").attr("href", `/users/${username}`).html(username).appendTo("<td>").appendTo($newRow);
+                $("<a>").attr("href", `/users/${username}`).addClass("title").html(username).appendTo($newCol);
                 // $("<td>").html(points).appendTo($newRow);
                 
                 app.notifier.showNotification("You joined this competition", "success");

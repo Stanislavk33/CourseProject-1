@@ -20,6 +20,8 @@ $('.addPoints').on('click', function(ev) {
 
     app.requester.put('/users/addPoints', data)
         .then(resp => {
+            $("#add-points-btn").addClass("hidden");
+            $("#points-added").removeClass("hidden");
             app.notifier.showNotification(resp, "success");
         })
         .catch(err => {

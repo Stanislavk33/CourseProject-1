@@ -56,6 +56,9 @@ userSchema.methods = {
     }
 };
 
+userSchema.statics.getOrganizatorMinimumPoints = function() {
+  return constants.ORGANIZATOR_MINIMALPOINTS;
+};
 
 mongoose.model('User', userSchema);
 

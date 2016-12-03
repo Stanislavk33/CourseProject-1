@@ -42,7 +42,7 @@ block content
                                     each competition in result.userForProfile.attendedCompetitions
                                         li
                                             div 
-                                                a(href="/competitions/"+ competition.id) #{competition.name}
+                                                a(href="/competitions/"+ competition._id) #{competition.name}
                                                 span #{competition.place}
                     block edit 
 

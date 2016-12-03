@@ -15,5 +15,5 @@ block joinedCompetitions
       ul.dropdown-menu.btn-info
         each competition in result.userForProfile.joinedCompetitions
             li
-            a(href="/competitions/"+ competition.id) #{competition.name}
+            a(href="/competitions/"+ competition._id) #{competition.name}
             span #{competition.place}
