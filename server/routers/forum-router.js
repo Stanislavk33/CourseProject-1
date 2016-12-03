@@ -1,22 +1,16 @@
 /* globals require */
 'use strict';
 
-const express = require('express');
+module.exports = ({ app, controllers, data,authentication }) => {
+    const controller = controllers.forum;
 
-module.exports = ({ app, data,authentication }) => {
-    const controller = require('./../controllers/forum-controller')(data),
-        router = new express.Router();
-
-    router
-        .get('/', controller.loadForumPosts)
-        .get('/create',  controller.getCreatePage)
-        .post('/create', controller.createForumPost)
-        .get('/:id', controller.getByID)
-        .post('/:id/comment', authentication.isAuthenticated, controller.addComment)
-        .put('/:id/like', authentication.isAuthenticated, controller.AddLikeToPost)
-        .put('/:id/unlike', authentication.isAuthenticated, controller.UnlikePost)
-        .put('/:id/comment/:answerid/like',authentication.isAuthenticated, controller.AddLikeToAnswer)
-        .put('/:id/comment/:answerid/unlike', authentication.isAuthenticated, controller.UnlikePostAnswer)
-
-    app.use('/forum', router);
+        app.get('/forum/', controller.loadForumPosts);
+        app.get('/forum/create',  controller.getCreatePage);
+        app.post('/forum/create', controller.createForumPost);
+        app.get('/forum/:id', controller.getByID);
+        app.post('/forum/:id/comment', authentication.isAuthenticated, controller.addComment);
+        app.put('/forum/:id/like', authentication.isAuthenticated, controller.AddLikeToPost);
+        app.put('/forum/:id/unlike', authentication.isAuthenticated, controller.UnlikePost);
+        app.put('/forum/:id/comment/:answerid/like',authentication.isAuthenticated, controller.AddLikeToAnswer);
+        app.put('/forum/:id/comment/:answerid/unlike', authentication.isAuthenticated, controller.UnlikePostAnswer);
 };

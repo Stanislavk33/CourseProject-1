@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = (data) => {
+module.exports = ({data}) => {
     return {
         loadCategories(req, res) {
             data.getAllCategories()
@@ -28,11 +28,11 @@ module.exports = (data) => {
             let body = req.body;
             console.log(body);
             data.createCategory({
-                    title: body.title,
-                    description: body.description,
-                    image: req.file ? req.file.filename : null,
-                    link: body.title.replace(' ', '-').toLowerCase()
-                })
+                title: body.title,
+                description: body.description,
+                image: req.file ? req.file.filename : null,
+                link: body.title.replace(' ', '-').toLowerCase()
+            })
                 .then(category => {
                     res.redirect(`/categories/${category.link}`);
                 })

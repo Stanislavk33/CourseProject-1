@@ -1,14 +1,14 @@
 'use strict';
 
-module.exports = (data) => {
+module.exports = ({data}) => {
     return {
         getHome(req, res) {
             Promise.all([
-                    data.getLatestUpcommingCompetitions(),
-                    data.getMostPopularCompetitions(),
-                    data.getTopUsers(),
-                    data.getAllCategories()
-                ])
+                data.getLatestUpcommingCompetitions(),
+                data.getMostPopularCompetitions(),
+                data.getTopUsers(),
+                data.getAllCategories()
+            ])
                 .then(([upcommingCompetitions, topCompetitions, topUsers, categories]) => {
 
                     res.render('home-page', {

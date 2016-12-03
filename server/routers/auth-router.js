@@ -1,21 +1,13 @@
 'use strict';
 
-const express = require('express');
-const passport = require('passport');
+module.exports = ({ app, data, controllers, authentication, uploadUserImage }) => {
+    const controller = controllers.auth;
 
-
-module.exports = ({ app, data, authentication, uploadUserImage }) => {
-    const controller = require('./../controllers/auth-controller')(data);
-
-    const router = new express.Router();
-
-    router
-        .get('/register', controller.loadRegisterPage)
-        .post('/register', uploadUserImage.single('avatar'), controller.register)
-        .get('/login', controller.loadLoginPage)
-        .post('/login', controller.loginLocal)
-        .get('/logout', authentication.isAuthenticated, controller.logout)
-        .get("/facebook", controller.facebookAuthenticate)
-        .get("/facebook/callback", controller.loginUserFacebook);
-    app.use('/auth', router);
+        app.get('/auth/register', controller.loadRegisterPage);
+        app.post('/auth/register', uploadUserImage.single('avatar'), controller.register);
+        app.get('/auth/login', controller.loadLoginPage);
+        app.post('/auth/login', controller.loginLocal);
+        app.get('/auth/logout', authentication.isAuthenticated, controller.logout);
+        app.get('/auth/facebook', controller.facebookAuthenticate);
+        app.get('/auth/facebook/callback', controller.loginUserFacebook);
 }

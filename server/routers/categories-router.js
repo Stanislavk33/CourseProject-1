@@ -1,18 +1,10 @@
 'use strict';
 
-const express = require('express'),
-    multer = require('multer'),
-    upload = multer({ dest: './public/imgs/categories-images/' });
+module.exports = ({ app, data, controllers, authentication, uploadCategoryImage }) => {
+        const controller = controllers.categories;
 
-module.exports = ({ app, data, authentication, uploadUserImage }) => {
-    const controller = require('./../controllers/categories-controller')(data),
-        router = new express.Router();
-
-    router
-        .get('/', controller.loadCategories)
-        .get('/create', authentication.isInRole('normal') /*authentication.isInRole('admin')*/ , controller.getCreateCategory)
-        .post('/create', authentication.isInRole('normal') /*authentication.isInRole('admin')*/ , upload.single('avatar'), controller.createCategory)
-        .get('/:link', controller.getCategoryByTitle)
-
-    app.use('/categories', router);
+        app.get('/categories/', controller.loadCategories);
+        app.get('/categories/create', authentication.isInRole('normal') /*authentication.isInRole('admin')*/ , controller.getCreateCategory);
+        app.post('/categories/create', authentication.isInRole('normal') /*authentication.isInRole('admin')*/ , uploadCategoryImage.single('avatar'), controller.createCategory);
+        app.get('/categories/:link', controller.getCategoryByTitle);
 };

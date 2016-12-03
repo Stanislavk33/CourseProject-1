@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = (data) => {
+module.exports = ({data}) => {
     return {
         search(req, res) {
             const body = req.body,

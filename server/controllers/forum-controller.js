@@ -3,7 +3,7 @@
 const DEFAULT_PAGE = 1,
     PAGE_SIZE = 2; // for testing. Default will be 10/15
 
-module.exports = (data) => {
+module.exports = ({data}) => {
     return {
         loadForumPosts(req, res) {
             const page = Number(req.query.page || DEFAULT_PAGE);
@@ -27,10 +27,10 @@ module.exports = (data) => {
                 user = req.user;
 
             data.createForumPost({
-                    title: body.title,
-                    description: body.description,
-                    user: { username: user.username, points: user.progress.totalPoints }
-                })
+                title: body.title,
+                description: body.description,
+                user: { username: user.username, points: user.progress.totalPoints }
+            })
                 .then(() => {
                     res.redirect('/forum')
                 }).catch((err) => {
@@ -54,9 +54,9 @@ module.exports = (data) => {
                 id = req.params.id;
 
             data.addAnswerToForumPost(id, {
-                    content: body.content,
-                    user: { username: req.user.username, points: req.user.progress.totalPoints }
-                })
+                content: body.content,
+                user: { username: req.user.username, points: req.user.progress.totalPoints }
+            })
                 .then(() => {
                     res.redirect('/forum/' + id)
                 }).catch((err) => {

@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = (data) => {
+module.exports = ({data}) => {
     return {
         getProfile(req, res) {
             const username = req.params.username;

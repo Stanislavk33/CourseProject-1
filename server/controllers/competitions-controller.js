@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = (data) => {
+module.exports = ({data}) => {
     return {
         getByID(req, res) {
             const id = req.params.id;

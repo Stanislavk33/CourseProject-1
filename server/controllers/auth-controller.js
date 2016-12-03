@@ -1,8 +1,6 @@
 'use strict';
 
-const passport = require('passport');
-
-module.exports = (data) => {
+module.exports = ({ data, passport }) => {
     return {
         loadRegisterPage(req, res) {
             return res.status(200).render('register', { result: {} });
