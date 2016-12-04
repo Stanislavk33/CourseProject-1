@@ -114,7 +114,6 @@ module.exports = function(models, validator) {
                     if (err) {
                         return reject(err);
                     }
-                    console.log(competitions)
                     return resolve(competitions);
                 })
             })

@@ -54,7 +54,6 @@ module.exports = ({ data }) => {
             if (req.file) {
                 userInfo.image = req.file.filename;
             }
-            console.log(userInfo);
             data.updateUserInformation(username, userInfo)
                 .then(() => {
                     return res.redirect(`/users/${username}`);
@@ -68,14 +67,6 @@ module.exports = ({ data }) => {
             res.redirect("/");
         },
 
-        // TODO: delete method if not used
-        loadRegisterPage(req, res) {
-            res.render("users/user/register", { result: { user: req.user } });
-        },
-        // TODO: delete method if not used
-        loadLoginPage(req, res) {
-            res.render("users/user/login", { result: { user: req.user } });
-        },
         getById(req, res) {
             data.getUserById(req.params.id)
                 .then(user => {
@@ -118,7 +109,6 @@ module.exports = ({ data }) => {
             let page = +req.query.page || 1
             if (req.query.search) {
                 const searchName = req.query.search;
-                console.log(searchName);
                 Promise.all([data.searchUsersByName(searchName, page, PAGE_SIZE), data.getCountOfFilteredUsers(searchName)])
                     .then(([users, usersCount]) => {
                         let pagesCount = Math.floor(usersCount / PAGE_SIZE);

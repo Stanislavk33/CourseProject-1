@@ -12,10 +12,9 @@ module.exports = function(config) {
     const Competition = require('../models/competition-model'),
         Category = require('../models/category-model'),
         User = require('../models/user-model'),
-        UserGallery = require('../models/user-gallery-model'),
         ForumPost = require('../models/forum-post-model'),
         validator = require('../utilities/validator'),
-        models = { Competition, Category, User, UserGallery, ForumPost },
+        models = { Competition, Category, User, ForumPost },
         data = {};
 
     fs.readdirSync('./server/data')

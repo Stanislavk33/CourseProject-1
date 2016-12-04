@@ -29,7 +29,7 @@ $('.addPoints').on('click', function (ev) {
             }
         })
         .catch(function(err) {
-            console.log(err);
+           app.notifier.showNotification("Points could not be added.", "error");
         })
 
     // $.ajax('/users/addPoints', {

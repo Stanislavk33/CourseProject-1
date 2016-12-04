@@ -82,7 +82,7 @@ $("#btn-register").on("click", function(ev) {
             }
         })
         .catch(function(err) {
-            console.log(err);
+            app.notifier.showNotification("Registraction failed", "error");
         })
 
 })
