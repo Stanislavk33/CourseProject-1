@@ -1,5 +1,7 @@
 'use strict';
 
+const PAGE_SIZE = 6;
+
 module.exports = ({ data }) => {
     return {
         getByID(req, res) {
@@ -143,14 +145,14 @@ module.exports = ({ data }) => {
         },
         loadCompetitions(req, res) {
 
-            const page = +req.query.page || 1,
-                count = 2;
-            Promise.all([data.getAllCompetitions(page, count), data.getCompetitionsCount()])
+            const page = +req.query.page || 1;
+
+            Promise.all([data.getAllCompetitions(page, PAGE_SIZE), data.getCompetitionsCount()])
                 .then(([competitions, compCount]) => {
                     competitions.forEach(x => {
                         x.passed = x.getPassed();
                     });
-                    const pagesCount = Math.ceil(compCount / count);
+                    const pagesCount = Math.ceil(compCount / PAGE_SIZE);
                     res.render('competitions/competition-list', { result: { competitions, user: req.user, params: { pagesCount, page } } });
                 });
         },
@@ -171,12 +173,12 @@ module.exports = ({ data }) => {
                     location: { longitude: body.longitude, latitude: body.latitude }
                 })
                 .then(competition => {
-                    return data.addCompetitionToCategory(competition)
+                    return data.addCompetitionToCategory(competition);
                 })
                 .then((competition) => {
                     return res.status(200).json({
                         success: 'Competition created',
-                        competition: {id: competition._id}
+                        competition: { id: competition._id }
                     });
                 })
                 .catch(err => {

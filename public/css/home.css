@@ -162,12 +162,6 @@ hgroup h2 {
     width: 100%;
     height: auto;
 }
-/*.search-result span.plus {
-    position: absolute;
-    right: 0;
-    top: 126px;
-}*/
-
 
 span.plus {
     display: inline-block;
@@ -194,21 +188,6 @@ span.plus {
 .home-list-title{
     margin-bottom: 1.5em;
 }
-/*.users-search{
-    display:inline-block;
-}*/
-
-
-/*.carousel-caption {
-  z-index: 10;
-}
-
-.carousel-content {
-    color:black;
-    display:flex;
-    align-items:center;
-     z-index: 10;
-}*/
 
 /*-------Competition-----------*/
 .competition-map{
@@ -220,5 +199,3 @@ span.plus {
 .competition-info{
     margin-top: 3em;
 }
-
-.upcomming-competitions {}

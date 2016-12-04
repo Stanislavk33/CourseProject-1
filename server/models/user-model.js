@@ -10,10 +10,11 @@ const mongoose = require('mongoose'),
 const userSchema = new Schema({
     username: {
         type: String,
+        match: constants.USERNAME_REGEX,
         unique: true,
         required: true,
-        minlength: constants.MIN_NAME_LENGTH,
-        maxlength: constants.MAX_NAME_LENGTH
+        minlength: constants.MIN_USERNAME_LENGTH,
+        maxlength: constants.MAX_USERNAME_LENGTH
     },
     firstName: {
         type: String,
@@ -40,7 +41,7 @@ const userSchema = new Schema({
     facebookId: { type: String },
     facebookToken: { type: String },
     progress: { type: progressbarSchema },
-    roles:[ { type: String, default: 'normal', minlength: constants.MIN_ROLE_LENGTH, maxlength: constants.MAX_ROLE_LENGTH }]
+    roles: [{ type: String, default: 'normal', minlength: constants.MIN_ROLE_LENGTH, maxlength: constants.MAX_ROLE_LENGTH }]
 });
 
 userSchema.methods = {
@@ -57,7 +58,7 @@ userSchema.methods = {
 };
 
 userSchema.statics.getOrganizatorMinimumPoints = function() {
-  return constants.ORGANIZATOR_MINIMALPOINTS;
+    return constants.ORGANIZATOR_MINIMALPOINTS;
 };
 
 mongoose.model('User', userSchema);

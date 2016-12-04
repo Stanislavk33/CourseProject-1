@@ -5,7 +5,8 @@ var app = app || {};
 $("#btn-register").on("click", function(ev) {
     ev.preventDefault();
 
-    var nameAndPassPattern = new RegExp(/^[a-zA-Z0-9]{6,50}$/),
+    var usernameAndPassPattern = new RegExp(/^[a-zA-Z0-9]{5,50}$/),
+        namePattern = new RegExp(/^[a-zA-Z]{3,50}$/),
         emailPattern = new RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i),
         testUsername,
         testFirstName,
@@ -21,14 +22,14 @@ $("#btn-register").on("click", function(ev) {
         lastName = $("#tb-last-name").val(),
         image = $("#tb-avatar")[0].files[0];
 
-    testUsername = nameAndPassPattern.test(username);
-    testFirstName = nameAndPassPattern.test(firstName);
-    testLastName = nameAndPassPattern.test(lastName);
-    testPassword = nameAndPassPattern.test(password) && nameAndPassPattern.test(confirmPassword);
+    testUsername = usernameAndPassPattern.test(username);
+    testFirstName = namePattern.test(firstName);
+    testLastName = namePattern.test(lastName);
+    testPassword = usernameAndPassPattern.test(password) && usernameAndPassPattern.test(confirmPassword);
     testEmail = emailPattern.test(email);
 
     if (!testUsername) {
-        app.notifier.showNotification("Username must contain only letters, numbers and must be between 6 and 50 symbols long", "error");
+        app.notifier.showNotification("Username must contain only letters, numbers and must be between 5 and 50 symbols long", "error");
         return;
     }
 
@@ -44,17 +45,17 @@ $("#btn-register").on("click", function(ev) {
     }
 
     if(!testPassword) {
-        app.notifier.showNotification("Password must contain only letters, numbers and must be between 6 and 50 symbols long", "error");
+        app.notifier.showNotification("Password must contain only letters, numbers and must be between 5 and 50 symbols long", "error");
         return;
     }
 
     if (!testFirstName) {
-        app.notifier.showNotification("First name must contain only letters, numbers and must be between 6 and 50 symbols long", "error");
+        app.notifier.showNotification("First name must contain only letters and must be between 3 and 50 symbols long", "error");
         return;
     }
 
     if (!testLastName) {
-        app.notifier.showNotification("Last name must contain only letters, numbers and must be between 6 and 50 symbols long", "error");
+        app.notifier.showNotification("Last name must contain only letters and must be between 3 and 50 symbols long", "error");
         return;
     }
 

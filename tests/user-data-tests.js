@@ -247,25 +247,71 @@ describe("Test users data ", () => {
     });
 
     describe('updateUserInformation(username, newInfo)', () => {
-        const users = [{ username: 'testusername' }];
-        const newInfo = 'newUsername';
-        beforeEach(() => {
-            sinon.stub(User, 'findOneAndUpdate', 'someuser', cb => {
-                const user = users.find(x => x.username === username);
+        const users = [{ username: 'testusername' }, { username: 'testusername2' }];
+
+        afterEach(() => {
+            sinon.restore();
+        });
+
+
+        it('Expect findOneAndUpdate to be provide new username to the user', done => {
+            sinon.stub(User, 'findOneAndUpdate', ({ username }, newInfo, cb) => {
+                let user = users.find(x => x.username === username);
                 user.username = newInfo;
-                return user;
+                cb(null, user);
             });
 
-            afterEach(() => {
-                sinon.restore();
+            data.updateUserInformation('testusername', 'newUsername')
+                .then(user => {
+                    expect(user.username).to.be.equal('newUsername');
+                    done();
+                })
+        });
+
+        it('Expect findOneAndUpdate to provide new email to the user', done => {
+            sinon.stub(User, 'findOneAndUpdate', ({ username }, newInfo, cb) => {
+                let user = users.find(x => x.username === username);
+                user.email = newInfo;
+                cb(null, user);
             });
-            it('Should update user info', done => {
-                data.updateUserInformation('testusername', 'newUsername')
-                    .then(user => {
-                        expect(user.username).to.be.equal.to('newUsername');
-                        done();
-                    })
+
+            data.updateUserInformation('testusername2', 'newEmail')
+                .then(user => {
+                    expect(user.email).to.be.equal('newEmail');
+                    done();
+                })
+        });
+
+        it('Expect findOneAndUpdate to provide new firstname to the user', done => {
+            sinon.stub(User, 'findOneAndUpdate', ({ username }, newInfo, cb) => {
+                let user = users.find(x => x.username === username);
+                user.firstName = newInfo;
+                cb(null, user);
             });
-        })
+
+            data.updateUserInformation('testusername2', 'newFirstName')
+                .then(user => {
+                    expect(user.firstName).to.be.equal('newFirstName');
+                    done();
+                })
+        });
+
+        it('Expect findOneAndUpdate to provide new firstname to the user', done => {
+            sinon.stub(User, 'findOneAndUpdate', ({ username }, newInfo, cb) => {
+                let user = users.find(x => x.username === username);
+                user.lastName = newInfo;
+                cb(null, user);
+            });
+
+            data.updateUserInformation('testusername2', 'newLastName')
+                .then(user => {
+                    expect(user.lastName).to.be.equal('newLastName');
+                    done();
+                })
+        });
     });
+
+    describe('updateUserInRole(userId, role)', () => {
+
+    })
 })
