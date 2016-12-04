@@ -133,6 +133,35 @@ describe("User data tests", () => {
 
             sinon.restore();
         });
+        it('Expect to create new user', done => {
+            sinon.stub(Validator, 'isValidUser', () => {
+                return true;
+            });
+
+            sinon.stub(User.prototype, 'save', cb => {
+                cb(null);
+            });
+
+            data.createUser({
+                    username: 'testUsername',
+                    firstname: 'Testfirstname',
+                    lastname: 'Testlastname',
+                    passHash: 'testPassHash',
+                    email: 'test@email.com',
+                    salt: 'testSalt'
+                })
+                .then((createdUser) => {
+                    console.log(createdUser);
+                    expect(createdUser.username).to.equal('testUsername');
+                    expect(createdUser.firstname).to.equal('Testfirstname');
+                    expect(createdUser.lastname).to.equal('Testlastname');
+                    expect(createdUser.passHash).to.equal('testPassHash');
+                    expect(createdUser.email).to.equal('test@email.com');
+                    expect(createdUser.salt).to.equal('testSalt');
+                }).then(done, done);
+
+            sinon.restore();
+        });
     });
 
     describe('updateUserInformation(username, newInfo)', () => {
