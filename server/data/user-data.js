@@ -35,6 +35,10 @@ module.exports = function (models, validator) {
                         return reject(err);
                     }
 
+                    if(!user){
+                        return resolve(null);
+                    }
+
                     return resolve(user);
                 });
             })

@@ -44,7 +44,7 @@ describe("User data tests", () => {
                 .then(done, done);
         });
 
-        it('Expect to return undefined when the user is not found', (done) => {
+        it('Expect to return null when the user is not found', (done) => {
             data.getUserById(10)
                 .then((foundUser) => {
                     expect(foundUser).to.be.null;
