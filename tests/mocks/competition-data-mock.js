@@ -21,6 +21,7 @@ class CompetitionMock {
     static findOneAndUpdate() {}
     static find() {}
     static findOne() {}
+    static update() {}
 }
 
 module.exports = CompetitionMock;
