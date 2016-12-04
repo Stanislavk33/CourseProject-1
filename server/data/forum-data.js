@@ -146,17 +146,8 @@ module.exports = function(models, validator) {
         },
         incrementForumPostAnswerLikes(_id, answerId) {
             return new Promise((resolve, reject) => {
-                ForumPost.findOne({ '_id': _id }, (err, forumPost) => {
-                    if (err) {
-                        return reject(err);
-                    }
-                    
-                    if(!forumPost){
-                        return resolve(null);
-                    }
-
-                    return resolve(forumPost);
-                }).then((forumPost) => {
+                ForumPost.findOne({ '_id': _id })
+                    .then((forumPost) => {
                         let answers = forumPost.answers;
                         answers.forEach(answer => {
                             if (answer._id == answerId) {
@@ -176,17 +167,8 @@ module.exports = function(models, validator) {
         decrementForumPostAnswerLikes(_id, answerId) {
 
             return new Promise((resolve, reject) => {
-                ForumPost.findOne({ '_id': _id }, (err, forumPost) => {
-                    if (err) {
-                        return reject(err);
-                    }
-                    
-                    if(!forumPost){
-                        return resolve(null);
-                    }
-
-                    return resolve(forumPost);
-                }).then((forumPost) => {
+                ForumPost.findOne({ '_id': _id })
+                    .then((forumPost) => {
                         let answers = forumPost.answers;
                         answers.forEach(answer => {
                             if (answer._id == answerId) {
@@ -206,17 +188,8 @@ module.exports = function(models, validator) {
         addUsernameToPostAnswerUsersLiked(postId, answerId, username) {
             return new Promise((resolve, reject) => {
 
-                ForumPost.findOne({ '_id': _id }, (err, forumPost) => {
-                    if (err) {
-                        return reject(err);
-                    }
-                    
-                    if(!forumPost){
-                        return resolve(null);
-                    }
-
-                    return resolve(forumPost);
-                }).then((forumPost) => {
+                ForumPost.findOne({ '_id': postId })
+                    .then((forumPost) => {
                         let answers = forumPost.answers;
                         answers.forEach(answer => {
                             if (answer._id == answerId) {
@@ -235,17 +208,8 @@ module.exports = function(models, validator) {
         },
         removeUsernameFromPostAnswerUsersLiked(postId, answerId, username) {
             return new Promise((resolve, reject) => {
-                ForumPost.findOne({ '_id': _id }, (err, forumPost) => {
-                    if (err) {
-                        return reject(err);
-                    }
-                    
-                    if(!forumPost){
-                        return resolve(null);
-                    }
-
-                    return resolve(forumPost);
-                }).then((forumPost) => {
+                ForumPost.findOne({ '_id': postId })
+                    .then((forumPost) => {
                         let answers = forumPost.answers;
                         answers.forEach(answer => {
                             if (answer._id == answerId) {
