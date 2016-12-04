@@ -1,6 +1,7 @@
 'use strict';
+const PAGE_SIZE = 6;
 
-module.exports = ({data}) => {
+module.exports = ({ data }) => {
     return {
         getProfile(req, res) {
             const username = req.params.username;
@@ -116,14 +117,13 @@ module.exports = ({data}) => {
         },
         loadUsers(req, res) {
             let page = +req.query.page || 1
-            const count = 2;
             if (req.query.search) {
                 const searchName = req.query.search;
                 console.log(searchName);
-                Promise.all([data.searchUsersByName(searchName, page, count), data.getCountOfFilteredUsers(searchName)])
+                Promise.all([data.searchUsersByName(searchName, page, PAGE_SIZE), data.getCountOfFilteredUsers(searchName)])
                     .then(([users, usersCount]) => {
-                        let pagesCount = Math.floor(usersCount / count);
-                        if ((usersCount % count) !== 0) {
+                        let pagesCount = Math.floor(usersCount / PAGE_SIZE);
+                        if ((usersCount % PAGE_SIZE) !== 0) {
                             pagesCount += 1;
                         }
 

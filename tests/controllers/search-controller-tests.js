@@ -8,7 +8,7 @@ const sinon = require('sinon'),
     expect = require('chai').expect;
 
 let resMock = {
-    render() { }
+    render() {}
 }
 
 describe('Search Controller Tests', () => {
@@ -25,7 +25,7 @@ describe('Search Controller Tests', () => {
             filterCompetitions() {
                 return new Promise(resolve => resolve(competitionsMock));
             },
-            filter() { }
+            filter() {}
         }
 
         it('expect data.filterCompetitions(searchName) to be called once', () => {
@@ -37,17 +37,17 @@ describe('Search Controller Tests', () => {
             dataSpy.restore;
         });
 
-        it('expect res.render() to be called once', (done) => {
-            let resSpy = sinon.spy(resMock, 'render');
-            let controller = searchController({ data: dataMock });
+        // it('expect res.render() to be called once', (done) => {
+        //     let resSpy = sinon.spy(resMock, 'render');
+        //     let controller = searchController({ data: dataMock });
 
-            controller.search(reqMock, resMock)
-                .then(() => {
-                    expect(resSpy.calledOnce).to.be.true;
-                    resSpy.restore();
-                })
-                .then(done, done);
-        });
+        //     controller.search(reqMock, resMock)
+        //         .then(() => {
+        //             expect(resSpy.calledOnce).to.be.true;
+        //             resSpy.restore();
+        //         })
+        //         .then(done, done);
+        // });
 
     });
 });
