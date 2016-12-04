@@ -6,7 +6,6 @@ module.exports = function(models, validator) {
 
     return {
         getAllCompetitions(page, size) {
-
             const skip = (page - 1) * size,
                 limit = size;
 
@@ -21,6 +20,7 @@ module.exports = function(models, validator) {
                     if (err) {
                         return reject(err);
                     };
+
                     return resolve(competition);
                 });
             });
@@ -32,49 +32,48 @@ module.exports = function(models, validator) {
                         return reject(err);
                     }
 
-                    if(!competition){
+                    if (!competition) {
                         return resolve(null);
                     }
-                    
+
                     return resolve(competition);
                 });
             });
         },
-        getCompetitionsByPlace(place) {
-            return new Promise((resolve, reject) => {
-                Competition.find({ 'place': place }, (err, competitions) => {
-                    if (err) {
-                        return reject(err);
-                    }
+        // getCompetitionsByPlace(place) {
+        //     return new Promise((resolve, reject) => {
+        //         Competition.find({ 'place': place }, (err, competitions) => {
+        //             if (err) {
+        //                 return reject(err);
+        //             }
 
-                    return resolve(competitions);
-                });
-            })
-        },
-        getCompetitionsByOrganizator(username) {
-            return new Promise((resolve, reject) => {
-                Competition.find({ 'organizator.username': username }, (err, competitions) => {
-                    if (err) {
-                        return reject(err);
-                    }
+        //             return resolve(competitions);
+        //         });
+        //     })
+        // },
+        // getCompetitionsByOrganizator(username) {
+        //     return new Promise((resolve, reject) => {
+        //         Competition.find({ 'organizator.username': username }, (err, competitions) => {
+        //             if (err) {
+        //                 return reject(err);
+        //             }
 
-                    return resolve(competitions);
-                });
-            })
-        },
-        getCompetitionsByLevel(level) {
-            return new Promise((resolve, reject) => {
-                Competition.find({ 'level': level }, (err, competitions) => {
-                    if (err) {
-                        return reject(err);
-                    }
+        //             return resolve(competitions);
+        //         });
+        //     })
+        // },
+        // getCompetitionsByLevel(level) {
+        //     return new Promise((resolve, reject) => {
+        //         Competition.find({ 'level': level }, (err, competitions) => {
+        //             if (err) {
+        //                 return reject(err);
+        //             }
 
-                    return resolve(competitions);
-                });
-            })
-        },
+        //             return resolve(competitions);
+        //         });
+        //     })
+        // },
         createCompetition(competition) {
-            // const passed = extractPassed(competition.startDate, competition.endDate);
             const newCompetition = new Competition({
                 name: competition.name,
                 place: competition.place,
