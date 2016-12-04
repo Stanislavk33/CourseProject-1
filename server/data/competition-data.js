@@ -121,7 +121,7 @@ module.exports = function(models, validator) {
         },
         getLatestUpcommingCompetitions() {
             return new Promise((resolve, reject) => {
-                Competition.find({ startDate: { $gt: Date.now() } }, {}, { sort: { startDate: 1 } }, (err, competitions) => {
+                Competition.find({ startDate: { $gt: Date.now() } }, {}, { sort: { startDate: 1 }, limit: 5 }, (err, competitions) => {
                     if (err) {
                         return reject(err);
                     }

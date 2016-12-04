@@ -18,7 +18,7 @@ function initMap() {
   });
 
   google.maps.event.addListenerOnce(map, 'idle', function () {
-    setTimeout(() => {
+    setTimeout(function() {
       google.maps.event.trigger(map, 'resize');
     }, 1000);
   });

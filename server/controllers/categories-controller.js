@@ -15,6 +15,7 @@ module.exports = ({data}) => {
             const link = req.params.link;
             data.getCategoryByLink(link)
                 .then(category => {
+                    category.competitions.forEach(x => x.category = category.title);
                     return res.status(200).render('categories/category', { result: { category, user: req.user } });
                 })
                 .catch(err => {

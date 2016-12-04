@@ -260,6 +260,7 @@ describe('Test categories data', () => {
                         _id: competition._id,
                         name: competition.name,
                         status: competition.passed,
+                        image: competition.image,
                         organizator: competition.organizator,
                         place: competition.place
                     };

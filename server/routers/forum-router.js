@@ -5,8 +5,8 @@ module.exports = ({ app, controllers, authentication }) => {
     const controller = controllers.forum;
 
         app.get('/forum/', controller.loadForumPosts);
-        app.get('/forum/create',  controller.getCreatePage);
-        app.post('/forum/create', controller.createForumPost);
+        app.get('/forum/create', authentication.isAuthenticated, controller.getCreatePage);
+        app.post('/forum/create',authentication.isAuthenticated, controller.createForumPost);
         app.get('/forum/:id', controller.getByID);
         app.post('/forum/:id/comment', authentication.isAuthenticated, controller.addComment);
         app.put('/forum/:id/like', authentication.isAuthenticated, controller.AddLikeToPost);

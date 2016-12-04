@@ -3,7 +3,7 @@ var app = app || {};
 
 (function () {
 
-    class Notifier {
+    app.notifier =  {
         showNotification(text, type) {
             toastr.options = {
                 "closeButton": true,
@@ -30,5 +30,4 @@ var app = app || {};
         }
     }
 
-    app.notifier = new Notifier();
 } ());

@@ -47,6 +47,7 @@ const categorySchema = new Schema({
             minlength: constants.MIN_NAME_LENGTH,
             maxlength: constants.MAX_NAME_LENGTH
         },
+        image: {type: String, required: true}
     }]
 });
 
