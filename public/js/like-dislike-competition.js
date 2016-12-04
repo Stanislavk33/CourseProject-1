@@ -6,13 +6,13 @@ var app = app || {};
 
 function likeCompetition(ev) {
     var $target = $(ev.target),
-         competitionId = $target.parents("#competition-info").attr("data-id");
-    $.ajax(`/competitions/${competitionId}/like`, {
+        competitionId = $target.parents("#competition-info").attr("data-id");
+    $.ajax('/competitions/' + competitionId + '/like', {
             method: "PUT"
         })
         .done(function() {
             var $likesSpan = $target.prev(),
-                 likes = $likesSpan.html();
+                likes = $likesSpan.html();
             $likesSpan.html(+likes + 1);
             $target.html("Dislike");
             $target.removeClass('btn-success');
@@ -27,13 +27,13 @@ function likeCompetition(ev) {
 
 function dislikeCompetition(ev) {
     var $target = $(ev.target),
-         competitionId = $target.parents("#competition-info").attr("data-id");
-    $.ajax(`/competitions/${competitionId}/dislike`, {
+        competitionId = $target.parents("#competition-info").attr("data-id");
+    $.ajax('/competitions/' + competitionId + '/dislike', {
             method: "PUT"
         })
         .done(function() {
             var $likesSpan = $target.prev(),
-                 likes = $likesSpan.html();
+                likes = $likesSpan.html();
             $likesSpan.html(+likes - 1);
             $target.html("Like");
             $target.removeClass('btn-danger');

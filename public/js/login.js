@@ -2,15 +2,15 @@
 
 var app = app || {};
 
-$("#btn-login").on("click", (ev) => {
+$("#btn-login").on("click", function(ev) {
     ev.preventDefault();
 
     var username = $("#tb-username").val(),
         password = $("#tb-password").val(),
         data = {
-        username,
-        password
-    }
+            username,
+            password
+        }
 
     app.requester.post("/auth/login", data)
         .then(function(resp) {

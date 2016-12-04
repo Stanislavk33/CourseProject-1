@@ -312,6 +312,25 @@ describe("Test users data ", () => {
     });
 
     describe('updateUserInRole(userId, role)', () => {
+        //User.findByIdAndUpdate({ '_id': userId }, { $push: { 'roles': role } }
+        const users = [{ '_id': 1, $push: { 'roles': 'normal' } }, { '_id': 3, $push: { 'roles': 'admin' } }];
 
+        afterEach(() => {
+            sinon.restore();
+        });
+
+        it('Expect findByIdAndUpdate to be provide new username to the user', done => {
+            sinon.stub(User, 'findByIdAndUpdate', ({ _id }, role, cb) => {
+                let user = users.find(x => x.username === username);
+                user.username = newInfo;
+                cb(null, user);
+            });
+
+            data.updateUserInformation('testusername', 'newUsername')
+                .then(user => {
+                    expect(user.username).to.be.equal('newUsername');
+                    done();
+                })
+        });
     })
 })

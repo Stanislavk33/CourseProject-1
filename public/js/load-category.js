@@ -1,8 +1,7 @@
-console.log('script linked!');
-$('.category-title').on('click', function(ev){
+$('.category-title').on('click', function(ev) {
 
     var $target = $(ev.target),
         categoryTitle = $target.html(),
         categoryLink = categoryTitle.replace(' ', '-').toLowerCase();
-    document.location.href = `/categories/${categoryLink}`
+    document.location.href = '/categories/' + categoryLink;
 });

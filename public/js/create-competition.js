@@ -59,7 +59,7 @@ $("#create").on("click", function(ev) {
     formData.append('competitionImage', image);
     formData.append('competitionName', competitionName);
     formData.append('place', place);
-    formData.append('description',description);
+    formData.append('description', description);
     formData.append('points', points);
     formData.append('level', level);
     formData.append('category', category);
@@ -72,9 +72,9 @@ $("#create").on("click", function(ev) {
 
     app.requester.postWithFile('/competitions/create', formData)
         .then(function(resp) {
-             if (resp.success) {
+            if (resp.success) {
                 app.notifier.showNotification(resp.success, "success");
-                setTimeout(function() { window.location.href = `/competitions/${resp.competition.id}` }, 500);
+                setTimeout(function() { window.location.href = '/competitions/' + resp.competition.id }, 500);
             } else if (resp.error) {
                 app.notifier.showNotification(resp.error, "error");
                 return;
@@ -82,6 +82,6 @@ $("#create").on("click", function(ev) {
             //app.notifier.showNotification(resp, "success");
         })
         .catch(function(err) {
-             app.notifier.showNotification("Competition could not be created.", "error");
+            app.notifier.showNotification("Competition could not be created.", "error");
         });
 });
