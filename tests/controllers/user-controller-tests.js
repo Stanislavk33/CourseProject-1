@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /* globals require describe it beforeEach afterEach */
 
 const expect = require('chai').expect;
