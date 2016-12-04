@@ -1,44 +1,45 @@
 {
-    "name": "team-undefined42",
-    "version": "1.0.0",
-    "description": "Web application with Node.js",
-    "main": "app.js",
-    "scripts": {
-        "dev": "./node_modules/.bin/nodemon app.js",
-        "postinstall": "./node_modules/bower/bin/bower install",
-        "test": "./node_modules/.bin/mocha tests tests/**/*.js -w",
-        "start": "node app.js"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/undefined42-Telerik/CourseProject.git"
-    },
-    "author": "Silviya Boteva, Elena Zarkova, Todor Georgiev, Boyko Bonev, Martin Yotov",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/undefined42-Telerik/CourseProject/issues"
-    },
-    "homepage": "https://github.com/undefined42-Telerik/CourseProject#readme",
-    "dependencies": {
-        "body-parser": "^1.15.2",
-        "bower": "^1.8.0",
-        "cookie-parser": "^1.4.3",
-        "express": "^4.14.0",
-        "express-session": "^1.14.2",
-        "mongoose": "^4.6.8",
-        "multer": "^1.2.0",
-        "passport": "^0.3.2",
-        "passport-facebook": "^2.1.1",
-        "passport-local": "^1.0.0",
-        "pug": "^2.0.0-beta6",
-        "typings": "^2.0.0"
-    },
-    "devDependencies": {
-        "bower": "^1.8.0",
-        "chai": "^3.5.0",
-        "eslint": "^3.10.2",
-        "mocha": "^3.2.0",
-        "nodemon": "^1.11.0",
-        "sinon": "^1.17.6"
-    }
+  "name": "team-undefined42",
+  "version": "1.0.0",
+  "description": "Web application with Node.js",
+  "main": "app.js",
+  "scripts": {
+    "dev": "./node_modules/.bin/nodemon app.js",
+    "postinstall": "./node_modules/bower/bin/bower install",
+    "test": "./node_modules/.bin/mocha tests tests/**/*.js -w",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/undefined42-Telerik/CourseProject.git"
+  },
+  "author": "Silviya Boteva, Elena Zarkova, Todor Georgiev, Boyko Bonev, Martin Yotov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/undefined42-Telerik/CourseProject/issues"
+  },
+  "homepage": "https://github.com/undefined42-Telerik/CourseProject#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "bower": "^1.8.0",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.14.0",
+    "express-session": "^1.14.2",
+    "mongoose": "^4.6.8",
+    "multer": "^1.2.0",
+    "passport": "^0.3.2",
+    "passport-facebook": "^2.1.1",
+    "passport-local": "^1.0.0",
+    "pug": "^2.0.0-beta6",
+    "typings": "^2.0.0"
+  },
+  "devDependencies": {
+    "bower": "^1.8.0",
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "eslint": "^3.10.2",
+    "mocha": "^3.2.0",
+    "nodemon": "^1.11.0",
+    "sinon": "^1.17.6"
+  }
 }

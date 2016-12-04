@@ -268,15 +268,15 @@ describe('Test categories data', () => {
                 });
         });
 
-        it('Expect to return category', done => {
+        it('Expect to return competition', done => {
             let category = { title: 'Category1', description: 'Description' };
             sinon.stub(CategoryMock, 'findOneAndUpdate', (filter, update, cb) => {
                 cb(null, category);
             });
 
             data.addCompetitionToCategory(competition)
-                .then(returnedCategory => {
-                    expect(returnedCategory).to.eql(category);
+                .then(returnedCompetition => {
+                    expect(returnedCompetition).to.eql(competition);
                     done();
                 });
         });
@@ -289,7 +289,6 @@ describe('Test categories data', () => {
 
             data.addCompetitionToCategory(competition)
                 .catch(err => {
-                    console.log('ERROR!!!!!!!!');
                     expect(err.err).to.equal('Competitions not added');
                     done();
                 });

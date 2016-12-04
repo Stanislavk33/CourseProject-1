@@ -67,7 +67,6 @@ module.exports = function (models, validator) {
         },
         addCompetitionToCategory(competition) {
             return new Promise((resolve, reject) => {
-                console.log("before");
                 const competitionToAdd = {
                     _id: competition._id,
                     name: competition.name,
@@ -80,7 +79,7 @@ module.exports = function (models, validator) {
                         if (err) {
                             return reject(err);
                         }
-                        return resolve(category);
+                        return resolve(competition);
                     })
             });
         }
