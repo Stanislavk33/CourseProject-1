@@ -119,53 +119,42 @@ describe("User data tests", () => {
         });
     });
 
-    // describe('createUser(user)', () => {
-    //     beforeEach(() => {
-    //         sinon.stub(User.prototype, 'save', cb => {
-    //             cb(null);
-    //         });
-    //     });
+    describe('createUser(user)', () => {
+        it('Expect to reject when validation fail', done => {
+            sinon.stub(Validator, 'isValidUser', () => {
+                return false;
+            });
 
-    //     beforeEach(() => {
-    //         sinon.stub(Validator.prototype, 'isValidUser', (user) => {
-    //             return true;
-    //         });
-    //     });
+            data.createUser({})
+                .then(() => {})
+                .catch(() => {
+                    done();
+                });
 
-    //     afterEach(() => {
-    //         sinon.restore();
-    //     });
-
-    //     it('Expect to save the user with correct data', (done) => {
-    //         let username = 'someuser';
-    //         let firstname = 'Silviya';
-    //         let lastname = 'Boteva';
-    //         let passHash = 'somepasshash';
-    //         let email = 'silviya@gmail.com';
-    //         let salt = 'somesalt';
-
-    //         data.createUser({ username, firstname, lastname, passHash, email, salt })
-    //             .then((actualUser) => {
-    //                 expect(actualUser.username).to.equal(username);
-    //                 expect(actualUser.firstname).to.equal(firstname);
-    //                 expect(actualUser.lastname).to.equal(lastname);
-    //                 expect(actualUser.passHash).to.equal(passHash);
-    //                 expect(actualUser.email).to.equal(email);
-    //                 expect(actualUser.salt).to.equal(salt);
-    //             }).then(done, done);
-    //     });
-    // });
-
-    describe('addCompetitionToUser(username, competition)', () => {
-
+            sinon.restore();
+        });
     });
 
     describe('updateUserInformation(username, newInfo)', () => {
-        let username = 'someuser';
-        let firstname = 'Silviya';
-        let lastname = 'Boteva';
-        let passHash = 'somepasshash';
-        let email = 'silviya@gmail.com';
-        let salt = 'somesalt';
+        const users = [{ username: 'testusername' }];
+        const newInfo = 'newUsername';
+        beforeEach(() => {
+            sinon.stub(User, 'findOneAndUpdate', 'someuser', cb => {
+                const user = users.find(x => x.username === username);
+                user.username = newInfo;
+                return user;
+            });
+
+            afterEach(() => {
+                sinon.restore();
+            });
+            it('Should update user info', done => {
+                data.updateUserInformation('testusername', 'newUsername')
+                    .then(user => {
+                        expect(user.username).to.be.equal.to('newUsername');
+                        done();
+                    })
+            });
+        })
     });
-});
+})
