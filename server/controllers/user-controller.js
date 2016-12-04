@@ -20,7 +20,7 @@ module.exports = ({ data }) => {
                     if (!user) {
                         throw new Error("No user found!");
                     }
-
+                    // console.log({ result: { userForProfile: user, user: req.user } });
                     return res.status(200).render(view, { result: { userForProfile: user, user: req.user } });
                 })
                 .catch((err) => {
@@ -29,7 +29,6 @@ module.exports = ({ data }) => {
         },
         getEditPage(req, res) {
             const username = req.params.username;
-            console.log(username);
 
             data.getUserByUsername(username)
                 .then((user) => {
