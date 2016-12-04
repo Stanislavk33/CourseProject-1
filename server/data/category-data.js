@@ -72,6 +72,7 @@ module.exports = function (models, validator) {
                     name: competition.name,
                     status: competition.passed,
                     organizator: competition.organizator,
+                    image: competition.image,
                     place: competition.place
                 }
                 Category.findOneAndUpdate({ 'title': competition.category }, { $push: { 'competitions': competitionToAdd } },

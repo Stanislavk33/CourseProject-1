@@ -90,7 +90,7 @@ describe('Test categories controller', () => {
             user: { username: 'john' },
             params: { link: 'the-link' }
         };
-        const category = { title: 'Category1', description: 'Description1' };
+        const category = { title: 'Category1', description: 'Description1',competitions: [{}] };
         let calledLink;
 
         beforeEach(() => {
