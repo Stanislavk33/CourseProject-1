@@ -4,7 +4,7 @@
 
 var app = app || {};
 
-$('.addPoints').on('click', function(ev) {
+$('.addPoints').on('click', function (ev) {
 
     let element = $(ev.target),
         username = element.attr('data-username'),
@@ -22,9 +22,11 @@ $('.addPoints').on('click', function(ev) {
 
     app.requester.put('/users/addPoints', data)
         .then(resp => {
-            $("#add-points-btn").addClass("hidden");
-            $("#points-added").removeClass("hidden");
-            app.notifier.showNotification(resp, "success");
+            if (resp.success) {
+                $("#add-points-btn").addClass("hidden");
+                $("#points-added").removeClass("hidden");
+                app.notifier.showNotification(resp, "success");
+            }
         })
         .catch(err => {
             console.log(err);
