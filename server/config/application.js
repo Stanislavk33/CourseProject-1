@@ -12,12 +12,12 @@ app.set('view engine', 'pug');
 app.set('views', './server/views');
 
 app.use('/static', express.static(path.resolve(__dirname + '/../../public')));
-console.log(path.resolve(__dirname + '/../../public'));
+
 
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({ secret: 'james bond 007', resave: true, saveUninitialized: true }));
-
+//secret: read from file!
 
 module.exports = app;
