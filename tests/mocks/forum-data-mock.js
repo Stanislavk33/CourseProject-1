@@ -13,6 +13,8 @@ class ForumPost {
 
     static find() {}
     static findOne() {}
+    static findByIdAndUpdate() {}
+    static count() {}
 }
 
 module.exports = ForumPost;

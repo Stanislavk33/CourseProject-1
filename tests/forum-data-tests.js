@@ -140,5 +140,126 @@ describe("Forum data tests", () => {
 
             sinon.restore();    
         });
-    })
+    });
+
+    describe('getForumPostCount()', () => {
+        let forumPosts = [
+            {_id: 'testId1', title: 'testPost1'},
+            {_id: 'testId2', title: 'testPost2'},
+            {_id: 'testId3', title: 'testPost3'},
+        ];
+
+        beforeEach(() => {
+            sinon.stub(ForumPost, "count", (query, cb) => {
+                cb(null, forumPosts.length);
+            });
+        });
+
+        afterEach(() => {
+            sinon.restore()
+        });
+
+        it('Expect to return 3', (done) => {
+            data.getForumPostCount()
+                .then((count) => {
+                    expect(count).to.equal(3);
+                })
+                .then(done, done);
+        });
+    });
+
+    describe('addAnswerToForumPost(forumPostId, answer)', () => {
+
+        const testId = 1;
+
+        let forumPosts = [
+            { _id: 0, answers: [] },
+            { _id: 1, answers: [] },
+            { _id: 2, answers: [] },
+        ]
+
+        const answer = {
+            content: 'testContent',
+            user: 'TestUser'
+        }
+
+        afterEach(() => {
+            sinon.restore();
+        });
+
+        it('Expect findByIdAndUpdate to be called with correct filter', done => {
+            let calledFilter;
+            sinon.stub(ForumPost, 'findByIdAndUpdate', (filter, update, cb) => {
+                calledFilter = filter;
+                cb(null, null);
+            });
+
+            data.addAnswerToForumPost(testId, answer)
+                .then(() => {
+                    expect(calledFilter).to.eql({ '_id': testId });
+                }).then(done, done);
+        });
+
+        it('Expect findByIdAndUpdate to be called with correct update', done => {
+            let calledUpdate;
+            sinon.stub(ForumPost, 'findByIdAndUpdate', (filter, update, cb) => {
+                calledUpdate = update;
+                cb(null, null);
+            });
+
+            data.addAnswerToForumPost(testId, answer)
+                .then(() => {
+                    expect(calledUpdate).to.eql({ $push: { 'answers': answer } });
+                }).then(done, done);
+        });
+
+        it('Expect to reject if error', done => {
+            sinon.stub(ForumPost, 'findByIdAndUpdate', (filter, update, cb) => {
+                cb({ err: 'Answer not added' });
+            });
+
+            data.addAnswerToForumPost(testId, answer)
+                .catch(err => {
+                    expect(err.err).to.equal('Answer not added');
+                }).then(done, done);
+        });
+
+        it('Expect to add one answer', done => {
+            sinon.stub(ForumPost, 'findByIdAndUpdate', (filter, update, cb) => {
+                const id = filter._id;
+                const answer = update.$push.answers;
+                forumPosts.forEach(forumPost => {
+                    if (forumPost._id === id) {
+                        forumPost.answers.push(answer);
+                    }
+                });
+
+                cb(null);
+            });
+
+            data.addAnswerToForumPost(testId, answer)
+                .then(() => {
+                    expect(forumPosts[1].answers.length).to.equal(1);
+                }).then(done, done);
+        });
+
+        it('Expect to add answer correctly', done => {
+            sinon.stub(ForumPost, 'findByIdAndUpdate', (filter, update, cb) => {
+                const id = filter._id;
+                const answer = update.$push.answers;
+                forumPosts.forEach(forumPost => {
+                    if (forumPost._id === id) {
+                        forumPost.answers.push(answer);
+                    }
+                });
+
+                cb(null);
+            });
+
+            data.addAnswerToForumPost(testId, answer)
+                .then(() => {
+                    expect(forumPosts[1].answers[0]).to.equal(answer);
+                }).then(done, done);
+        });
+    });
 });

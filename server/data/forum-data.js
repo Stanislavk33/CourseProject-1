@@ -48,17 +48,17 @@ module.exports = function(models, validator) {
                 });
             })
         },
-        getForumPostsByAuthor(username) {
-            return new Promise((resolve, reject) => {
-                ForumPost.find({ 'user.username': username }, (err, forumPosts) => {
-                    if (err) {
-                        return reject(err);
-                    }
+        // getForumPostsByAuthor(username) {
+        //     return new Promise((resolve, reject) => {
+        //         ForumPost.find({ 'user.username': username }, (err, forumPosts) => {
+        //             if (err) {
+        //                 return reject(err);
+        //             }
 
-                    return resolve(forumPosts);
-                });
-            })
-        },
+        //             return resolve(forumPosts);
+        //         });
+        //     })
+        // },
         createForumPost(forumPost) { 
             const newForumPost = new ForumPost({
                 title: forumPost.title,
@@ -144,7 +144,6 @@ module.exports = function(models, validator) {
                     })
             });
         },
-        // TODO: updateForumPostAnswerLikes()
         incrementForumPostAnswerLikes(_id, answerId) {
             return new Promise((resolve, reject) => {
                 ForumPost.findOne({ '_id': _id })
