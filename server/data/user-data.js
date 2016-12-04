@@ -1,8 +1,8 @@
 'use strict';
 
-const hashing = require("../utilities/encryptor");
+const hashing = require('../utilities/encryptor');
 
-module.exports = function(models, validator) {
+module.exports = function (models, validator) {
     const User = models.User;
 
     return {
@@ -20,12 +20,12 @@ module.exports = function(models, validator) {
         getTopUsers() {
             return new Promise((resolve, reject) => {
                 User.find({}, {}, { limit: 10, sort: { 'progress.totalPoints': -1 }, }, (err, users) => {
-                        if (err) {
-                            return reject(err);
-                        }
+                    if (err) {
+                        return reject(err);
+                    }
 
-                        return resolve(users);
-                    })
+                    return resolve(users);
+                })
             });
         },
         getUserById(id) {
@@ -74,7 +74,7 @@ module.exports = function(models, validator) {
                 const salt = hashing.getSalt(),
                     passHash = hashing.getPassHash(salt, user.passHash);
                 if (!validator.isValidUser(user)) {
-                    return reject({ error: "Invalid information" });
+                    return reject({ error: 'Invalid information' });
                 }
                 const newUser = new User({
                     username: user.username,
@@ -92,7 +92,7 @@ module.exports = function(models, validator) {
                     },
                     roles: ['normal'],
                     facebookId: user.facebookId
-                        // facebookToken: user.facebookToken
+                    // facebookToken: user.facebookToken
                 });
 
                 if (user.image) {
@@ -121,7 +121,7 @@ module.exports = function(models, validator) {
         },
         removeCompetitionFromUser(username, competitionId) {
             return new Promise((resolve, reject) => {
-                User.update({ username }, { $pull: { "joinedCompetitions": { _id: competitionId } } }, (err, user) => {
+                User.update({ username }, { $pull: { 'joinedCompetitions': { _id: competitionId } } }, (err, user) => {
                     if (err) {
                         return reject(err);
                     }
@@ -133,11 +133,11 @@ module.exports = function(models, validator) {
         updateUserInRole(userId, role) {
             return new Promise((resolve, reject) => {
                 User.findByIdAndUpdate({ '_id': userId }, { $push: { 'roles': role } },
-                    (err) => {
+                    (err, user) => {
                         if (err) {
                             return reject(err);
                         }
-                        return resolve();
+                        return resolve(user);
                     });
             });
         },
@@ -148,14 +148,14 @@ module.exports = function(models, validator) {
                         if (err) {
                             return reject(err);
                         }
-                        return resolve(err);
+                        return resolve(user);
                     })
             });
         },
         updatePoints(username, points, category) {
             return new Promise((resolve, reject) => {
                 if (!validator.isValidPoints(points)) {
-                    reject({ error: "Invalid points count" });
+                    reject({ error: 'Invalid points count' });
                 }
                 let currentPoints = 0;
                 const user = User.findOne({ username })
@@ -177,21 +177,33 @@ module.exports = function(models, validator) {
                         }
                         return { currentPoints, categoryPoints };
                     }).then(newPoints => {
-                        User.findOneAndUpdate({ username }, { $set: { 'progress.totalPoints': newPoints.currentPoints, 'progress.categoriesPoints': newPoints.categoryPoints } },
-                            (err, user) => {
-                                if (err) {
-                                    return reject(err);
-                                }
+                        return new Promise((res, rej) => {
+                            User.findOneAndUpdate({ username }, { $set: { 'progress.totalPoints': newPoints.currentPoints, 'progress.categoriesPoints': newPoints.categoryPoints } },
+                                (err, user) => {
+                                    if (err) {
+                                        return rej(err);
+                                    }
 
-                                return resolve(user);
-                            })
-                    });
+                                    if (user.progress.totalPoints < User.getOrganizatorMinimumPoints() || user.roles.indexOf('organizator') > -1) {
+                                        return res(user);
+                                    }
+
+                                    return this.updateUserInRole(user._id, 'organizator');
+                                })
+                        })
+                    })
+                    .then((user) => {
+                        return resolve(user);
+                    })
+                    .catch(err => {
+                        reject(err);
+                    })
             });
         },
         findUserWithIdAndName(query) {
             return new Promise((resolve, reject) => {
                 User.find(query)
-                    .select("_id username")
+                    .select('_id username')
                     .exec((err, users) => {
                         if (err) {
                             return reject(err);
@@ -208,7 +220,7 @@ module.exports = function(models, validator) {
                 lastNameRegex = { lastName: regex };
 
             return new Promise((resolve, reject) => {
-                User.count({ $or: [usernameRegex, firstNameRegex, lastNameRegex] }, function(err, usersCount) {
+                User.count({ $or: [usernameRegex, firstNameRegex, lastNameRegex] }, function (err, usersCount) {
                     if (err) {
                         return reject(err);
                     }
@@ -225,7 +237,7 @@ module.exports = function(models, validator) {
                 skip = (page - 1) * size,
                 limit = size;
             return new Promise((resolve, reject) => {
-                User.find({ $or: [usernameRegex, firstNameRegex, lastNameRegex] }, {}, { skip: skip, limit: limit }, function(err, users) {
+                User.find({ $or: [usernameRegex, firstNameRegex, lastNameRegex] }, {}, { skip: skip, limit: limit }, function (err, users) {
                     if (err) {
                         return reject(err);
                     };

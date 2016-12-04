@@ -8,10 +8,10 @@ module.exports = ({data}) => {
 
             data.filterCompetitions(searchName)
                 .then((competitions) => {
-                    competitions.forEach(x=>{
+                    competitions.forEach(x => {
                         x.passed = x.getPassed();
                     });
-                    return res.status(200).render('searchpage', { result: { competitions, searchName, user: req.user } });
+                    return res.status(200).render('competitions/searchpage', { result: { competitions, searchName, user: req.user } });
                 })
                 .catch((err) => {
                     res.status(500).redirect('/500');

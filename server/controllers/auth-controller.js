@@ -3,10 +3,10 @@
 module.exports = ({ data, passport }) => {
     return {
         loadRegisterPage(req, res) {
-            return res.status(200).render('register', { result: {} });
+            return res.status(200).render('auth/register', { result: {} });
         },
         loadLoginPage(req, res) {
-            return res.status(200).render('login', { result: {} });
+            return res.status(200).render('auth/login', { result: {} });
         },
         register(req, res) {
             const user = {
@@ -35,7 +35,7 @@ module.exports = ({ data, passport }) => {
         loginLocal(req, res, next) {
             const auth = passport.authenticate('local', (err, user) => {
                 if (err) {
-                    return res.json({ error: "Invalid username or password"});
+                    return res.json({ error: 'Invalid username or password'});
                     // next(err);
                     // return;
                 }

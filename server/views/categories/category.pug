@@ -1,9 +1,9 @@
-extends _layout
-include ./_mixins/competitions-mixin
+extends ../_layout
+include ../_mixins/competitions-mixin
 
 block content
     .main
-        .container
+        .container(style="margin-top: 50px;")
             .section.text-center.section-landing
                 img.categories-img(src='/static/imgs/categories-images/'+result.category.image)
                 h1 #{result.category.title}

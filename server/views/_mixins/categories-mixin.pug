@@ -3,30 +3,31 @@ mixin categories-list(categories)
         .row
             .col-md-8.col-md-offset-2
                 h2.title These are our categories
-        - for(let i = 0; i < 9; i+=1 )
-            if i % 3 === 0
-                | <div class='row'>
-                .col-md-4
-                    .info
-                        a(href='/categories/' + categories[i].link)
-                            img.categories-img(src='/static/imgs/categories-images/'+categories[i].image)
-                        h4.info-title
-                            a(href='/categories/'+categories[i].link) #{categories[i].title}
-                        p #{categories[i].description}
-            else if i % 3 === 2
-                .col-md-4
-                    .info
-                        a(href='/categories/' + categories[i].link)
-                            img.categories-img(src='/static/imgs/categories-images/'+categories[i].image)
-                        h4.info-title
-                            a(href='/categories/'+categories[i].link) #{categories[i].title}
-                        p #{categories[i].description}
-                | </div>   
-            else
-                .col-md-4
-                    .info
-                        a(href='/categories/' + categories[i].link)
-                            img.categories-img(src='/static/imgs/categories-images/'+categories[i].image)
-                        h4.info-title
-                            a(href='/categories/'+categories[i].link) #{categories[i].title}
-                        p #{categories[i].description} 
+        if categories.length
+            - for(let i = 0; i < categories.length; i+=1 )
+                if i % 3 === 0
+                    | <div class='row'>
+                    .col-md-4
+                        .info
+                            a(href='/categories/' + categories[i].link)
+                                img.categories-img(src='/static/imgs/categories-images/'+categories[i].image)
+                            h4.info-title
+                                a(href='/categories/'+categories[i].link) #{categories[i].title}
+                            p #{categories[i].description}
+                else if i % 3 === 2
+                    .col-md-4
+                        .info
+                            a(href='/categories/' + categories[i].link)
+                                img.categories-img(src='/static/imgs/categories-images/'+categories[i].image)
+                            h4.info-title
+                                a(href='/categories/'+categories[i].link) #{categories[i].title}
+                            p #{categories[i].description}
+                    | </div>   
+                else
+                    .col-md-4
+                        .info
+                            a(href='/categories/' + categories[i].link)
+                                img.categories-img(src='/static/imgs/categories-images/'+categories[i].image)
+                            h4.info-title
+                                a(href='/categories/'+categories[i].link) #{categories[i].title}
+                            p #{categories[i].description} 
