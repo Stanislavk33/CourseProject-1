@@ -199,7 +199,6 @@ describe('Test competition data', () => {
             sinon.stub(Competition, 'findOneAndUpdate', ({ _id }, update, options, cb) => {
                 let competition = competitions.find(x => x._id === _id);
                 competition.likes += update;
-                console.log("jiasdijadsda");
                 cb(null, competition);
             });
         });

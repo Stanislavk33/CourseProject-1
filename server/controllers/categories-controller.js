@@ -37,7 +37,6 @@ module.exports = ({data}) => {
                     res.redirect(`/categories/${category.link}`);
                 })
                 .catch(err => {
-                    console.log(err);
                     res.status(500).redirect('/500');
                 });
         }

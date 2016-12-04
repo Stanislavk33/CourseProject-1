@@ -16,26 +16,7 @@ module.exports = ({ data }) => {
                 .catch((err) => {
                     res.status(500).redirect('/500');
                 });
-        },
-
-        // TODO: delete method if not used
-        searchUser(username, isLoggedIn, req, res) {
-            let user = req.user;
-            if (user) {
-                user.isAdmin = req.user.roles.indexOf("admin") !== -1;
-            }
-
-            //"i" case-insensitive
-            let query = { username: new RegExp(username, "i") };
-            data.findUserWithIdAndName(query)
-                .then((users) => {
-                    return res.status(200).render('searchpage', { result: { users, user: req.user } });
-                }, err => {
-                    console.log(err);
-                })
-                .catch((err) => {
-                    res.status(500).redirect('/500');
-                });
         }
+
     };
 };

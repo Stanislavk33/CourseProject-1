@@ -46,7 +46,6 @@ const userSchema = new Schema({
 
 userSchema.methods = {
     isValidPassword(password) {
-        console.log(password, this);
         const realPassHash = this.passHash,
             currentPassHash = encryptor.getPassHash(this.salt, password);
         if (currentPassHash === realPassHash) {

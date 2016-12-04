@@ -63,7 +63,7 @@ module.exports = ({ data }) => {
                     res.status(500).redirect('/500');
                 });
         },
-        AddLikeToPost(req, res) {
+        addLikeToPost(req, res) {
             const id = req.params.id;
 
             data.incrementForumPostLikes(id)
@@ -74,7 +74,7 @@ module.exports = ({ data }) => {
                     res.status(500).redirect('/500');
                 });
         },
-        UnlikePost(req, res) {
+        unlikePost(req, res) {
             const id = req.params.id;
 
             data.decrementForumPostLikes(id)
@@ -85,7 +85,7 @@ module.exports = ({ data }) => {
                     res.status(500).redirect('/500');
                 });
         },
-        AddLikeToAnswer(req, res) {
+        addLikeToAnswer(req, res) {
             const postId = req.params.id;
             const answerId = req.params.answerid;
             data.incrementForumPostAnswerLikes(postId, answerId)
@@ -96,7 +96,7 @@ module.exports = ({ data }) => {
                     res.status(500).redirect('/500');
                 });
         },
-        UnlikePostAnswer(req, res) {
+        unlikePostAnswer(req, res) {
             const postId = req.params.id;
             const answerId = req.params.answerid;
             data.decrementForumPostAnswerLikes(postId, answerId)
