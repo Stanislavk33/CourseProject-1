@@ -108,17 +108,6 @@ module.exports = function(models, validator) {
                 });
             });
         },
-        updateCompetitionPassedStatus(_id, status) {
-            return new Promise((resolve, reject) => {
-                Competition.findByIdAndUpdate({ '_id': _id }, { $set: { 'passed': status } },
-                    (err) => {
-                        if (err) {
-                            return reject(err);
-                        }
-                        return resolve();
-                    });
-            });
-        },
         getLatestUpcommingCompetitions() {
             return new Promise((resolve, reject) => {
                 Competition.find({ startDate: { $gt: Date.now() } }, {}, { sort: { startDate: 1 }, limit: 5 }, (err, competitions) => {

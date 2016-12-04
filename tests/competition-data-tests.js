@@ -353,21 +353,73 @@ describe('Test competition data', () => {
                     expect(competition).to.be.eql(expectedCompetition);
                     done();
                 })
-                
+
+            sinon.restore();
+        });
+    })
+
+    describe('Test getLatestUpcommingCompetitions()', () => {
+        it('Shoud call Competition.find with empty select object', done => {
+            let expectedSelect;
+            sinon.stub(Competition, 'find', (filter, select, expressions, cb) => {
+                expectedSelect = select;
+                cb(null, null);
+            });
+
+            data.getLatestUpcommingCompetitions()
+                .then(_ => {
+                    expect(expectedSelect).to.eql({})
+                    done();
+                })
             sinon.restore();
         });
 
+        it('Shoud call Competition.find with expected expressions', done => {
+            let expectedExpressions;
+            sinon.stub(Competition, 'find', (filter, select, expressions, cb) => {
+                expectedExpressions = expressions;
+                cb(null, null);
+            });
 
-    })
+            data.getLatestUpcommingCompetitions()
+                .then(_ => {
+                    expect(expectedExpressions).to.eql({ sort: { startDate: 1 }, limit: 5 });
+                    done();
+                })
+            sinon.restore();
+        });
+
+        it('Shoud reject when Competition.find return error', done => {
+            const errorMessage = 'competition find error';
+            sinon.stub(Competition, 'find', (_, __, ___, cb) => {
+
+                cb({ err: errorMessage });
+            });
+
+            data.getLatestUpcommingCompetitions()
+                .catch(err => {
+                    expect(err.err).to.equal(errorMessage);
+                    done();
+                });
+
+            sinon.restore();
+        });
+
+        it('Expect to return expected competition', done => {
+            const expectedCompetition = { _id: 1, name: 'First competition' };
+
+            sinon.stub(Competition, 'find', (_, __, ___, cb) => {
+
+                cb(null, expectedCompetition);
+            });
+
+            data.getLatestUpcommingCompetitions()
+                .then(competition => {
+                    expect(expectedCompetition).to.be.eql(competition);
+                    done();
+                })
+
+            sinon.restore();
+        });
+    });
 });
-// removeUserFromCompetition(competitionId, username) {
-//     return new Promise((resolve, reject) => {
-//         Competition.update({ _id: competitionId }, { $pull: { "joinedUsers": { username } } }, (err, competition) => {
-//             if (err) {
-//                 return reject(err);
-//             }
-
-//             resolve(competition);
-//         });
-//     });
-// },
