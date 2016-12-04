@@ -110,6 +110,7 @@ module.exports = function(models, validator) {
                         if (err) {
                             return reject(err);
                         }
+
                         return resolve(competition);
                     });
             });
