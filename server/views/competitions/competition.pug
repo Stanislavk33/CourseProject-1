@@ -56,10 +56,10 @@ block content
                                                 td
                                                     if user.attended
                                                         span.label.label-success(id="points-added") Points added
-                                                        //- button.btn.btn-info.addPoints.hidden(id="add-points-btn" data-username=user.username data-points=result.competition.points data-category=result.competition.category) Add Points
+                                                        button.btn.btn-info.addPoints.hidden(id="add-points-btn" data-username=user.username data-points=result.competition.points data-category=result.competition.category) Add Points
                                                     else
-                                                        //- span.label.label-success.hidden(id="points-added") Points added
-                                                        button.btn.btn-info.addPoints(data-username=user.username data-points=result.competition.points data-category=result.competition.category) Add Points
+                                                        span.label.label-success.hidden(id="points-added") Points added
+                                                        button.btn.btn-info.addPoints(id="add-points-btn" data-username=user.username data-points=result.competition.points data-category=result.competition.category) Add Points
 block scripts
 
     script(src="/static/bower_components/jquery/dist/jquery.min.js")

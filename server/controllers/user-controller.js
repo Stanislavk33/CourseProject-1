@@ -76,8 +76,6 @@ module.exports = ({data}) => {
         loadLoginPage(req, res) {
             res.render("users/user/login", { result: { user: req.user } });
         },
-
-        // TODO: delete method if not used
         getById(req, res) {
             data.getUserById(req.params.id)
                 .then(user => {
@@ -108,7 +106,9 @@ module.exports = ({data}) => {
                     return data.updateAttendedStatusToUser(username, competitionId)
                 })
                 .then(() => {
-                    return res.status(200).redirect(`/competitions/${competitionId}`);
+                    return res.status(200).json({
+                        success: true
+                    });
                 })
                 .catch((err) => {
                     res.status(500).redirect('/500');

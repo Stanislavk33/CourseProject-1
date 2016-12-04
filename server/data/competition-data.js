@@ -40,39 +40,6 @@ module.exports = function(models, validator) {
                 });
             });
         },
-        // getCompetitionsByPlace(place) {
-        //     return new Promise((resolve, reject) => {
-        //         Competition.find({ 'place': place }, (err, competitions) => {
-        //             if (err) {
-        //                 return reject(err);
-        //             }
-
-        //             return resolve(competitions);
-        //         });
-        //     })
-        // },
-        // getCompetitionsByOrganizator(username) {
-        //     return new Promise((resolve, reject) => {
-        //         Competition.find({ 'organizator.username': username }, (err, competitions) => {
-        //             if (err) {
-        //                 return reject(err);
-        //             }
-
-        //             return resolve(competitions);
-        //         });
-        //     })
-        // },
-        // getCompetitionsByLevel(level) {
-        //     return new Promise((resolve, reject) => {
-        //         Competition.find({ 'level': level }, (err, competitions) => {
-        //             if (err) {
-        //                 return reject(err);
-        //             }
-
-        //             return resolve(competitions);
-        //         });
-        //     })
-        // },
         createCompetition(competition) {
             const newCompetition = new Competition({
                 name: competition.name,
@@ -98,7 +65,7 @@ module.exports = function(models, validator) {
                     if (err) {
                         return reject(err);
                     }
-                    
+
                     return resolve(newCompetition);
                 });
             });
@@ -110,6 +77,7 @@ module.exports = function(models, validator) {
                         if (err) {
                             return reject(err);
                         }
+
                         return resolve(competition);
                     });
             });
@@ -179,12 +147,11 @@ module.exports = function(models, validator) {
                 });
             });
         },
-        getMostPopularCompetitions(count) {
+        getMostPopularCompetitions() {
             return new Promise((resolve, reject) => {
                 const competitions = Competition.find({})
-                    // .sort({ dateCreated: -1 })
                     .sort({ 'likes': 'desc' })
-                    .limit(count);
+                    .limit(5);
 
                 resolve(competitions);
             });

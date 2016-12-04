@@ -99,9 +99,6 @@ module.exports = function(models, validator) {
                         // facebookToken: user.facebookToken
                 });
 
-                if (user.image) { //If nessesery
-                    newUser.image = user.image
-                }
                 newUser.save(err => {
 
                     if (err) {

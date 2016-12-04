@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = ({data}) => {
+module.exports = ({ data }) => {
     return {
         getByID(req, res) {
             const id = req.params.id;
@@ -158,18 +158,18 @@ module.exports = ({data}) => {
             let body = req.body,
                 user = req.user.username;
             data.createCompetition({
-                name: body.competitionName,
-                place: body.place,
-                organizator: user,
-                category: body.category,
-                description: body.description,
-                points: body.points,
-                level: body.level,
-                startDate: body.startDate,
-                endDate: body.endDate,
-                image: req.file ? req.file.filename : 'default.jpg',
-                location: { longitude: body.longitude, latitude: body.latitude }
-            })
+                    name: body.competitionName,
+                    place: body.place,
+                    organizator: user,
+                    category: body.category,
+                    description: body.description,
+                    points: body.points,
+                    level: body.level,
+                    startDate: body.startDate,
+                    endDate: body.endDate,
+                    image: req.file ? req.file.filename : 'default.jpg',
+                    location: { longitude: body.longitude, latitude: body.latitude }
+                })
                 .then(competition => {
                     return data.addCompetitionToCategory(competition)
                 })

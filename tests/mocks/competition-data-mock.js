@@ -18,7 +18,7 @@ class CompetitionMock {
     save() {}
 
     isValidPassword() {}
-
+    static findOneAndUpdate() {}
     static find() {}
     static findOne() {}
 }

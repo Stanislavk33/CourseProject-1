@@ -21,6 +21,7 @@ class User {
 
     static find() {}
     static findOne() {}
+    static findOneAndUpdate() {}
 }
 
 module.exports = User;
