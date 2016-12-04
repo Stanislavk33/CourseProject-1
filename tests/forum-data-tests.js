@@ -262,4 +262,527 @@ describe("Forum data tests", () => {
                 }).then(done, done);
         });
     });
+
+    describe('incrementForumPostLikes(_id)', () => {
+        const testId = 1;
+
+        let forumPosts = [
+            { _id: 0, likes: 0 },
+            { _id: 1, likes: 0 },
+            { _id: 2, likes: 0 },
+        ]
+
+        afterEach(() => {
+            sinon.restore();
+        });
+
+        it('Expect findByIdAndUpdate to be called with correct filter', done => {
+            let calledFilter;
+            sinon.stub(ForumPost, 'findByIdAndUpdate', (filter, update, cb) => {
+                calledFilter = filter;
+                cb(null, null);
+            });
+
+            data.incrementForumPostLikes(testId)
+                .then(() => {
+                    expect(calledFilter).to.eql({ '_id': testId });
+                }).then(done, done);
+        });
+
+        it('Expect findByIdAndUpdate to be called with correct update', done => {
+            let calledUpdate;
+            sinon.stub(ForumPost, 'findByIdAndUpdate', (filter, update, cb) => {
+                calledUpdate = update;
+                cb(null, null);
+            });
+
+            data.incrementForumPostLikes(testId)
+                .then(() => {
+                    expect(calledUpdate).to.eql({ '$inc': { 'likes': 1 } });
+                }).then(done, done);
+        });
+
+        it('Expect to reject if error', done => {
+            sinon.stub(ForumPost, 'findByIdAndUpdate', (filter, update, cb) => {
+                cb({ err: 'Likes not incremented' });
+            });
+
+            data.incrementForumPostLikes(testId)
+                .catch(err => {
+                    expect(err.err).to.equal('Likes not incremented');
+                }).then(done, done);
+        });
+
+        it('Expect to increment post likes', done => {
+            sinon.stub(ForumPost, 'findByIdAndUpdate', (filter, update, cb) => {
+                const id = filter._id;
+                forumPosts.forEach(forumPost => {
+                    if (forumPost._id === id) {
+                        forumPost.likes += 1;
+                    }
+                });
+
+                cb(null);
+            });
+
+            data.incrementForumPostLikes(testId)
+                .then(() => {
+                    expect(forumPosts[1].likes).to.equal(1);
+                }).then(done, done);
+        });
+    });
+
+    describe('decrementForumPostLikes(_id)', () => {
+        const testId = 1;
+
+        let forumPosts = [
+            { _id: 0, likes: 1 },
+            { _id: 1, likes: 1 },
+            { _id: 2, likes: 1 },
+        ]
+
+        afterEach(() => {
+            sinon.restore();
+        });
+
+        it('Expect findByIdAndUpdate to be called with correct filter', done => {
+            let calledFilter;
+            sinon.stub(ForumPost, 'findByIdAndUpdate', (filter, update, cb) => {
+                calledFilter = filter;
+                cb(null, null);
+            });
+
+            data.decrementForumPostLikes(testId)
+                .then(() => {
+                    expect(calledFilter).to.eql({ '_id': testId, "score": { "$gt": 0 } });
+                }).then(done, done);
+        });
+
+        it('Expect findByIdAndUpdate to be called with correct update', done => {
+            let calledUpdate;
+            sinon.stub(ForumPost, 'findByIdAndUpdate', (filter, update, cb) => {
+                calledUpdate = update;
+                cb(null, null);
+            });
+
+            data.decrementForumPostLikes(testId)
+                .then(() => {
+                    expect(calledUpdate).to.eql({ '$inc': { 'likes': -1 } });
+                }).then(done, done);
+        });
+
+        it('Expect to reject if error', done => {
+            sinon.stub(ForumPost, 'findByIdAndUpdate', (filter, update, cb) => {
+                cb({ err: 'Likes not decremented' });
+            });
+
+            data.decrementForumPostLikes(testId)
+                .catch(err => {
+                    expect(err.err).to.equal('Likes not decremented');
+                }).then(done, done);
+        });
+
+        it('Expect to increment post likes', done => {
+            sinon.stub(ForumPost, 'findByIdAndUpdate', (filter, update, cb) => {
+                const id = filter._id;
+                forumPosts.forEach(forumPost => {
+                    if (forumPost._id === id) {
+                        forumPost.likes -= 1;
+                    }
+                });
+
+                cb(null);
+            });
+
+            data.incrementForumPostLikes(testId)
+                .then(() => {
+                    expect(forumPosts[1].likes).to.equal(0);
+                }).then(done, done);
+        });
+    });
+
+    describe('addAnswerToForumPost(forumPostId, answer)', () => {
+
+        const testId = 1;
+
+        let forumPosts = [
+            { _id: 0, usersLiked: [] },
+            { _id: 1, usersLiked: [] },
+            { _id: 2, usersLiked: [] },
+        ]
+
+        const user = {
+            username: 'TestUser'
+        }
+
+        afterEach(() => {
+            sinon.restore();
+        });
+
+        it('Expect findByIdAndUpdate to be called with correct filter', done => {
+            let calledFilter;
+            sinon.stub(ForumPost, 'findByIdAndUpdate', (filter, update, cb) => {
+                calledFilter = filter;
+                cb(null, null);
+            });
+
+            data.addUsernameToPostUsersLiked(testId, user.username)
+                .then(() => {
+                    expect(calledFilter).to.eql({ '_id': testId });
+                }).then(done, done);
+        });
+
+        it('Expect findByIdAndUpdate to be called with correct update', done => {
+            let calledUpdate;
+            sinon.stub(ForumPost, 'findByIdAndUpdate', (filter, update, cb) => {
+                calledUpdate = update;
+                cb(null, null);
+            });
+
+            data.addUsernameToPostUsersLiked(testId, user.username)
+                .then(() => {
+                    expect(calledUpdate).to.eql({ $push: { 'usersLiked': user.username } });
+                }).then(done, done);
+        });
+
+        it('Expect to reject if error', done => {
+            sinon.stub(ForumPost, 'findByIdAndUpdate', (filter, update, cb) => {
+                cb({ err: 'Liked user not added' });
+            });
+
+            data.addUsernameToPostUsersLiked(testId, user.username)
+                .catch(err => {
+                    expect(err.err).to.equal('Liked user not added');
+                }).then(done, done);
+        });
+
+        it('Expect to add one liked user', done => {
+            sinon.stub(ForumPost, 'findByIdAndUpdate', (filter, update, cb) => {
+                const id = filter._id;
+                const likedUser = update.$push.usersLiked;
+                forumPosts.forEach(forumPost => {
+                    if (forumPost._id === id) {
+                        forumPost.usersLiked.push(likedUser);
+                    }
+                });
+
+                cb(null);
+            });
+
+            data.addUsernameToPostUsersLiked(testId, user.username)
+                .then(() => {
+                    expect(forumPosts[1].usersLiked.length).to.equal(1);
+                }).then(done, done);
+        });
+
+        it('Expect to add answer correctly', done => {
+            sinon.stub(ForumPost, 'findByIdAndUpdate', (filter, update, cb) => {
+                const id = filter._id;
+                const likedUser = update.$push.usersLiked;
+                forumPosts.forEach(forumPost => {
+                    if (forumPost._id === id) {
+                        forumPost.usersLiked.push(likedUser);
+                    }
+                });
+
+                cb(null);
+            });
+
+            data.addUsernameToPostUsersLiked(testId, user.username)
+                .then(() => {
+                    expect(forumPosts[1].usersLiked[0]).to.equal(user.username);
+                }).then(done, done);
+        });
+    });
+
+    describe('addUsernameToPostUsersLiked(forumPostId, username)', () => {
+
+        const testId = 1;
+
+        let forumPosts = [
+            { _id: 0, usersLiked: [] },
+            { _id: 1, usersLiked: [] },
+            { _id: 2, usersLiked: [] },
+        ]
+
+        const user = {
+            username: 'TestUser'
+        }
+
+        afterEach(() => {
+            sinon.restore();
+        });
+
+        it('Expect findByIdAndUpdate to be called with correct filter', done => {
+            let calledFilter;
+            sinon.stub(ForumPost, 'findByIdAndUpdate', (filter, update, cb) => {
+                calledFilter = filter;
+                cb(null, null);
+            });
+
+            data.addUsernameToPostUsersLiked(testId, user.username)
+                .then(() => {
+                    expect(calledFilter).to.eql({ '_id': testId });
+                }).then(done, done);
+        });
+
+        it('Expect findByIdAndUpdate to be called with correct update', done => {
+            let calledUpdate;
+            sinon.stub(ForumPost, 'findByIdAndUpdate', (filter, update, cb) => {
+                calledUpdate = update;
+                cb(null, null);
+            });
+
+            data.addUsernameToPostUsersLiked(testId, user.username)
+                .then(() => {
+                    expect(calledUpdate).to.eql({ $push: { 'usersLiked': user.username } });
+                }).then(done, done);
+        });
+
+        it('Expect to reject if error', done => {
+            sinon.stub(ForumPost, 'findByIdAndUpdate', (filter, update, cb) => {
+                cb({ err: 'Liked user not added' });
+            });
+
+            data.addUsernameToPostUsersLiked(testId, user.username)
+                .catch(err => {
+                    expect(err.err).to.equal('Liked user not added');
+                }).then(done, done);
+        });
+
+        it('Expect to add one liked user', done => {
+            sinon.stub(ForumPost, 'findByIdAndUpdate', (filter, update, cb) => {
+                const id = filter._id;
+                const likedUser = update.$push.usersLiked;
+                forumPosts.forEach(forumPost => {
+                    if (forumPost._id === id) {
+                        forumPost.usersLiked.push(likedUser);
+                    }
+                });
+
+                cb(null);
+            });
+
+            data.addUsernameToPostUsersLiked(testId, user.username)
+                .then(() => {
+                    expect(forumPosts[1].usersLiked.length).to.equal(1);
+                }).then(done, done);
+        });
+
+        it('Expect to add answer correctly', done => {
+            sinon.stub(ForumPost, 'findByIdAndUpdate', (filter, update, cb) => {
+                const id = filter._id;
+                const likedUser = update.$push.usersLiked;
+                forumPosts.forEach(forumPost => {
+                    if (forumPost._id === id) {
+                        forumPost.usersLiked.push(likedUser);
+                    }
+                });
+
+                cb(null);
+            });
+
+            data.addUsernameToPostUsersLiked(testId, user.username)
+                .then(() => {
+                    expect(forumPosts[1].usersLiked[0]).to.equal(user.username);
+                }).then(done, done);
+        });
+    });
+
+    describe('removeUsernameFromPostUsersLiked(forumPostId, username)', () => {
+
+        const testId = 1;
+
+        let forumPosts = [
+            { _id: 0, usersLiked: ['TestUser'] },
+            { _id: 1, usersLiked: ['TestUser'] },
+            { _id: 2, usersLiked: ['TestUser'] },
+        ]
+
+        const user = {
+            username: 'TestUser'
+        }
+
+        afterEach(() => {
+            sinon.restore();
+        });
+
+        it('Expect findByIdAndUpdate to be called with correct filter', done => {
+            let calledFilter;
+            sinon.stub(ForumPost, 'findByIdAndUpdate', (filter, update, cb) => {
+                calledFilter = filter;
+                cb(null, null);
+            });
+
+            data.removeUsernameFromPostUsersLiked(testId, user.username)
+                .then(() => {
+                    expect(calledFilter).to.eql({ '_id': testId });
+                }).then(done, done);
+        });
+
+        it('Expect findByIdAndUpdate to be called with correct update', done => {
+            let calledUpdate;
+            sinon.stub(ForumPost, 'findByIdAndUpdate', (filter, update, cb) => {
+                calledUpdate = update;
+                cb(null, null);
+            });
+
+            data.removeUsernameFromPostUsersLiked(testId, user.username)
+                .then(() => {
+                    expect(calledUpdate).to.eql({ $pull: { 'usersLiked': user.username } });
+                }).then(done, done);
+        });
+
+        it('Expect to reject if error', done => {
+            sinon.stub(ForumPost, 'findByIdAndUpdate', (filter, update, cb) => {
+                cb({ err: 'Liked user not removed' });
+            });
+
+            data.removeUsernameFromPostUsersLiked(testId, user.username)
+                .catch(err => {
+                    expect(err.err).to.equal('Liked user not removed');
+                }).then(done, done);
+        });
+
+        it('Expect to remove liked user', done => {
+            sinon.stub(ForumPost, 'findByIdAndUpdate', (filter, update, cb) => {
+                const id = filter._id;
+                const likedUser = update.$pull.usersLiked;
+                forumPosts.forEach(forumPost => {
+                    if (forumPost._id === id) {
+                        forumPost.usersLiked.pop(likedUser);
+                    }
+                });
+
+                cb(null);
+            });
+
+            data.removeUsernameFromPostUsersLiked(testId, user.username)
+                .then(() => {
+                    expect(forumPosts[1].usersLiked.length).to.equal(0);
+                }).then(done, done);
+        });
+    });
+
+    // Not woking
+    // describe('incrementForumPostAnswerLikes(_id)', () => {
+    //     const testId = 1;
+    //     const testAnswerId = 0;
+
+    //     let forumPosts = [
+    //         { _id: 0, answers: [ {_id: 0, likes: 0}] },
+    //         { _id: 1, answers: [ {_id: 0, likes: 0}] },
+    //         { _id: 2, answers: [ {_id: 0, likes: 0}] },
+    //     ]
+
+    //     afterEach(() => {
+    //         sinon.restore();
+    //     });
+
+    //     it('Expect findOne to be called with correct filter', done => {
+    //         let calledFilter;
+    //         sinon.stub(ForumPost, 'findOne', (filter, cb) => {
+    //             calledFilter = filter;
+    //             cb(null, null);
+    //         });
+
+    //         data.incrementForumPostAnswerLikes(testId)
+    //             .then(() => {
+    //                 expect(calledFilter).to.eql({ '_id': testId });
+    //             }).then(done, done);
+    //     });
+
+    //     it('Expect findByIdAndUpdate to be called with correct filter', done => {
+    //         sinon.stub(ForumPost, "findOne", (query, cb) => {
+    //             let id = query._id;
+    //             let foundForumPosts= forumPosts.find(post => post._id === id);
+    //             console.log(foundForumPosts);
+    //             cb(null, foundForumPosts);
+    //         });
+
+    //         let calledFilter;
+    //         sinon.stub(ForumPost, 'findByIdAndUpdate', (filter) => {
+    //             calledFilter = filter;
+    //             return;
+    //         });
+
+    //         data.incrementForumPostAnswerLikes(testId, testAnswerId)
+    //             .then(() => {
+    //                 expect(calledFilter).to.eql({ '_id': testId });
+    //             }).then(done, done);
+    //     });
+
+    //     it('Expect findByIdAndUpdate to be called with correct update', done => {
+    //         sinon.stub(ForumPost, "findOne", (query, cb) => {
+    //             let id = query._id;
+    //             let foundForumPosts= forumPosts.find(post => post._id === id);
+    //             cb(null, foundForumPosts);
+    //         });
+
+    //         let calledUpdate;
+    //         sinon.stub(ForumPost, 'findByIdAndUpdate', (filter, update) => {
+    //             calledUpdate = update;
+    //         });
+
+    //         data.incrementForumPostAnswerLikes(testId)
+    //             .then(() => {
+    //                 expect(calledUpdate).to.eql({ 'answers': [ {id: 0, likes: 1}] });
+    //             }).then(done, done);
+    //     });
+
+    //     it('Expect to reject if findOne returns error', done => {
+
+    //         sinon.stub(ForumPost, "findOne", (query, cb) => {
+    //             cb({ err: 'Post not found' });
+    //         });
+
+    //         data.incrementForumPostAnswerLikes(testId)
+    //             .catch(err => {
+    //                 expect(err.err).to.equal('Post not found');
+    //             }).then(done, done);
+    //     });
+
+    //     it('Expect to reject if findOne returns error', done => {
+
+    //         sinon.stub(ForumPost, "findOne", (query, cb) => {
+    //             let id = query._id;
+    //             let foundForumPosts= forumPosts.find(post => post._id === id);
+    //             cb(null, foundForumPosts);
+    //         });
+
+    //         sinon.stub(ForumPost, 'findByIdAndUpdate', (filter, update, cb) => {
+    //             cb({ err: 'Answers not updated' });
+    //         });
+
+    //         data.incrementForumPostAnswerLikes(testId)
+    //             .catch(err => {
+    //                 expect(err.err).to.equal('Answers not updated');
+    //             }).then(done, done);
+    //     });
+
+    //     it('Expect to increment post answer likes', done => {
+    //         sinon.stub(ForumPost, "findOne", (query, cb) => {
+    //             let id = query._id;
+    //             let foundForumPosts= forumPosts.find(post => post._id === id);
+    //             cb(null, foundForumPosts);
+    //         });
+
+    //         sinon.stub(ForumPost, 'findByIdAndUpdate', (filter, update, cb) => {
+    //             const id = filter._id;
+    //             forumPosts.forEach(forumPost => {
+    //                 if (forumPost._id === id) {
+    //                     forumPost.likes += 1;
+    //                 }
+    //             });
+
+    //             cb(null);
+    //         });
+
+    //         data.incrementForumPostAnswerLikes(testId)
+    //             .then(() => {
+    //                 expect(forumPosts[1].likes).to.equal(1);
+    //             }).then(done, done);
+    //     });
+    // });
+    
 });
