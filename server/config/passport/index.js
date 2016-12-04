@@ -13,6 +13,10 @@ module.exports = (app, data) => {
     passport.deserializeUser((userId, done) => {
         data.getUserById(userId)
             .then(user => {
+                if (user) {
+                    user.isOrganizator = user.roles.indexOf('organizator') >= 0;
+                    user.isAdmin = user.roles.indexOf('admin') >= 0;
+                }
                 done(null, user || false);
             })
             .catch(err => {

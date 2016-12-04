@@ -105,13 +105,10 @@ module.exports = ({data}) => {
                         throw new Error("No user found!");
                     }
                 }).then(() => {
-                    data.updateAttendedStatusToUser(username, competitionId)
-                        .then(() => {
-                            return res.status(200);
-                        })
-                        .catch(er => {
-                            throw er;
-                        })
+                    return data.updateAttendedStatusToUser(username, competitionId)
+                })
+                .then(() => {
+                    return res.status(200).redirect(`/competitions/${competitionId}`);
                 })
                 .catch((err) => {
                     res.status(500).redirect('/500');

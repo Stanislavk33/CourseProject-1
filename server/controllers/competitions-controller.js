@@ -174,7 +174,7 @@ module.exports = ({data}) => {
                     return data.addCompetitionToCategory(competition)
                 })
                 .then((competition) => {
-                    res.redirect(`/competitions/${competition._id}`);
+                    return res.status(200).redirect(`/competitions/${competition._id}`);
                 })
                 .catch(err => {
                     console.log(err);

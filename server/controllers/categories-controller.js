@@ -26,7 +26,6 @@ module.exports = ({data}) => {
         },
         createCategory(req, res) {
             let body = req.body;
-            console.log(body);
             data.createCategory({
                 title: body.title,
                 description: body.description,

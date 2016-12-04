@@ -10,7 +10,6 @@ module.exports = ({data}) => {
                 data.getAllCategories()
             ])
                 .then(([upcommingCompetitions, topCompetitions, topUsers, categories]) => {
-
                     res.render('home-page', {
                         result: {
                             upcommingCompetitions,
