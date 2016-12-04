@@ -84,6 +84,18 @@ describe('Test competition data', () => {
     });
 
     describe('Test createCompetition(competition)', () => {
+
+        const competitionToBeAdded = {
+            name: 'testName',
+            place: "testPlace",
+            organizator: "testOrganizator",
+            category: 'testCategory',
+            description: 'testDescription',
+            points: 42,
+            level: 'pro-tester',
+            image: 'default-image'
+        };
+
         it('Should reject when validation fail', done => {
             sinon.stub(validatorMock, 'validateCompetition', () => {
                 return false;
@@ -106,16 +118,9 @@ describe('Test competition data', () => {
                 cb(null);
             });
 
-            data.createCompetition({
-                    place: "testPlace",
-                    organizator: "testOrganizator",
-                    category: 'testCategory',
-                    description: 'testDescription',
-                    points: 42,
-                    level: 'pro-tester',
-                    image: 'default-image'
-                })
+            data.createCompetition(competitionToBeAdded)
                 .then(competition => {
+                    expect(competition.name).to.equal('testName');
                     expect(competition.place).to.equal('testPlace');
                     expect(competition.organizator).to.equal('testOrganizator');
                     expect(competition.category).to.equal('testCategory');
@@ -135,9 +140,7 @@ describe('Test competition data', () => {
             });
 
             sinon.stub(Competition.prototype, 'save', cb => {
-
                 cb({ error: 'error' });
-
             });
 
             data.createCompetition({})
@@ -145,6 +148,48 @@ describe('Test competition data', () => {
                 .catch(() => {
                     done();
                 });
+
+            sinon.restore();
+        });
+
+        it('Expect validator to be called with correct competition', done => {
+            sinon.stub(Competition.prototype, 'save', cb => {
+                cb(null);
+            });
+
+            let calledCompetition;
+
+            sinon.stub(validatorMock, 'validateCompetition', competition => {
+                calledCompetition = competition;
+                return true;
+            });
+
+            data.createCompetition(competitionToBeAdded)
+                .then(_ => {
+                    expect(calledCompetition).to.eql(competitionToBeAdded);
+                    done();
+                });
+
+            sinon.restore();
+        });
+
+        it('Expect competition to be saved', done => {
+            sinon.stub(validatorMock, 'validateCompetition', competition => {
+                return true;
+            });
+
+            let saveIsCalled;
+            sinon.stub(Competition.prototype, 'save', cb => {
+                saveIsCalled = true;
+                cb(null);
+            });
+
+            data.createCompetition(competitionToBeAdded)
+                .then(_ => {
+                    expect(saveIsCalled).to.be.true;
+                    done();
+                });
+            sinon.restore();
         });
     });
     describe('Test updateCompetition(competitionId, update, null)', () => {
@@ -173,29 +218,72 @@ describe('Test competition data', () => {
         })
     });
 
-    // describe('addJoinedUserToCompetition(competitionId, username)', () => {
-    //     const competitions = [{ _id: 0, likes: 1 }, { _id: 1, likes: 12 }];
+    describe('addJoinedUserToCompetition(competitionId, username)', () => {
+        it('shoud call findOneAndUpdate with expected update, including the passed username of the addJoinedUsers', done => {
 
-    //     beforeEach(() => {
-    //         sinon.stub(Competition, 'findOneAndUpdate', ({ _id,  }, {}, cb) => {
+            let calledUpdate;
+            sinon.stub(Competition, 'findOneAndUpdate', (filter, update, cb) => {
+                calledUpdate = update;
+                cb(null, null);
+            });
+            const username = 'Pesho';
 
-    //             let expectedCompetition = competitions.find(x => x._id === _id);
-    //             expectedCompetition.user = username;
-    //             cb(null, expectedCompetition);
-    //         });
-    //     });
+            data.addJoinedUserToCompetition(1, username)
+                .then(competition => {
+                    expect(calledUpdate).to.eql({ $addToSet: { 'joinedUsers': { username, attended: false } } });
+                    done();
+                });
 
-    //     afterEach(() => {
-    //         sinon.restore();
-    //     });
+            sinon.restore();
+        });
 
-    //     it('shoud resolve competition with id 1 and property username equal to Pesho', done => {
-    //         data.addJoinedUserToCompetition(1, 'Pesho')
-    //             .then(competition => {
-    //                 expect(competition._id).to.equal(1);
-    //                 expect(competition.username).to.equal('Pesho');
-    //                 done();
-    //             });
-    //     })
-    // })
+        it('shoud call findOneAndUpdate with expected filter, including id and username', done => {
+            let calledFilter;
+            sinon.stub(Competition, 'findOneAndUpdate', (filter, update, cb) => {
+                calledFilter = filter;
+                cb(null, null);
+            });
+
+            const username = 'Pesho';
+            const passedId = 1;
+
+            data.addJoinedUserToCompetition(passedId, username)
+                .then(competition => {
+                    expect(calledFilter).to.eql({ _id: passedId, 'joinedUsers.username': { $ne: username } });
+                    done();
+                });
+
+            sinon.restore();
+        });
+
+        it('Expect to return correct competition', done => {
+            const expectedCompetition = { _id: 1, name: 'First competition' };
+            sinon.stub(Competition, 'findOneAndUpdate', (_, __, cb) => {
+                cb(null, expectedCompetition)
+            });
+
+            data.addJoinedUserToCompetition(null, null)
+                .then(actualCompetition => {
+                    expect(expectedCompetition).to.eql(actualCompetition);
+                    done();
+                });
+
+            sinon.restore();
+        });
+
+        it('Expect to reject when findOneAndUpdate to return error', done => {
+            const errorMessage = 'addJoinedUsersToCompetition error';
+            sinon.stub(Competition, 'findOneAndUpdate', (_, __, cb) => {
+                cb({ err: errorMessage }, null);
+            });
+
+            data.addJoinedUserToCompetition(null, null)
+                .catch(err => {
+                    expect(err.err).to.be.equal(errorMessage);
+                    done();
+                });
+                
+            sinon.restore();
+        })
+    })
 });
