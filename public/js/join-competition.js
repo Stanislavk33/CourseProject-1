@@ -6,13 +6,13 @@ var app = app || {};
 
 (function () {
     $('#join').on('click', function (ev) {
-        const competitionId = $('#info').attr('data-id');
+        var competitionId = $('#info').attr('data-id');
 
         $.ajax(`/competitions/${competitionId}/join`, {
             method: "PUT"
         })
-            .done((result) => {
-                const username = result.result.username,
+            .done(function(result) {
+                var username = result.result.username,
                     points = result.result.points,
                     $thead = $("#joined-users").find("thead"),
                     $newRow = $("<tr>").appendTo($thead),
@@ -25,7 +25,7 @@ var app = app || {};
                 $("#leave").removeClass("hidden");
                 $("#join").addClass("hidden");
             })
-            .fail((err) => {
+            .fail(function(err) {
                 app.notifier.showNotification(err.message, "error");
             });
 
@@ -34,19 +34,19 @@ var app = app || {};
     })
 
     $('#leave').on('click', function(ev){
-        const competitionId = $("#info").attr("data-id");
+        var competitionId = $("#info").attr("data-id");
 
         $.ajax(`/competitions/${competitionId}/leave`, {
             method: "PUT"
         })
-            .done((result) => {
+            .done(function(result) {
                 $('tr:contains('+ result.username+')').remove();
                 $("#leave").addClass("hidden");
                 $("#join").removeClass("hidden");
                 
                 app.notifier.showNotification("You left this competition!", "success")
             })
-            .fail((err) => {
+            .fail(function(err) {
                 app.notifier.showNotification(err.message, "error");
             });
 

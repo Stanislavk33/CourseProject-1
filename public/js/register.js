@@ -2,9 +2,7 @@
 
 var app = app || {};
 
-console.log(app);
-
-$("#btn-register").on("click", (ev) => {
+$("#btn-register").on("click", function(ev) {
     ev.preventDefault();
 
     var nameAndPassPattern = new RegExp(/^[a-zA-Z0-9]{6,50}$/),
@@ -29,8 +27,6 @@ $("#btn-register").on("click", (ev) => {
     testPassword = nameAndPassPattern.test(password) && nameAndPassPattern.test(confirmPassword);
     testEmail = emailPattern.test(email);
 
-
-
     if (!testUsername) {
         app.notifier.showNotification("Username must contain only letters, numbers and must be between 6 and 50 symbols long", "error");
         return;
@@ -43,7 +39,6 @@ $("#btn-register").on("click", (ev) => {
 
 
     if (password !== confirmPassword) {
-        console.log('case');
         app.notifier.showNotification("Password doesnt match!", "error");
         return;
     }
@@ -63,7 +58,7 @@ $("#btn-register").on("click", (ev) => {
         return;
     }
 
-    let formData = new FormData();
+    var formData = new FormData();
     formData.append('avatar', image);
     formData.append('username', username);
     formData.append('password', password);
@@ -72,10 +67,8 @@ $("#btn-register").on("click", (ev) => {
     formData.append('lastName', lastName);
     formData.append('birthDate', birthDate);
 
-    console.log(formData);
-
     app.requester.postWithFile('/auth/register', formData)
-        .then(resp => {
+        .then(function(resp) {
             if (resp.success) {
                 app.notifier.showNotification(resp.success, "success");
                 setTimeout(function () {
@@ -87,7 +80,7 @@ $("#btn-register").on("click", (ev) => {
                 return;
             }
         })
-        .catch(err => {
+        .catch(function(err) {
             console.log(err);
         })
 

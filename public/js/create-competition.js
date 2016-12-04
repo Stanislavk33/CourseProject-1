@@ -4,10 +4,10 @@
 
 var app = app || {};
 
-let marker;
+var marker;
 
 function initMap() {
-    let coordinates = { lat: 42.6977, lng: 23.3219 },
+    var coordinates = { lat: 42.6977, lng: 23.3219 },
         map = new google.maps.Map(document.getElementById('map'), {
             center: coordinates,
             zoom: 10
@@ -19,7 +19,7 @@ function initMap() {
 }
 
 function addMarker(location, map, oldMarker) {
-    let marker = new google.maps.Marker({
+    var marker = new google.maps.Marker({
         position: location,
         map: map
     });
@@ -43,19 +43,19 @@ $("#create").on("click", function(ev) {
         return false;
     }
 
-    let latitude = marker.getPosition().lat();
-    let longitude = marker.getPosition().lng();
-    let competitionName = $("#competitionName").val();
-    let place = $("#place").val();
-    let description = $("#description").val();
-    let points = $("#points").val();
-    let level = $("#level").val();
-    let category = $("#category").val();
-    let startDate = $("#startDate").val();
-    let endDate = $("#endDate").val();
-    let image = $('#tb-competition')[0].files[0];
+    var latitude = marker.getPosition().lat(),
+        longitude = marker.getPosition().lng(),
+        competitionName = $("#competitionName").val(),
+        place = $("#place").val(),
+        description = $("#description").val(),
+        points = $("#points").val(),
+        level = $("#level").val(),
+        category = $("#category").val(),
+        startDate = $("#startDate").val(),
+        endDate = $("#endDate").val(),
+        image = $('#tb-competition')[0].files[0];
 
-    let formData = new FormData();
+    var formData = new FormData();
     formData.append('competitionImage', image);
     formData.append('competitionName', competitionName);
     formData.append('place', place);
@@ -71,17 +71,17 @@ $("#create").on("click", function(ev) {
     ev.preventDefault();
 
     app.requester.postWithFile('/competitions/create', formData)
-        .then(resp => {
+        .then(function(resp) {
              if (resp.success) {
                 app.notifier.showNotification(resp.success, "success");
-                setTimeout(() => { window.location.href = `/competitions/${resp.competition.id}` }, 500);
+                setTimeout(function() { window.location.href = `/competitions/${resp.competition.id}` }, 500);
             } else if (resp.error) {
                 app.notifier.showNotification(resp.error, "error");
                 return;
             }
             //app.notifier.showNotification(resp, "success");
         })
-        .catch(err => {
-             app.notifier.showNotification(resp.error, "Competition could not be created.");
+        .catch(function(err) {
+             app.notifier.showNotification("Competition could not be created.", "error");
         });
 });

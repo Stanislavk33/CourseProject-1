@@ -6,14 +6,14 @@ var app = app || {};
 
 $('.addPoints').on('click', function (ev) {
 
-    let element = $(ev.target),
+    var element = $(ev.target),
         username = element.attr('data-username'),
         points = +element.attr('data-points'),
         category = element.attr('data-category'),
         competitionId = $('#info').attr('data-id');
 
     ev.preventDefault();
-    const data = {
+    var data = {
         username,
         points,
         category,
@@ -21,14 +21,14 @@ $('.addPoints').on('click', function (ev) {
     };
 
     app.requester.put('/users/addPoints', data)
-        .then(resp => {
+        .then(function(resp) {
             if (resp.success) {
                 $("#add-points-btn").addClass("hidden");
                 $("#points-added").removeClass("hidden");
                 app.notifier.showNotification(resp, "success");
             }
         })
-        .catch(err => {
+        .catch(function(err) {
             console.log(err);
         })
 

@@ -40,27 +40,23 @@ var app = app || {};
             });
         });
         return promise;
-}
+    }
 
-    class Requester {
+    app.requester ={
         get(url) {
             return makeRequest('GET', url);
-        }
-
+        },
         post(url, data) {
             return makeRequest('POST', url, data);
-        }
+        },
         postWithFile(url, data) {
             return makeRequestWithFile('POST', url, data);
-        }
+        },
         put(url, data) {
             return makeRequest('PUT', url, data);
-        }
-
+        },
         delete(url) {
             return makeRequest('DELETE', url);
         }
     }
-
-    app.requester = new Requester()
 }());

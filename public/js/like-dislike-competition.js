@@ -5,14 +5,14 @@
 var app = app || {};
 
 function likeCompetition(ev) {
-    const $target = $(ev.target);
-    const competitionId = $target.parents("#competition-info").attr("data-id");
+    var $target = $(ev.target),
+         competitionId = $target.parents("#competition-info").attr("data-id");
     $.ajax(`/competitions/${competitionId}/like`, {
             method: "PUT"
         })
-        .done(() => {
-            const $likesSpan = $target.prev();
-            const likes = $likesSpan.html();
+        .done(function() {
+            var $likesSpan = $target.prev(),
+                 likes = $likesSpan.html();
             $likesSpan.html(+likes + 1);
             $target.html("Dislike");
             $target.removeClass('btn-success');
@@ -20,20 +20,20 @@ function likeCompetition(ev) {
             $target.one('click', dislikeCompetition);
             app.notifier.showNotification("Competition liked!", "success");
         })
-        .fail((err) => {
+        .fail(function(err) {
             app.notifier.showNotification(err.message, "error");
         });
 }
 
 function dislikeCompetition(ev) {
-    const $target = $(ev.target);
-    const competitionId = $target.parents("#competition-info").attr("data-id");
+    var $target = $(ev.target),
+         competitionId = $target.parents("#competition-info").attr("data-id");
     $.ajax(`/competitions/${competitionId}/dislike`, {
             method: "PUT"
         })
-        .done(() => {
-            const $likesSpan = $target.prev();
-            const likes = $likesSpan.html();
+        .done(function() {
+            var $likesSpan = $target.prev(),
+                 likes = $likesSpan.html();
             $likesSpan.html(+likes - 1);
             $target.html("Like");
             $target.removeClass('btn-danger');
@@ -41,7 +41,7 @@ function dislikeCompetition(ev) {
             $target.one('click', likeCompetition);
             app.notifier.showNotification("Competition disliked!", "success");
         })
-        .fail((err) => {
+        .fail(function(err) {
             app.notifier.showNotification(err.message, "error");
         });
 }

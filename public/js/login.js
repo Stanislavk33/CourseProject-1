@@ -2,34 +2,27 @@
 
 var app = app || {};
 
-console.log(app);
-
 $("#btn-login").on("click", (ev) => {
     ev.preventDefault();
 
-    let username = $("#tb-username").val();
-    let password = $("#tb-password").val();
-
-
-    let data = {
+    var username = $("#tb-username").val(),
+        password = $("#tb-password").val(),
+        data = {
         username,
         password
     }
 
-    console.log(data);
-
     app.requester.post("/auth/login", data)
-        .then(resp => {
+        .then(function(resp) {
             if (resp.success) {
                 app.notifier.showNotification(resp.success, "success");
-                setTimeout(() => { window.location.href = "/" }, 500);
+                setTimeout(function() { window.location.href = "/" }, 500);
             } else if (resp.error) {
                 app.notifier.showNotification(resp.error, "error");
                 return;
             }
         })
-        .catch(err => {
-            console.log('in catch');
-            console.log(err)
+        .catch(function(err) {
+            app.notifier.showNotification("Login unsuccessful.", "error");
         });
 })
