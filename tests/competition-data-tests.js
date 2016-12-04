@@ -1,3 +1,5 @@
+/* globals require describe it beforeEach afterEach*/
+
 const expect = require("chai").expect,
     sinonModule = require("sinon"),
     Competition = require('./mocks/competition-data-mock'),
@@ -82,21 +84,21 @@ describe('Test competition data', () => {
     });
 
     describe('Test createCompetition(competition)', () => {
-        it('Shoud reject when validation fail', done => {
-            sinon.stub(validatorMock, 'validateCompetition', (competition) => {
+        it('Should reject when validation fail', done => {
+            sinon.stub(validatorMock, 'validateCompetition', () => {
                 return false;
             });
 
             data.createCompetition({})
-                .then(_ => {}).catch(err => {
+                .then(() => {}).catch(() => {
                     done();
                 });
 
             sinon.restore();
         });
 
-        it('Shoud return competition with expected properties', done => {
-            sinon.stub(validatorMock, 'validateCompetition', (competition) => {
+        it('Should return competition with expected properties', done => {
+            sinon.stub(validatorMock, 'validateCompetition', () => {
                 return true;
             });
 
@@ -127,18 +129,18 @@ describe('Test competition data', () => {
             sinon.restore();
         });
 
-        it('Shoud reject when save throw error', done => {
-            sinon.stub(validatorMock, 'validateCompetition', (competition) => {
+        it('Should reject when save throw error', done => {
+            sinon.stub(validatorMock, 'validateCompetition', () => {
                 return true;
             });
             sinon.stub(Competition.prototype, 'save', cb => {
 
-                return (error);
+                cb(error);
             });
 
             data.createCompetition({})
-                .then(_ => {})
-                .catch(err => {
+                .then(() => {})
+                .catch(() => {
                     done();
                 });
         });
@@ -158,7 +160,7 @@ describe('Test competition data', () => {
                 sinon.restore();
             });
 
-            it('Shoud find competition with provided id and increment the value of likes with 3', done => {
+            it('Should find competition with provided id and increment the value of likes with 3', done => {
                 data.updateCompetition(1, 3, null)
                     .then(competition => {
 

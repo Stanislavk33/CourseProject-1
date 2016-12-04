@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = ({ app, data, controllers, authentication, uploadCategoryImage }) => {
+module.exports = ({ app, controllers, authentication, uploadCategoryImage }) => {
         const controller = controllers.categories;
 
         app.get('/categories/', controller.loadCategories);

@@ -1,3 +1,5 @@
+/* globals google $ */
+
 'use strict';
 
 var app = app || {};

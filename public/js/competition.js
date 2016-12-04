@@ -1,3 +1,5 @@
+/* globals google $*/
+
 'use strict';
 
 function initMap() {

@@ -98,7 +98,7 @@ module.exports = function(models, validator) {
                     if (err) {
                         return reject(err);
                     }
-                    console.log(newCompetition.name);
+                    
                     return resolve(newCompetition);
                 });
             });

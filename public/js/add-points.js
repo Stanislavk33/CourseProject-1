@@ -1,3 +1,5 @@
+/* globals $ */
+
 'use strict';
 
 var app = app || {};
