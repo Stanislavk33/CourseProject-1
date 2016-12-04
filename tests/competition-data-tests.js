@@ -89,7 +89,6 @@ describe('Test competition data', () => {
 
             data.createCompetition({})
                 .then(_ => {}).catch(err => {
-                    console.log("heree");
                     done();
                 });
 
@@ -122,6 +121,24 @@ describe('Test competition data', () => {
                     expect(competition.level).to.equal('pro-tester');
                     expect(competition.points).to.equal(42);
                     expect(competition.image).to.equal('default-image');
+                    done();
+                });
+
+            sinon.restore();
+        });
+
+        it('Shoud reject when save throw error', done => {
+            sinon.stub(validatorMock, 'validateCompetition', (competition) => {
+                return true;
+            });
+            sinon.stub(Competition.prototype, 'save', cb => {
+
+                return (error);
+            });
+
+            data.createCompetition({})
+                .then(_ => {})
+                .catch(err => {
                     done();
                 });
         })
