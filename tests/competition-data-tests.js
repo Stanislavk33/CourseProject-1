@@ -141,6 +141,34 @@ describe('Test competition data', () => {
                 .catch(err => {
                     done();
                 });
+        });
+    });
+
+    describe('Test updateCompetition(competitionId, update, null)', () => {
+        const competitions = [{ _id: 0, likes: 1 }, { _id: 1, likes: 12 }];
+        beforeEach(() => {
+            sinon.stub(Competition, 'findOneAndUpdate', { _id }, update, options, cb => {
+                let competition = competitions.find(x => x._id === _id);
+                competition.likes += update;
+
+                return competition;
+            });
+
+            afterEach(() => {
+                sinon.restore();
+            });
+
+            it('Shoud find competition with provided id and increment the value of likes with 3', done => {
+                data.updateCompetition(1, 3, null)
+                    .then(competition => {
+
+                        expect(competition._id).to.be.equal.to(1);
+                        expect(competition.likes).to.be.equal.to(15);
+                        done();
+                    })
+            })
         })
-    })
+    });
+
+
 })

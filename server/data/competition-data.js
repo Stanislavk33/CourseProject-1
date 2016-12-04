@@ -224,14 +224,3 @@ module.exports = function(models, validator) {
         }
     };
 };
-
-function extractPassed(startDate, endDate) {
-    if (+Date.now() > +new Date(endDate)) {
-        return 'passed';
-    } else if (+new Date(startDate) < +Date.now() &&
-        +Date.now() < +new Date(endDate)) {
-        return 'ongoing';
-    } else {
-        return 'upcoming';
-    };
-}
