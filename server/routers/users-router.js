@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = ({ app, data, controllers, authentication, uploadUserImage }) => {
+module.exports = ({ app, controllers, authentication, uploadUserImage }) => {
     const controller = controllers.user;
 
         app.get('/users/', controller.loadUsers);

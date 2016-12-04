@@ -11,9 +11,6 @@ module.exports = (passport, data) => {
                     const passHash = hashing.getPassHash(user.salt, password);
 
                     if (user && user.passHash === passHash) {
-                        user.isOrganizator = user.roles.indexOf('organizator') >= 0;
-                        user.isAdmin = user.roles.indexOf('admin') >= 0;
-
                         done(null, user);
                     } else {
                         done(null, false);

@@ -1,7 +1,7 @@
 /* globals require */
 'use strict';
 
-module.exports = ({ app, controllers, data,authentication }) => {
+module.exports = ({ app, controllers, authentication }) => {
     const controller = controllers.forum;
 
         app.get('/forum/', controller.loadForumPosts);

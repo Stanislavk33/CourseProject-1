@@ -1,7 +1,7 @@
 /* globals module require */
 'use strict';
 
-module.exports = function(models, validator) {
+module.exports = function (models, validator) {
     const Category = models.Category;
 
     return {
@@ -22,8 +22,8 @@ module.exports = function(models, validator) {
                     if (err) {
                         return reject(err);
                     }
-                                   
-                    if(!category){
+
+                    if (!category) {
                         return resolve(null);
                     }
 
@@ -43,18 +43,18 @@ module.exports = function(models, validator) {
             });
         },
         createCategory(category) {
-            const newCategory = new Category({
-                title: category.title,
-                description: category.description,
-                image: category.image,
-                link: category.link,
-                competitions: []
-            });
-
             return new Promise((resolve, reject) => {
                 if (!validator.isValidCategory(category)) {
-                    return reject({ err: 'category information is not correct' });
+                    return reject({ err: 'Category information is not correct' });
                 }
+
+                const newCategory = new Category({
+                    title: category.title,
+                    description: category.description,
+                    image: category.image,
+                    link: category.link,
+                    competitions: []
+                });
 
                 newCategory.save(err => {
                     if (err) {
@@ -67,7 +67,6 @@ module.exports = function(models, validator) {
         },
         addCompetitionToCategory(competition) {
             return new Promise((resolve, reject) => {
-                console.log("before");
                 const competitionToAdd = {
                     _id: competition._id,
                     name: competition.name,
@@ -80,7 +79,7 @@ module.exports = function(models, validator) {
                         if (err) {
                             return reject(err);
                         }
-                        return resolve(category);
+                        return resolve(competition);
                     })
             });
         }

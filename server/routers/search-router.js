@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = ({ app, data, controllers }) => {
+module.exports = ({ app, controllers }) => {
     const controller = controllers.search;
 
     app.get('/search/', controller.search);

@@ -3,8 +3,7 @@
 
 const mongoose = require('mongoose'),
     Schema = mongoose.Schema,
-    constants = require('../utilities/constants'),
-    Status = constants.competitionStatus;
+    constants = require('../utilities/constants')
 
 const competitionSchema = new Schema({
     name: {
@@ -78,7 +77,7 @@ competitionSchema.methods.getPassed = function() {
         return 'ongoing';
     } else {
         return 'upcoming';
-    };
+    }
 };
 
 mongoose.model('Competition', competitionSchema);

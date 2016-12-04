@@ -1,3 +1,5 @@
+/* globals google $ */
+
 'use strict';
 
 var app = app || {};
@@ -70,9 +72,16 @@ $("#create").on("click", function(ev) {
 
     app.requester.postWithFile('/competitions/create', formData)
         .then(resp => {
-            app.notifier.showNotification(resp, "success");
+             if (resp.success) {
+                app.notifier.showNotification(resp.success, "success");
+                setTimeout(() => { window.location.href = `/competitions/${resp.competition.id}` }, 500);
+            } else if (resp.error) {
+                app.notifier.showNotification(resp.error, "error");
+                return;
+            }
+            //app.notifier.showNotification(resp, "success");
         })
         .catch(err => {
-            console.log(err);
+             app.notifier.showNotification(resp.error, "Competition could not be created.");
         });
 });

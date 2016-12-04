@@ -1,3 +1,5 @@
+/* globals require describe it */
+
 'use strict';
 
 const searchController = require('./../../server/controllers/search-controller');
@@ -20,7 +22,7 @@ describe('Search Controller Tests', () => {
         let competitionsMock = [];
 
         let dataMock = {
-            filterCompetitions(searchName) {
+            filterCompetitions() {
                 return new Promise(resolve => resolve(competitionsMock));
             },
             filter() { }

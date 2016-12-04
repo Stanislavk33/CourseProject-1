@@ -46,7 +46,7 @@ module.exports = function (models) {
                 });
             });
         },
-        addPhotoToUserGallery(userGalleryId, photo) { //photo object is created in the controller
+        addPhotoToUserGallery(userGalleryId, photo) {
             return new Promise((resolve, reject) => {
                 UserGallery.findByIdAndUpdate({ '_id': userGalleryId },
                     { $push: { 'photos': photo } },

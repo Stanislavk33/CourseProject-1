@@ -174,7 +174,10 @@ module.exports = ({ data }) => {
                     return data.addCompetitionToCategory(competition)
                 })
                 .then((competition) => {
-                    res.redirect(`/competitions/${competition._id}`);
+                    return res.status(200).json({
+                        success: 'Competition created',
+                        competition: {id: competition._id}
+                    });
                 })
                 .catch(err => {
                     console.log(err);

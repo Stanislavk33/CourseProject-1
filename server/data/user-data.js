@@ -2,7 +2,7 @@
 
 const hashing = require('../utilities/encryptor');
 
-module.exports = function (models, validator) {
+module.exports = function(models, validator) {
     const User = models.User;
 
     return {
@@ -33,6 +33,10 @@ module.exports = function (models, validator) {
                 User.findOne({ '_id': id }, (err, user) => {
                     if (err) {
                         return reject(err);
+                    }
+
+                    if (!user) {
+                        return resolve(null);
                     }
 
                     return resolve(user);
@@ -92,12 +96,9 @@ module.exports = function (models, validator) {
                     },
                     roles: ['normal'],
                     facebookId: user.facebookId
-                    // facebookToken: user.facebookToken
+                        // facebookToken: user.facebookToken
                 });
 
-                if (user.image) {
-                    newUser.image = user.image
-                }
                 newUser.save(err => {
 
                     if (err) {
@@ -220,7 +221,7 @@ module.exports = function (models, validator) {
                 lastNameRegex = { lastName: regex };
 
             return new Promise((resolve, reject) => {
-                User.count({ $or: [usernameRegex, firstNameRegex, lastNameRegex] }, function (err, usersCount) {
+                User.count({ $or: [usernameRegex, firstNameRegex, lastNameRegex] }, function(err, usersCount) {
                     if (err) {
                         return reject(err);
                     }
@@ -237,7 +238,7 @@ module.exports = function (models, validator) {
                 skip = (page - 1) * size,
                 limit = size;
             return new Promise((resolve, reject) => {
-                User.find({ $or: [usernameRegex, firstNameRegex, lastNameRegex] }, {}, { skip: skip, limit: limit }, function (err, users) {
+                User.find({ $or: [usernameRegex, firstNameRegex, lastNameRegex] }, {}, { skip: skip, limit: limit }, function(err, users) {
                     if (err) {
                         return reject(err);
                     };

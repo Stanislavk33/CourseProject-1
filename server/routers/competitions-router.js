@@ -1,7 +1,7 @@
 /* globals require */
 'use strict';
 
-module.exports = ({ app, data, controllers, authentication, uploadCompetitionImage }) => {
+module.exports = ({ app, controllers, authentication, uploadCompetitionImage }) => {
     const controller = controllers.competitions;
 
         app.get('/competitions/', controller.loadCompetitions);

@@ -1,11 +1,11 @@
     module.exports = {
-        isValidUser(user) {},
+        isValidUser() {},
 
-        isValidPoints(points) {},
+        isValidPoints() {},
 
-        isValidCategory(category) {},
+        isValidCategory() {},
 
-        validateCompetition(competition) {},
+        validateCompetition() {},
 
-        isValidForumPost(forumPost) {}
+        isValidForumPost() {}
     }

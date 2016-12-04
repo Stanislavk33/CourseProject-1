@@ -6,7 +6,8 @@ const sinonModule = require("sinon");
 describe("Forum data tests", () => {
     let sinon;
     let ForumPost = require('./mocks/forum-data-mock');
-    let data = require('../server/data/forum-data')({ ForumPost });
+    let Validator = require('./mocks/validator-mock');
+    let data = require('../server/data/forum-data')({ ForumPost }, Validator);
 
     beforeEach(() => {
         sinon = sinonModule.sandbox.create();
@@ -74,7 +75,7 @@ describe("Forum data tests", () => {
             sinon.restore()
         });
 
-        it('Expect to return forum post by given id', (done) => {
+        it('Expect to return forum post by given id', done => {
             
             data.getForumPostById(existingForumPostId)
                 .then((actualPost) => {
@@ -86,9 +87,58 @@ describe("Forum data tests", () => {
         it('Expect to return null when post with the given id does not exist', (done) => {
             data.getForumPostById(nonExistingForumPostId)
                 .then((actualPost) => {
-                    expect(actualPost).to.equal(null);
+                    expect(actualPost).to.be.null;
                 })
                 .then(done, done);
         });
     });
+
+    describe('createForumPost(forumPost)', () => {
+        const forumPost = {
+            title: 'Title',
+            description: 'Description',
+            user: 'User'
+        }
+
+        beforeEach(() => {
+            sinon.stub(ForumPost.prototype, "save", cb => {
+                cb(null);
+            });
+        });
+
+        afterEach(() => {
+            sinon.restore()
+        });
+
+        it('Expect to reject when validation fail', done => {
+            sinon.stub(Validator, 'isValidForumPost', () => {
+                return false;
+            });
+
+            data.createForumPost(forumPost)
+                .then(() => {})
+                .catch(() => {
+                    done();
+                });
+
+            sinon.restore();
+        });
+        it('Expect to create forum post', done => {
+            sinon.stub(Validator, 'isValidForumPost', () => {
+                return true;
+            });
+
+            data.createForumPost(forumPost)
+                .then(createdForumPost => {
+                    expect(createdForumPost.title).to.equal(forumPost.title);
+                    expect(createdForumPost.description).to.equal(forumPost.description);
+                    expect(createdForumPost.user).to.equal(forumPost.user);
+                    expect(createdForumPost.likes).to.equal(0);
+                    expect(createdForumPost.usersLiked).to.eql([]);
+                    expect(createdForumPost.answers).to.eql([]);
+                }).then(done, done);
+
+            sinon.restore();    
+        });
+    })
 });
