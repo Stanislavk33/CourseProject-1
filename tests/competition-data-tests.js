@@ -282,8 +282,92 @@ describe('Test competition data', () => {
                     expect(err.err).to.be.equal(errorMessage);
                     done();
                 });
+
+            sinon.restore();
+        });
+    });
+
+    describe('Test removeUsersFromCompetition', () => {
+
+        it('Expect update to be called with expected filter', done => {
+            let expectedFilter;
+            sinon.stub(Competition, 'update', (filter, update, cb) => {
+                expectedFilter = filter;
+                cb(null, null);
+            });
+
+            const competitionId = 1;
+            const username = 'Test user';
+            data.removeUserFromCompetition(competitionId, username)
+                .then(_ => {
+                    expect(expectedFilter).to.be.eql({ _id: competitionId });
+                    done();
+                });
+
+            sinon.restore();
+        });
+
+        it('Expect update to be called with expected update statement', done => {
+            let expectedUpdate;
+            sinon.stub(Competition, 'update', (filter, update, cb) => {
+                expectedUpdate = update;
+                cb(null, null);
+            });
+
+            const competitionId = 1;
+            const username = 'Test user';
+            data.removeUserFromCompetition(competitionId, username)
+                .then(_ => {
+                    expect(expectedUpdate).to.be.eql({ $pull: { "joinedUsers": { username } } });
+                    done();
+                });
+
+            sinon.restore();
+        });
+
+        it('Expect to reject when update throw error', done => {
+            const errorMessage = 'removeUserFromCompetition error';
+            sinon.stub(Competition, 'update', (_, __, cb) => {
+
+                cb({ err: errorMessage });
+            });
+
+            data.removeUserFromCompetition(null, null)
+                .catch(err => {
+                    expect(err.err).to.be.equal(errorMessage);
+                    done();
+                })
+            sinon.restore();
+        });
+
+        it('Expect to return expected competition', done => {
+            const expectedCompetition = { _id: 1, name: 'First competition' };
+
+            sinon.stub(Competition, 'update', (_, __, cb) => {
+
+                cb(null, expectedCompetition);
+            });
+
+            data.removeUserFromCompetition(null, null)
+                .then(competition => {
+                    expect(competition).to.be.eql(expectedCompetition);
+                    done();
+                })
                 
             sinon.restore();
-        })
+        });
+
+
     })
 });
+// removeUserFromCompetition(competitionId, username) {
+//     return new Promise((resolve, reject) => {
+//         Competition.update({ _id: competitionId }, { $pull: { "joinedUsers": { username } } }, (err, competition) => {
+//             if (err) {
+//                 return reject(err);
+//             }
+
+//             resolve(competition);
+//         });
+//     });
+// },
