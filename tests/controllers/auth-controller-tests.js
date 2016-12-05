@@ -8,7 +8,7 @@ describe('Test auth controller', () => {
     const data = {
         createUser: () => {}
     };
-    const controller = require('../../server/controllers/auth-controller');
+    const controller = require('../../server/controllers/auth-controller')(data);
     const resMock = require('../mocks/res-mock');
 
     beforeEach(() => {
