@@ -63,5 +63,18 @@ describe('Test Competition controller', () => {
 
             controller.getCreatePage(req, response);
         });
+
+        it('Expect render parameters to be correct', done => {
+            let categoriesTitles = ['Category1', 'Category2', 'Category3'];
+
+            response.on('end', () => {
+                const actual = response.params.renderParameter;
+                const expected = { result: { categoriesTitles, user: req.user } };
+                expect(actual).to.eql(expected);
+                done();
+            })
+
+            controller.getCreatePage(req, response);
+        })
     });
 });
