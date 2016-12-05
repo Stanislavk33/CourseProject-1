@@ -3,6 +3,16 @@
 ------------------------------------------
 
 ##Course - Web Applications with Node.js
+
+## Team members
+| Name | [Student system](https://telerikacademy.com) username | [Github](https://github.com) username|
+|:----|:-----------------------|:-----------------------------|
+| Elena Zarkova  | ElenaZ      | ElenaZarkova  |
+| Silviya Boteva | sboteva1    | silweto7      |
+| Boyko Bonev    | BoykoBonev  | BoykoBonev    |
+| Martin Yotov   | martinyotov | MartinYotov   |
+| Todor Georgiev | Toshe7o     | georgievtodor |
+
 ##Team project overview - Conquer Bulagria
 
 
