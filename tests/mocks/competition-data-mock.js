@@ -19,6 +19,8 @@ class CompetitionMock {
 
     isValidPassword() {}
     static findOneAndUpdate() {}
+    static findByIdAndUpdate() {}
+    static findById() {}
     static find() {}
     static findOne() {}
     static update() {}

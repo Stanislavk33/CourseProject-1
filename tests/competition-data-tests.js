@@ -421,4 +421,26 @@ describe('Test competition data', () => {
             sinon.restore();
         });
     });
+
+    describe('Test updateAttendedStatusToUser(username, competitionId)', () => {
+        it('Shoud call findById with expected filter', done => {
+            let expectedFilter;
+            sinon.stub(Competition, 'findById', filter => {
+                expectedFilter = filter;
+                return Promise.resolve({ joinedUsers: [] });
+            });
+
+            sinon.stub(Competition, 'findByIdAndUpdate', (filter, condition) => {
+                return Promise.resolve({});
+            });
+
+            const username = 'usernameTest';
+            const competitionId = 2;
+            data.updateAttendedStatusToUser(username, competitionId)
+                .then(_ => {
+                    expect(expectedFilter).to.be.eql({ '_id': competitionId });
+                    done();
+                });
+        })
+    })
 });
