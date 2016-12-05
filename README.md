@@ -1,86 +1,139 @@
-# Course Project
-_Web applications with Node.js_
+#Team Undefined42
 
-This document describes the **course project assignment** for the [Web applications with Node.js course](telerikacademy.com/courses/courses/Details/400) at Telerik Academy.
+------------------------------------------
 
-## Project Description
+##Course - Web Applications with Node.js
 
-Design and implement a **Standard Web application** using [Node.js](http://nodejs.org), [Express](expressjs.com) and [MongoDB](https://www.mongodb.com/).  
+## Team members
+| Name | [Student system](https://telerikacademy.com) username | [Github](https://github.com) username|
+|:----|:-----------------------|:-----------------------------|
+| Elena Zarkova  | ElenaZ      | ElenaZarkova  |
+| Silviya Boteva | sboteva1    | silweto7      |
+| Boyko Bonev    | BoykoBonev  | BoykoBonev    |
+| Martin Yotov   | martinyotov | MartinYotov   |
+| Todor Georgiev | Toshe7o     | georgievtodor |
 
-It can be a discussion forum, blog system, e-commerce site, online gaming site, social network, or any other web application by your choice.
+##Team project overview - Conquer Bulagria
 
-The application should have a:
 
-- **public part** (accessible without authentication)
-- **private part** (available for registered users)
+## Pages: 
+1. Homepage
+2. Competitions
+3. Categories
+4. Profile
+5. Forum
+6. Users
 
-### Public Part
+------------------------------------------
 
-The **public part** of your projects should be **visible without authentication**.
-  - Using [Pug](https://pugjs.orghttps://goo.gl/forms/hOQg9O1laMDIFTo13
-- Use **MongoDB**  - Using [Pug](https://pugjs.orghttps://goo.gl/forms/hOQg9O1laMDIFTo13
+## The functionalities overall:
+1. Register
+2. Login
+3. Edit profile
+4. Creating competition - if user is organizator
+5. Create categories - if user is admin
+6. Create forum posts 
+7. Write comments 
+8. Like/dislike forum posts 
+9. Like/dislike forum comments 
+10. Joining competitions
+11. Leaving competitions
+12. Searching competitions - by name, place, category
+13. Rating competitions - like/dislike
+14. Verifying a user attended the competition - in his profile page
+15. Add points to user who atended competition - if user is organizator
+16. Display map and pin to exact place on competition page and create competition form
+17. Display top users on home page
+18. Display top competitions on home page
+19. Display joined users on competition page
+20. Pagination on forum, competitions, after search
+20. Display label for status of competitions
 
-  - As data storage
-  - Optionally, you may use **Mongoose** or any other ODM framework
-- Create a data/service layer for accessing the database
-- Use [Passport](http://passportjs.org/) - for managing **users**
-  - Your registered users should have at least one of the two roles: **user**
+-------------------------------------
+## Home page:
+1. Top competitions are displayed in slides
+2. Top users are displayed in table, sort by points
+3. Categories are shown 
 
-### Application front-end (client) - **up to 35%**
+## Users:
+1. Everyone (not registered) will see 
+	- the homepage
+	- the pages of the competitions
+	- the pages of categories
+	- the profiles of the users
+2. Regular user 
+	- can join competitions
+	- can rate competitions
+	- have points
+	- have progress bar 
+	- can write in the forum
+	- can rate posts and comments
+	- can edit own profile
+	- can become organizator after reaching certain points in total points
+3. Organizator
+	- can add new competitions
+	- can add points if the users came to the competition
+4. Admin
+	- can create categories
 
-- Use any framework of your choice for the front-end
-  - Optional, not required
-  - KendoUI, AngularJS, Angular 2, Knockout, Bootstrap, etc...
-- Implement responsive design
-  - It may be based on **Bootstrap**, **Materialize** or any other UI framework
-- Use AJAX with the AJAX routes from the server
-- Apply **error handling** and **data validation** to avoid crashes when invalid data is entered
-- Write at least **10 different unit tests** for your controllers and data logic
-- Prevent yourself from **security** holes (XSS, XSRF, Parameter Tampering, etc.)
-  - Handle correctly the **special HTML characters** and tags like `<script>`, `<br />`, etc.
+-----------------------------------
 
-### Application Creativity - **up to 10%**
+## Competition:
+Every competition has:
+	- name
+	- place
+	- likes
+	- organizator
+	- category
+	- description
+	- users who are joined
+	- start date
+	- end date
+	- image
+	- how many points it gives
+	- level of difficulty
+	- location on the map
+	- users who liked
 
-- Think of a innovative application
-  - Not yet another blog system, forum, pseudo-imdb, or something similar or boring
+--------------------------------------
 
-##  General Requirements
+## Category
+Every category has:
+	- link
+	- title
+	- description
+	- image
+	- list of competitions who have: name, place, status, organizator, image
 
-- Use Git
-  - Github, GitLab, Bitbucket, or other
-- Brief **documentation** of the project and the project architecture
-  - As `README.md` file at the root of the github repository
+--------------------------------------
 
-### Optional Requirements
+## Profile page:
+Every profile page has:
+	- username
+	- full name
+	- profile picture
+	- mail, facebook
+	- already attended competitions
+	- joined competitions
+	- total points
+	- progress bar
 
-- Nice looking UI supporting of all modern and old Web browsers
-- Good usability (easy to use UI)
-- Record a short video showcasing your application
-  - ~1-2 minutes, just show the interesting features
-  - Do not record register/login functionality, this is not interesting...
+-----------------------------------------
 
-### Deliverables
+## Forum
+Every forum post has:
+	- title
+	- description
+	- author
+	- date
+	- likes
+	- comments
 
-- Upload your application in the cloud
-  - MS Azure, HerokuCloud, Amazon, all are fine
-- Register your application at [Our Showcase System](http://best.telerikacademy.com)
-  - Link to the live application
-  - Link to the video
-  - Link to the github repository
+--------------------------------------
 
-### Public Project Defense
+## Progress bar:
+- different progress bar for each category of competitions
+- one main progress bar combining the points from all the categories
 
-Each team will have to make a **public defense** of its work in front of a trainer (for about 30 minutes), in which each of the team members will answer to the trainer's questions individually.
+---------------------------------------------
 
-The public defense includes:
-
-- Live **demonstration** of the developed web application (prepare sample data).
-- Explain application structure and its back-end and front-end **source code**
-- Show the **commit logs** in the source control repository to prove a contribution from all team members.
-- May include a simple task for each team member
-  - The task must be implemented immediately
-
-### Give Feedback about Your Teammates
-
-You will be invited to **provide feedback** about all your teammates, their attitude to this project, their technical skills, their team working skills, their contribution to the project, etc.
-The feedback is important part of the project evaluation so **take it seriously** and be honest.
