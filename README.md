@@ -1,8 +1,11 @@
-#Team Undefined42
+# Team Undefined42
 
 ------------------------------------------
 
-##Course - Web Applications with Node.js
+## Course - Web Applications with Node.js
+
+### Visit us at:
+http://conquerbulgaria.herokuapp.com/
 
 ## Team members
 | Name | [Student system](https://telerikacademy.com) username | [Github](https://github.com) username|
